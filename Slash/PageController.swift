@@ -40,7 +40,6 @@ class PageController: UIPageViewController, UIPageViewControllerDelegate, UIPage
         self.pageController.currentPage = initialPage
         self.view.addSubview(pageController)
         pageController.anchor(top: nil, bottom: self.view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: -10, paddingLeft: 0, paddingRight: 0, width: 0, height: 20)
-        
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
