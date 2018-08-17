@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34DF91F80A204AADBF510835 /* Pods_Slash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C03E22EF35EDD994605E9FF5 /* Pods_Slash.framework */; };
 		4C0A005C212730E700919278 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A005B212730E700919278 /* CoinCell.swift */; };
 		4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F03F2126019100CEB049 /* AppDelegate.swift */; };
 		4C20F0442126019100CEB049 /* BTCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F0432126019100CEB049 /* BTCController.swift */; };
@@ -44,6 +45,9 @@
 		4CE298A121261700008A533A /* LTCController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTCController.swift; sourceTree = "<group>"; };
 		4CE298A321261710008A533A /* BCHController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCHController.swift; sourceTree = "<group>"; };
 		4CE298A521261748008A533A /* ETCController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCController.swift; sourceTree = "<group>"; };
+		5381EE55B5C6C38E55D9DED8 /* Pods-Slash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Slash.release.xcconfig"; path = "Pods/Target Support Files/Pods-Slash/Pods-Slash.release.xcconfig"; sourceTree = "<group>"; };
+		B8E351820A56351957C6451F /* Pods-Slash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Slash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Slash/Pods-Slash.debug.xcconfig"; sourceTree = "<group>"; };
+		C03E22EF35EDD994605E9FF5 /* Pods_Slash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Slash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34DF91F80A204AADBF510835 /* Pods_Slash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +67,8 @@
 			children = (
 				4C20F03E2126019100CEB049 /* Slash */,
 				4C20F03D2126019100CEB049 /* Products */,
+				D571B1830E84C315D8481814 /* Pods */,
+				AAE65EA7FD4A9CCEBC4C97E2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +144,23 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		AAE65EA7FD4A9CCEBC4C97E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C03E22EF35EDD994605E9FF5 /* Pods_Slash.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D571B1830E84C315D8481814 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B8E351820A56351957C6451F /* Pods-Slash.debug.xcconfig */,
+				5381EE55B5C6C38E55D9DED8 /* Pods-Slash.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,9 +168,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C20F0522126019200CEB049 /* Build configuration list for PBXNativeTarget "Slash" */;
 			buildPhases = (
+				BAA9304884920496BFBF0509 /* [CP] Check Pods Manifest.lock */,
 				4C20F0382126019100CEB049 /* Sources */,
 				4C20F0392126019100CEB049 /* Frameworks */,
 				4C20F03A2126019100CEB049 /* Resources */,
+				3488E2F15EC1CFBB36D92601 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,6 +227,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3488E2F15EC1CFBB36D92601 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Slash/Pods-Slash-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LinearProgressBar/LinearProgressBar.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LinearProgressBar.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Slash/Pods-Slash-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BAA9304884920496BFBF0509 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Slash-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4C20F0382126019100CEB049 /* Sources */ = {
@@ -354,6 +419,7 @@
 		};
 		4C20F0532126019200CEB049 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E351820A56351957C6451F /* Pods-Slash.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -373,6 +439,7 @@
 		};
 		4C20F0542126019200CEB049 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5381EE55B5C6C38E55D9DED8 /* Pods-Slash.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

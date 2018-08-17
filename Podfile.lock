@@ -1,0 +1,16 @@
+PODS:
+  - LinearProgressBar (1.0.1)
+
+DEPENDENCIES:
+  - LinearProgressBar
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - LinearProgressBar
+
+SPEC CHECKSUMS:
+  LinearProgressBar: f6a74dbabed229dbb1a7978089e2e4317a3a0ee0
+
+PODFILE CHECKSUM: 76cb0d95ff9103ba68004c56c79ed5f90636468f
+
+COCOAPODS: 1.5.3

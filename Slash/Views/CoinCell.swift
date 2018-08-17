@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import LinearProgressBar
 
 class CoinCell: UICollectionViewCell {
     override init(frame: CGRect) {
@@ -52,6 +53,19 @@ class CoinCell: UICollectionViewCell {
         return textField
     }()
     
+    //: https://github.com/gordoneliel/LinearProgressBar
+    let progressBar: LinearProgressBar = {
+        let pB = LinearProgressBar()
+        pB.backgroundColor = .clear
+        pB.barColor = .orange
+        pB.trackColor = .lightGray
+        //pB.barThickness = CGFloat(5)
+        pB.progressValue = CGFloat(66)
+        pB.trackPadding = 25
+        
+        return pB
+    }()
+    
     func setupCell() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = 10
@@ -59,8 +73,11 @@ class CoinCell: UICollectionViewCell {
         self.backgroundColor = .white
         addSubview(coinImageView)
         addSubview(coinLabel)
+        addSubview(progressBar)
         
         coinImageView.anchor(top: self.topAnchor, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 47, height: 47)
-        coinLabel.anchor(top: nil, bottom: self.bottomAnchor, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 243, height: 70)
+        coinLabel.anchor(top: nil, bottom: self.bottomAnchor, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: -25, paddingLeft: 18, paddingRight: 0, width: 243, height: 70)
+        
+        progressBar.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 6)
     }
 }
