@@ -1,5 +1,5 @@
 //
-//  PageController.swift
+//  HomeViewController.swift
 //  Slash
 //
 //  Created by Michael Lema on 8/16/18.
@@ -9,8 +9,16 @@
 import Foundation
 import UIKit
 
-class PageController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+class HomeViewController: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    fileprivate let coinImage:[UIImage] = [#imageLiteral(resourceName: "BTC"),#imageLiteral(resourceName: "ETH"),#imageLiteral(resourceName: "LTC"),#imageLiteral(resourceName: "BCH"),#imageLiteral(resourceName: "ETC")]
+    fileprivate let coinName = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic"]
+    fileprivate let colors: [UIColor] = [UIColor(red:0.91, green:0.73, blue:0.08, alpha:1.0),
+                                         UIColor(red:0.21, green:0.27, blue:0.31, alpha:1.0),
+                                         UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
+                                         UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
+                                         UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
+    static let coinCellId = "cellId"
     struct URL {
         static let btcUSD = "BTC-USD"
         static let ethUSD = "ETH-USD"
@@ -38,12 +46,20 @@ class PageController: UIPageViewController, UIPageViewControllerDelegate, UIPage
     let red = UIColor.init(red: 255/256, green: 73/255, blue: 0/256, alpha: 1)
     let white = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
     
-
-    var pages = [UIViewController]()
-    let pageController: UIPageControl = {
-        let pc = UIPageControl()
-        return pc
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        //layout.minimumLineSpacing = 0
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(CoinCell.self, forCellWithReuseIdentifier: HomeViewController.coinCellId)
+        return collectionView
     }()
+    
     
     var settingsButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -68,31 +84,12 @@ class PageController: UIPageViewController, UIPageViewControllerDelegate, UIPage
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.dataSource = self
-        self.delegate = self
-        
-        //: FIXME:  Change this back to 2 later
-        let initialPage = 0
-        let page1 = BCHController()
-        let page2 = LTCController()
-        let page3 = BTCController()
-        let page4 = ETHController()
-        let page5 = ETCController()
-        
-        self.pages.append(page1)
-        self.pages.append(page2)
-        self.pages.append(page3)
-        self.pages.append(page4)
-        self.pages.append(page5)
-        self.setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
-        
-        //: PageController
-        self.pageController.numberOfPages = pages.count
-        self.pageController.currentPage = initialPage
-        self.view.addSubview(pageController)
+        view.backgroundColor = UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0)
+        self.view.addSubview(collectionView)
         self.view.addSubview(settingsButton)
-        pageController.anchor(top: nil, bottom: self.view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: -10, paddingLeft: 0, paddingRight: 0, width: 0, height: 20)
+        
         settingsButton.anchor(top: view.topAnchor, bottom: nil, left: nil, right: view.rightAnchor, paddingTop: 40, paddingBottom: 0, paddingLeft: 0, paddingRight: 10, width: 25, height: 25)
+        collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
         
         setup()
         setupViews()
@@ -174,31 +171,27 @@ class PageController: UIPageViewController, UIPageViewControllerDelegate, UIPage
         
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = self.pages.index(of: viewController) else { return nil }
-        if (viewControllerIndex == 0) {
-            //: Go to the last page
-            return self.pages.last
-        } else {
-            return self.pages[viewControllerIndex - 1]
-        }
+    //: MARK: CollectionView methods
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.coinCellId, for: indexPath) as! CoinCell
+        cell.coinImageView.image = coinImage[indexPath.item].withRenderingMode(.alwaysTemplate)
+        cell.coinImageView.tintColor = colors[1]
+        cell.coinLabel.text = coinName[indexPath.item]
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (self.view.frame.width - 60), height: (self.view.frame.height / 2))
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        //: Adjust the cell position
+        let width = self.view.frame.width
+        let cellWidth = (self.view.frame.width - 60)
+        let diff = (width-cellWidth) / 2
+        return UIEdgeInsets(top: 0, left: diff, bottom: 0, right: diff)
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = self.pages.index(of: viewController) else { return nil }
-        if (viewControllerIndex < self.pages.count - 1) {
-            //: Go to next page
-            return self.pages[viewControllerIndex + 1]
-        } else {
-            //: Go back to first page
-            return self.pages.first
-        }
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        //: Update the pageController index
-        guard let viewControllers = pageViewController.viewControllers, let viewControllerIndex = self.pages.index(of: viewControllers[0]) else {return}
-        self.pageController.currentPage = viewControllerIndex
-        
-    }
+
 }

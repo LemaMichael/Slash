@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = PageController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
+        window?.rootViewController = HomeViewController()
 
         return true
     }
