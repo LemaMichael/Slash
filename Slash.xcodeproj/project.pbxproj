@@ -12,6 +12,11 @@
 		4C20F04B2126019200CEB049 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04A2126019200CEB049 /* Assets.xcassets */; };
 		4C20F04E2126019200CEB049 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04C2126019200CEB049 /* LaunchScreen.storyboard */; };
 		4C94D97221262272008F80EE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97121262272008F80EE /* Extensions.swift */; };
+		4C94D97521266E63008F80EE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97421266E63008F80EE /* Pair.swift */; };
+		4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97621267049008F80EE /* CurrencyFormatter.swift */; };
+		4C94D97B21267B2E008F80EE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97A21267B2E008F80EE /* Reachability.swift */; };
+		4C94D97D212681CA008F80EE /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97C212681CA008F80EE /* Preferences.swift */; };
+		4C94D97F21268365008F80EE /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97E21268365008F80EE /* Client.swift */; };
 		4CE2989D2126156D008A533A /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989C2126156D008A533A /* PageController.swift */; };
 		4CE298A0212616F4008A533A /* ETHController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989F212616F4008A533A /* ETHController.swift */; };
 		4CE298A221261700008A533A /* LTCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A121261700008A533A /* LTCController.swift */; };
@@ -27,6 +32,11 @@
 		4C20F04D2126019200CEB049 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C20F04F2126019200CEB049 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C94D97121262272008F80EE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		4C94D97421266E63008F80EE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
+		4C94D97621267049008F80EE /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
+		4C94D97A21267B2E008F80EE /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		4C94D97C212681CA008F80EE /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		4C94D97E21268365008F80EE /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		4CE2989C2126156D008A533A /* PageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
 		4CE2989F212616F4008A533A /* ETHController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHController.swift; sourceTree = "<group>"; };
 		4CE298A121261700008A533A /* LTCController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTCController.swift; sourceTree = "<group>"; };
@@ -65,11 +75,14 @@
 			isa = PBXGroup;
 			children = (
 				4C20F03F2126019100CEB049 /* AppDelegate.swift */,
-				4CE2989E212616C4008A533A /* Coin Controllers */,
+				4C94D97321266E59008F80EE /* Model */,
+				4C94D979212671A5008F80EE /* Views */,
+				4CE2989E212616C4008A533A /* Controllers */,
 				4CE2989C2126156D008A533A /* PageController.swift */,
 				4C20F04A2126019200CEB049 /* Assets.xcassets */,
 				4C20F04C2126019200CEB049 /* LaunchScreen.storyboard */,
 				4C20F04F2126019200CEB049 /* Info.plist */,
+				4C94D97821267120008F80EE /* Helpers */,
 				4C94D97021262269008F80EE /* Utils */,
 			);
 			path = Slash;
@@ -83,7 +96,33 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		4CE2989E212616C4008A533A /* Coin Controllers */ = {
+		4C94D97321266E59008F80EE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4C94D97421266E63008F80EE /* Pair.swift */,
+				4C94D97C212681CA008F80EE /* Preferences.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4C94D97821267120008F80EE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4C94D97621267049008F80EE /* CurrencyFormatter.swift */,
+				4C94D97A21267B2E008F80EE /* Reachability.swift */,
+				4C94D97E21268365008F80EE /* Client.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4C94D979212671A5008F80EE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4CE2989E212616C4008A533A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				4C20F0432126019100CEB049 /* BTCController.swift */,
@@ -92,7 +131,7 @@
 				4CE298A321261710008A533A /* BCHController.swift */,
 				4CE298A521261748008A533A /* ETCController.swift */,
 			);
-			path = "Coin Controllers";
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,12 +206,17 @@
 			files = (
 				4C20F0442126019100CEB049 /* BTCController.swift in Sources */,
 				4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */,
+				4C94D97D212681CA008F80EE /* Preferences.swift in Sources */,
 				4CE298A221261700008A533A /* LTCController.swift in Sources */,
 				4C94D97221262272008F80EE /* Extensions.swift in Sources */,
 				4CE2989D2126156D008A533A /* PageController.swift in Sources */,
+				4C94D97F21268365008F80EE /* Client.swift in Sources */,
+				4C94D97521266E63008F80EE /* Pair.swift in Sources */,
 				4CE298A421261710008A533A /* BCHController.swift in Sources */,
+				4C94D97B21267B2E008F80EE /* Reachability.swift in Sources */,
 				4CE298A621261748008A533A /* ETCController.swift in Sources */,
 				4CE298A0212616F4008A533A /* ETHController.swift in Sources */,
+				4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
