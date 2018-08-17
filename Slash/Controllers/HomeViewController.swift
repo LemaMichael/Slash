@@ -46,6 +46,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate, UICollectio
     let red = UIColor.init(red: 255/256, green: 73/255, blue: 0/256, alpha: 1)
     let white = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
     
+    
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -59,7 +61,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate, UICollectio
         collectionView.register(CoinCell.self, forCellWithReuseIdentifier: HomeViewController.coinCellId)
         return collectionView
     }()
-    
     
     var settingsButton: UIButton = {
         let button = UIButton(type: .custom)

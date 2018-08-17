@@ -1,16 +1,22 @@
 PODS:
+  - Charts (3.1.1):
+    - Charts/Core (= 3.1.1)
+  - Charts/Core (3.1.1)
   - LinearProgressBar (1.0.1)
 
 DEPENDENCIES:
+  - Charts
   - LinearProgressBar
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Charts
     - LinearProgressBar
 
 SPEC CHECKSUMS:
+  Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   LinearProgressBar: f6a74dbabed229dbb1a7978089e2e4317a3a0ee0
 
-PODFILE CHECKSUM: 76cb0d95ff9103ba68004c56c79ed5f90636468f
+PODFILE CHECKSUM: 7adf7f24961b62f22f465a9036bc8e6d90090678
 
 COCOAPODS: 1.5.3
