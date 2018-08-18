@@ -15,5 +15,8 @@ target 'Slash' do
     # https://github.com/danielgindi/Charts
     pod 'Charts'
     
+    # Alamofire (Elegant HTTP Networking in Swift)
+    pod 'Alamofire' 
+    
     
 end

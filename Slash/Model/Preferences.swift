@@ -12,7 +12,7 @@ enum UserDefaults: String {
     case interval = "interval"
     case firstPair = "firstPair"
     case secondPair = "secondPair"
-    case launchFromStart = "launchFromStart"
-    case darkMenuBar = "darkMenuBar"
-    case colorSymbols = "colorSymbols"
+    case thirdPair = "thirdPair"
+    case fourthPair = "fourthPair"
+    case fifthPair = "fifthPair"
 }

@@ -1,22 +1,26 @@
 PODS:
+  - Alamofire (4.7.3)
   - Charts (3.1.1):
     - Charts/Core (= 3.1.1)
   - Charts/Core (3.1.1)
   - LinearProgressBar (1.0.1)
 
 DEPENDENCIES:
+  - Alamofire
   - Charts
   - LinearProgressBar
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Charts
     - LinearProgressBar
 
 SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   LinearProgressBar: f6a74dbabed229dbb1a7978089e2e4317a3a0ee0
 
-PODFILE CHECKSUM: 7adf7f24961b62f22f465a9036bc8e6d90090678
+PODFILE CHECKSUM: b7705709f40b50ce7446bd7903e39a76fd48d7d8
 
 COCOAPODS: 1.5.3
