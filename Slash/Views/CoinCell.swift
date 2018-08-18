@@ -12,6 +12,15 @@ import LinearProgressBar
 import Charts
 
 class CoinCell: UICollectionViewCell {
+    
+    
+    var coin: CoinDetail?
+    
+    let green = UIColor(red:0.38, green:0.79, blue:0.00, alpha:1.0)
+    let red = UIColor(red:1.00, green:0.29, blue:0.29, alpha:1.0)
+    
+    var pairID: String?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCell()
@@ -19,6 +28,54 @@ class CoinCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //: From Barbar macOS app - Dai Hovey
+    func update(_ pair: Pair?, price: String?, pairID: String?) {
+        DispatchQueue.main.async {
+            //guard let pairID = pairID else { return }
+            guard let price = price else {
+                self.coinPrice.text = "$0.00"
+                self.coinPercentage.text = "..."
+                return
+            }
+            self.coinPrice.text = price
+            guard let pair = pair else {
+                self.coinLabel.text = "Loading..."
+                return
+            }
+            if let currencyPair = pair.displayName {
+                self.coinLabel.text = currencyPair
+            }
+            guard let _ = pair.open else { return }
+            
+            let percentString = "\(CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: pair.percent()))!)%"
+            
+            let diffString = "\(pair.difference())"
+            
+            let options = CurrencyFormatterOptions()
+            options.showPositivePrefix = true
+            options.showNegativePrefix = true
+            
+            self.coinPercentage.text = "\(CurrencyFormatter.sharedInstance.formatAmountString(diffString, currency: "USD", options: options))  \(percentString)"
+            
+            if pair.difference() < 0 {
+                self.coinPercentage.textColor = self.red
+            } else {
+                self.coinPercentage.textColor = self.green
+            }
+        }
+    }
+    
+    func updateOffline() {
+        DispatchQueue.main.async {
+           // self.coinPrice.text = "Sorry, can't connect"
+            self.coinPercentage.text = "Sorry, can't connect."
+            self.coinPercentage.textColor = self.red
+
+        }
+    }
+    
+    
     let coinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -39,10 +96,6 @@ class CoinCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .lightGray
         label.text = "+240.66 (4.12%)"
-        //: Green color
-        label.textColor = UIColor(red:0.38, green:0.79, blue:0.00, alpha:1.0)
-        //: Red color
-        //: UIColor(red:1.00, green:0.29, blue:0.29, alpha:1.0)
         label.font =  UIFont(name: "AvenirNext", size: 9)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
@@ -108,5 +161,14 @@ class CoinCell: UICollectionViewCell {
         percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressBar.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
         
         chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
+        
+        
+        //: Setting up coin
+        guard let coin = coin else { return }
+        coinImageView.image = UIImage(named: coin.id)
+        coinPrice.text = coin.currentPrice
+        coinPercentage.text = coin.currentPrice
+        coinLabel.text = coin.name
+
     }
 }
