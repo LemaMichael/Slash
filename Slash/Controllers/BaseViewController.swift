@@ -47,8 +47,6 @@ class BaseViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTickerConnection()
-        setupStats()
         
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
