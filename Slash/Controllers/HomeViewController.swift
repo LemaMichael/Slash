@@ -88,70 +88,9 @@ class HomeViewController: BaseViewController,UICollectionViewDelegate, UICollect
         
         settingsButton.anchor(top: view.topAnchor, bottom: nil, left: nil, right: view.rightAnchor, paddingTop: 40, paddingBottom: 0, paddingLeft: 0, paddingRight: 10, width: 25, height: 25)
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
-        
-        //setup()
-        //fetchPairs()
+    }
+    
 
-        // Start reachability without a hostname intially
-        //setupReachability(useHostName: false)
-        //startNotifier()
-        
-        // After 5 seconds, stop and re-start reachability, this time using a hostname
-        let dispatchTime = DispatchTime.now() + Double(Int64(UInt64(5) * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
-        DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-            //self.stopNotifier()
-            //self.setupReachability(useHostName: true)
-            //self.startNotifier()
-        }
-    }
-    
-    
-    func setup() {
-        if let interval = defaults.object(forKey: UserDefaults.interval.rawValue) as? TimeInterval {
-            self.interval = interval
-        } else {
-            self.interval = TimeInterval(5)  // Default is 60 seconds
-            defaults.set(self.interval, forKey: UserDefaults.interval.rawValue)
-        }
-        
-        //: 1
-        if let firstPair = defaults.object(forKey: UserDefaults.firstPair.rawValue) as? String {
-            firstPairID = firstPair
-        } else {
-            firstPairID = URL.btcUSD // Default
-            defaults.set(firstPairID, forKey: UserDefaults.firstPair.rawValue)
-        }
-        //: 2
-        if let secondPair = defaults.object(forKey: UserDefaults.secondPair.rawValue) as? String {
-            secondPairID = secondPair
-        } else {
-            secondPairID = URL.ethUSD // Default
-            defaults.set(secondPairID, forKey: UserDefaults.secondPair.rawValue)
-        }
-        //: 3
-        if let thirdPair = defaults.object(forKey: UserDefaults.thirdPair.rawValue) as? String {
-            thirdPairID = thirdPair
-        } else {
-            thirdPairID = URL.ltcUSD // Default
-            defaults.set(thirdPairID, forKey: UserDefaults.thirdPair.rawValue)
-        }
-        //: 4
-        if let fourthPair = defaults.object(forKey: UserDefaults.fourthPair.rawValue) as? String {
-            fourthPairID = fourthPair
-        } else {
-            fourthPairID = URL.bchUSD // Default
-            defaults.set(fourthPairID, forKey: UserDefaults.fourthPair.rawValue)
-        }
-        //: 5
-        if let fifthPair = defaults.object(forKey: UserDefaults.fifthPair.rawValue) as? String {
-            fifthPairID = fifthPair
-        } else {
-            fifthPairID = URL.etcUSD // Default
-            defaults.set(fifthPairID, forKey: UserDefaults.fifthPair.rawValue)
-        }
-        
-        defaults.synchronize()
-    }
     
     func updateTimer() {
         if timer != nil {
@@ -160,95 +99,10 @@ class HomeViewController: BaseViewController,UICollectionViewDelegate, UICollect
             }
         }
         
-        timer = Timer(timeInterval: interval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-    }
-    
-    @objc func update() {
-        fetchPairsPrice()
+       // timer = Timer(timeInterval: interval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
 
-    func updateOfflineTitle() {
-        DispatchQueue.main.async(execute: {
-            let cells = self.collectionView.visibleCells as! Array<CoinCell>
-            for cell in cells {
-                cell.updateOffline()
-            }
-        })
-    }
     
-    func fetchPairsPrice() {
-        for pair in chosenPairs {
-            fetchStats(pair.id!, callback:  { (open, volume) in
-                pair.open = open
-                pair.volume = volume
-            })
-            
-            fetchPrice(pair.id!, callback: { (price) in
-                pair.price = price
-                //: DONE !
-            })
-        }
-    }
-    func fetchPrice(_ pricePair:String, callback: @escaping (String?) -> Void) {
-        let request = URLRequest(url: Foundation.URL(string: "\(pairsURL)/\(pricePair)/ticker")!)
-        Client.shared.getPrice(request) { (price) in
-            callback(price)
-        }
-    }
-    
-    func fetchStats(_ pricePair:String, callback: @escaping (String?, String?) -> Void) {
-        print(pricePair)
-        let request = URLRequest(url: Foundation.URL(string: "\(pairsURL)/\(pricePair)/stats")!)
-        Client.shared.getStats(request) { (open, volume) in
-            callback(open, volume)
-        }
-    }
-
-
-    func fetchPairs() {
-        let request = URLRequest(url: Foundation.URL(string: pairsURL)!)
-        
-        chosenPairs.removeAll()
-        
-        
-        Client.shared.getPairs(request) { (pairs) in
-            self.pairs = pairs!
-            
-            var firstPair: Pair!
-            var secondPair: Pair!
-            var thirdPair: Pair!
-            var fourthPair: Pair!
-            var fifthPair: Pair!
-            
-            for pair in self.pairs {
-                
-                if pair.id == self.firstPairID {
-                    firstPair = pair
-                }
-                if pair.id == self.secondPairID {
-                    secondPair = pair
-                }
-                if pair.id == self.thirdPairID {
-                    thirdPair = pair
-                }
-                if pair.id == self.fourthPairID {
-                    fourthPair = pair
-                }
-                if pair.id == self.fifthPairID {
-                    fifthPair = pair
-                }
-            }
-            
-            self.chosenPairs.append(firstPair)
-            self.chosenPairs.append(secondPair)
-            self.chosenPairs.append(thirdPair)
-            self.chosenPairs.append(fourthPair)
-            self.chosenPairs.append(fifthPair)
-            
-            self.update()
-            self.updateTimer()
-        }
-    }
     
     func updateInterval(_ interval: TimeInterval) {
         self.interval = interval
@@ -259,68 +113,14 @@ class HomeViewController: BaseViewController,UICollectionViewDelegate, UICollect
         updateTimer()
     }
     
-    //: Will need to do this with 5 pairs in settings tab perhaps
-    func updatePair(_ isFirstPair:Bool, title: String) {
-        if isFirstPair == true {
-            defaults.set(title, forKey: UserDefaults.firstPair.rawValue)
-            firstPairID = title
-        } else {
-            defaults.set(title, forKey: UserDefaults.secondPair.rawValue)
-            secondPairID = title
-        }
-        
-        defaults.synchronize()
-        fetchPairs()
-    }
-    
-    
-    //MARK: Reachability
-    func setupReachability(useHostName: Bool) {
-        let hostName = "gdax.com"
-        
-        self.reachability = useHostName ? Reachability(hostname: hostName) : Reachability()
-        
-        reachability?.whenReachable = { reachability in
-            self.fetchPairs()
-        }
-        reachability?.whenUnreachable = { reachability in
-            self.updateOfflineTitle()
-        }
-    }
-    
-    func startNotifier() {
-        do {
-            try reachability?.startNotifier()
-        } catch {
-            return
-        }
-    }
-    
-    func stopNotifier() {
-        reachability!.stopNotifier()
-        reachability = nil
-    }
 
-    
-    
     //: MARK: CollectionView methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.coinCellId, for: indexPath) as! CoinCell
-  //      cell.coinImageView.image = coinImage[indexPath.item].withRenderingMode(.alwaysTemplate)
-   //     cell.coinImageView.tintColor = colors[1]
-    //    cell.coinLabel.text = coinName[indexPath.item]
-//
-//        let pair = self.chosenPairs[indexPath.item]
-//        if let first = self.chosenPairs[indexPath.item].price,
-//            let quote = self.chosenPairs[indexPath.item].quoteCurrency {
-//            self.firstPrice = CurrencyFormatter.sharedInstance.formatAmountString(first, currency: quote, options: nil)
-//        }
-        
-    //    cell.update(pair, price: self.firstPrice, pairID: self.firstPairID)
-        
+
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
