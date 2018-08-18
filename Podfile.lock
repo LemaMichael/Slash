@@ -3,24 +3,36 @@ PODS:
   - Charts (3.1.1):
     - Charts/Core (= 3.1.1)
   - Charts/Core (3.1.1)
+  - CryptoSwift (0.11.0)
+  - GDAXSocketSwift (0.1.2):
+    - CryptoSwift
   - LinearProgressBar (1.0.1)
+  - Starscream (3.0.5)
 
 DEPENDENCIES:
   - Alamofire
   - Charts
+  - GDAXSocketSwift
   - LinearProgressBar
+  - Starscream
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Charts
+    - CryptoSwift
+    - GDAXSocketSwift
     - LinearProgressBar
+    - Starscream
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
+  CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
+  GDAXSocketSwift: c0d01a025fa90b053f2fed19cca9a13b856e3e28
   LinearProgressBar: f6a74dbabed229dbb1a7978089e2e4317a3a0ee0
+  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
 
-PODFILE CHECKSUM: b7705709f40b50ce7446bd7903e39a76fd48d7d8
+PODFILE CHECKSUM: d2386e977508ab7ae98969a9d23373aa6db84676
 
 COCOAPODS: 1.5.3

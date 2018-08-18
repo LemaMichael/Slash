@@ -18,5 +18,7 @@ target 'Slash' do
     # Alamofire (Elegant HTTP Networking in Swift)
     pod 'Alamofire' 
     
-    
+    # GDAXSocketSwift
+    pod 'GDAXSocketSwift'
+    pod 'Starscream'
 end
