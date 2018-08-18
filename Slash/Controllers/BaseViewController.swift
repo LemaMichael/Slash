@@ -9,6 +9,7 @@
 import UIKit
 import UIKit
 import Alamofire
+import GDAXSocketSwift
 
 class BaseViewController: UIViewController {
     fileprivate let coinImage:[UIImage] = [#imageLiteral(resourceName: "BTC"),#imageLiteral(resourceName: "ETH"),#imageLiteral(resourceName: "LTC"),#imageLiteral(resourceName: "BCH"),#imageLiteral(resourceName: "ETC")]
@@ -24,7 +25,7 @@ class BaseViewController: UIViewController {
     fileprivate var products = [Product]()
     fileprivate var productID = [String]()
     
-    struct URL {
+    struct url {
         static let btcUSD = "BTC-USD"
         static let ethUSD = "ETH-USD"
         static let ltcUSD = "LTC-USD"
@@ -32,58 +33,35 @@ class BaseViewController: UIViewController {
         static let etcUSD = "ETC-USD"
     }
     let url = "https://api.pro.coinbase.com/products"
-
+    var socketClient: GDAXSocketClient = GDAXSocketClient()
     
+    let priceFormatter: NumberFormatter = NumberFormatter()
+    let timeFormatter: DateFormatter = DateFormatter()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !socketClient.isConnected {
+            socketClient.connect()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTickerConnection()
         setupStats()
-
-    }
-    
-    func setupTickerConnection() {
-        Alamofire.request(url + "products").responseJSON { (response) in
-            switch response.result {
-            case .success:
-                if let json = response.data {
-                    print("JSON: \(json)") // serialized json response
-                    do {
-                        self.products = try JSONDecoder().decode(Products.self, from: json )
-                        
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func setupStats() {
         
-      
+        socketClient.delegate = self
+        socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
+        socketClient.logger = GDAXSocketClientDefaultLogger()
+        
+        priceFormatter.numberStyle = .decimal
+        priceFormatter.maximumFractionDigits = 2
+        priceFormatter.minimumFractionDigits = 2
+        
+        timeFormatter.dateStyle = .short
+        timeFormatter.timeStyle = .medium
+        
     }
-    
-    func setupCurrencyConnection() {
-        Alamofire.request(url + "currencies").responseJSON { (response) in
-            switch response.result {
-            case .success:
-                if let json = response.data {
-                    print("JSON: \(json)") // serialized json response
-                    do {
-                        self.currencies = try JSONDecoder().decode(Currencies.self, from: json )
-                        // print(self.currencies)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
     
     
     func modifyCurriencies() {
@@ -97,4 +75,25 @@ class BaseViewController: UIViewController {
         }
     }
     
+}
+
+
+extension BaseViewController: GDAXSocketClientDelegate {
+    func gdaxSocketDidConnect(socket: GDAXSocketClient) {
+        socket.subscribe(channels:[.ticker], productIds:[.BTCUSD, .ETHUSD, .LTCUSD, .BCHUSD, .ETCUSD])
+    }
+    
+    func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?) {
+        print("Error!")
+    }
+    
+    func gdaxSocketClientOnErrorMessage(socket: GDAXSocketClient, error: GDAXErrorMessage) {
+        print(error.message)
+    }
+    
+    func gdaxSocketClientOnTicker(socket: GDAXSocketClient, ticker: GDAXTicker) {
+        let formattedPrice = priceFormatter.string(from: ticker.price as NSNumber) ?? "0.0000"
+        print("Price = " + formattedPrice)
+        print(ticker.productId.rawValue)
+    }
 }

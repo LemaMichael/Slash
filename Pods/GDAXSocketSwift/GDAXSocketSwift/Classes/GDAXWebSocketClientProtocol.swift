@@ -18,7 +18,7 @@ public protocol GDAXWebSocketClient: class {
     
     var baseURLString: String { get }
     
-    weak var delegate: GDAXWebSocketClientDelegate? { get set}
+    var delegate: GDAXWebSocketClientDelegate? { get set}
     
     func connect()
     func disconnect()
