@@ -1,0 +1,6 @@
+framework module GDAXKit {
+  umbrella header "GDAXKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -18,7 +18,10 @@ target 'Slash' do
     # Alamofire (Elegant HTTP Networking in Swift)
     pod 'Alamofire' 
     
-    # GDAXSocketSwift
+    # GDAXSocketSwift (Unofficial Swift implementation of GDAX Websocket API)
     pod 'GDAXSocketSwift'
     pod 'Starscream'
+    
+    # GDAXKit (Client Library for GDAX.com's API)
+    pod 'GDAXKit'
 end
