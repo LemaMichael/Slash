@@ -95,6 +95,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
         socketClient.logger = GDAXSocketClientDefaultLogger()
@@ -113,8 +114,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         settingsButton.anchor(top: view.topAnchor, bottom: nil, left: nil, right: view.rightAnchor, paddingTop: 40, paddingBottom: 0, paddingLeft: 0, paddingRight: 10, width: 25, height: 25)
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
         
+        updateTimer()
+
+        
     }
 
+    func setup() {
+        if let interval = defaults.object(forKey: UserDefaults.interval.rawValue) as? TimeInterval {
+            self.interval = interval
+        } else {
+            self.interval = TimeInterval(5)  // Default is 5 seconds
+            defaults.set(self.interval, forKey: UserDefaults.interval.rawValue)
+        }
+    }
 
     
     func updateTimer() {
@@ -123,10 +135,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 timer.invalidate()
             }
         }
-        
-       // timer = Timer(timeInterval: interval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(timeInterval: self.interval, target: self, selector: #selector(self.updateCells), userInfo: nil, repeats: true)
+        }
+
     }
 
+    @objc func updateCells() {
+        print("updateCells")
+        self.collectionView.reloadData()
+    }
     
     
     func updateInterval(_ interval: TimeInterval) {
@@ -170,9 +188,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
 
-
 }
-
 
 
 extension HomeViewController: GDAXSocketClientDelegate {
@@ -227,5 +243,10 @@ extension HomeViewController: GDAXSocketClientDelegate {
         //        for item in coins {
         //            print(item.id)
         //        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer.invalidate()
     }
 }
