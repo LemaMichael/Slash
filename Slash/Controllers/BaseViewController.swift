@@ -19,25 +19,15 @@ class BaseViewController: UIViewController {
                                          UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
-    //fileprivate let currencies  = ["BTC-USD", "ETH-USD", "LTC-USD", "BCH-USD", "ETC-USD"]
-    fileprivate var currencies = [Currency]()
-    fileprivate var stats = [Stats]()
-    fileprivate var products = [Product]()
-    fileprivate var productID = [String]()
     
-    struct url {
-        static let btcUSD = "BTC-USD"
-        static let ethUSD = "ETH-USD"
-        static let ltcUSD = "LTC-USD"
-        static let bchUSD = "BCH-USD"
-        static let etcUSD = "ETC-USD"
-    }
+   var coins = [CoinDetail]()
+    
+    
     let url = "https://api.pro.coinbase.com/products"
     var socketClient: GDAXSocketClient = GDAXSocketClient()
     
     let priceFormatter: NumberFormatter = NumberFormatter()
     let timeFormatter: DateFormatter = DateFormatter()
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,7 +37,6 @@ class BaseViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
         socketClient.logger = GDAXSocketClientDefaultLogger()
@@ -62,16 +51,16 @@ class BaseViewController: UIViewController {
     }
     
     
-    func modifyCurriencies() {
-        for var item in self.currencies {
-            //:Default will return Ether as the name of the currency
-            if (item.name.range(of: "Ether") != nil) {
-                item.name = item.name.replacingOccurrences(of: "Ether", with: "Ethereum")
-            }
-            print(item.name)
-            print(item.id)
-        }
-    }
+    //    func modifyCurriencies() {
+    //        for var item in self.currencies {
+    //            //:Default will return Ether as the name of the currency
+    //            if (item.name.range(of: "Ether") != nil) {
+    //                item.name = item.name.replacingOccurrences(of: "Ether", with: "Ethereum")
+    //            }
+    //            print(item.name)
+    //            print(item.id)
+    //        }
+    //    }
     
 }
 
@@ -82,7 +71,10 @@ extension BaseViewController: GDAXSocketClientDelegate {
     }
     
     func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?) {
-        print("Error!")
+        let alertController = UIAlertController(title: "No Connection", message: "Please connect to Wifi", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     func gdaxSocketClientOnErrorMessage(socket: GDAXSocketClient, error: GDAXErrorMessage) {
@@ -93,5 +85,35 @@ extension BaseViewController: GDAXSocketClientDelegate {
         let formattedPrice = priceFormatter.string(from: ticker.price as NSNumber) ?? "0.0000"
         print("Price = " + formattedPrice)
         print(ticker.productId.rawValue)
+        
+        let coin = CoinDetail()
+        coin.id = ticker.productId.rawValue
+        coin.name = coin.id
+        coin.currentPrice = formattedPrice
+        coin.high = String(ticker.high24h)
+        coin.low = String(ticker.low24h)
+        coin.volume = String(ticker.volume24h)
+        coin.thirtyDayVolume = String(ticker.volume30d)
+        
+        if (coins.isEmpty  || coins.count < 5) {
+            coins.append(coin)
+        }
+        for item in coins {
+            if item.id == coin.id {
+                print("Item: \(item.id) is being modified")
+                item.currentPrice = formattedPrice
+                item.high = String(ticker.high24h)
+                item.low = String(ticker.low24h)
+                item.volume = String(ticker.volume24h)
+                item.thirtyDayVolume = String(ticker.volume30d)
+            }
+        }
+        
+        
+        
+//        print("Currently i have: \(coins.count) items. The items are:")
+//        for item in coins {
+//            print(item.id)
+//        }
     }
 }

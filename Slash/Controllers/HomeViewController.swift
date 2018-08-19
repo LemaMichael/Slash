@@ -11,7 +11,17 @@ import UIKit
 import Alamofire
 import GDAXSocketSwift
 
-class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    var coins: [CoinDetail] = [CoinDetail]() {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
+    var socketClient: GDAXSocketClient = GDAXSocketClient()
+    
+    let priceFormatter: NumberFormatter = NumberFormatter()
+    let timeFormatter: DateFormatter = DateFormatter()
     
     
     static let coinCellId = "cellId"
@@ -84,14 +94,27 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        socketClient.delegate = self
+        socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
+        socketClient.logger = GDAXSocketClientDefaultLogger()
+        
+        priceFormatter.numberStyle = .decimal
+        priceFormatter.maximumFractionDigits = 2
+        priceFormatter.minimumFractionDigits = 2
+        
+        timeFormatter.dateStyle = .short
+        timeFormatter.timeStyle = .medium
+        
         view.backgroundColor = UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0)
         self.view.addSubview(collectionView)
         self.view.addSubview(settingsButton)
         
         settingsButton.anchor(top: view.topAnchor, bottom: nil, left: nil, right: view.rightAnchor, paddingTop: 40, paddingBottom: 0, paddingLeft: 0, paddingRight: 10, width: 25, height: 25)
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
+        
     }
-    
+
 
     
     func updateTimer() {
@@ -118,11 +141,15 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
 
     //: MARK: CollectionView methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        print("numberOfItemsInSection called")
+        return self.coins.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.coinCellId, for: indexPath) as! CoinCell
+        if !coins.isEmpty{
+            cell.update(coins[indexPath.item])
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -135,6 +162,70 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         let diff = (width-cellWidth) / 2
         return UIEdgeInsets(top: 0, left: diff, bottom: 0, right: diff)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !socketClient.isConnected {
+            socketClient.connect()
+        }
+    }
 
 
+}
+
+
+
+extension HomeViewController: GDAXSocketClientDelegate {
+    func gdaxSocketDidConnect(socket: GDAXSocketClient) {
+        socket.subscribe(channels:[.ticker], productIds:[.BTCUSD, .ETHUSD, .LTCUSD, .BCHUSD, .ETCUSD])
+    }
+    
+    func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?) {
+        let alertController = UIAlertController(title: "No Connection", message: "Please connect to Wifi", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func gdaxSocketClientOnErrorMessage(socket: GDAXSocketClient, error: GDAXErrorMessage) {
+        print(error.message)
+    }
+    
+    func gdaxSocketClientOnTicker(socket: GDAXSocketClient, ticker: GDAXTicker) {
+        let formattedPrice = priceFormatter.string(from: ticker.price as NSNumber) ?? "0.0000"
+        print("Price = " + formattedPrice)
+        print(ticker.productId.rawValue)
+        
+        let coin = CoinDetail()
+        coin.id = ticker.productId.rawValue
+        coin.name = coin.id
+        coin.currentPrice = formattedPrice
+        coin.open = String(ticker.open24h)
+        coin.high = String(ticker.high24h)
+        coin.low = String(ticker.low24h)
+        coin.volume = String(ticker.volume24h)
+        coin.thirtyDayVolume = String(ticker.volume30d)
+        
+        if (coins.isEmpty  || coins.count < 5) {
+            coins.append(coin)
+        }
+        for item in coins {
+            if item.id == coin.id {
+                print("Item: \(item.id) is being modified")
+                item.currentPrice = formattedPrice
+                coin.open = String(ticker.open24h)
+                item.high = String(ticker.high24h)
+                item.low = String(ticker.low24h)
+                item.volume = String(ticker.volume24h)
+                item.thirtyDayVolume = String(ticker.volume30d)
+            }
+        }
+        
+        
+        
+        //        print("Currently i have: \(coins.count) items. The items are:")
+        //        for item in coins {
+        //            print(item.id)
+        //        }
+    }
 }

@@ -14,7 +14,27 @@ class CoinDetail: NSObject {
     var id, name: String! //BTC, Bitcoin
     
     //: Get 24 hour stats, GET /products/<product-id>/stats
-    var currentPrice, high, low, volume, thirtyDayVolume, time: String!
+    var currentPrice, open, high, low, volume, thirtyDayVolume: String!
+    let zero = 0.0
+    
+    func difference () -> Double {
+        guard let price = self.currentPrice else { return zero }
+        guard let doublePrice = Double(price) else { return zero }
+        guard let open = self.open else { return zero }
+        guard let openDouble = Double(open) else { return zero }
+        let diff = doublePrice - openDouble
+        return diff
+    }
+    func percent() -> Double {
+        guard let price = self.currentPrice else { return zero }
+        guard let doublePrice = Double(price) else { return zero }
+        guard let open = self.open else { return zero }
+        guard let openDouble = Double(open) else { return zero }
+        
+        let percent = ((1/(openDouble / doublePrice)) - 1) * 100
+        return percent
+    }
+    
 }
 
 /* Ticker Example
