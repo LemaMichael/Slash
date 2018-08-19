@@ -44,8 +44,9 @@ class CoinCell: UICollectionViewCell {
                 return
             }
             if let currencyPair = coin.id {
-                self.coinLabel.text = currencyPair
+                self.coinLabel.text = coin.officialName()
             }
+            self.coinImageView.image = UIImage(named: coin.imageName())?.withRenderingMode(.alwaysTemplate)
             
             let percentString = "\(CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: coin.percent()))!)%"
             
@@ -77,6 +78,7 @@ class CoinCell: UICollectionViewCell {
     let coinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .lightGray
         return imageView
     }()
     

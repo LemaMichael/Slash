@@ -35,6 +35,37 @@ class CoinDetail: NSObject {
         return percent
     }
     
+    func imageName() -> String {
+        //:AWESOME
+        let start = name.startIndex
+        let end = name.index(start, offsetBy: 3)
+        let range = start..<end
+        return String(name[range])
+    }
+    
+    func officialName() -> String{
+        let start = name.startIndex
+        let end = name.index(start, offsetBy: 3)
+        let range = start..<end
+        
+        let id = String(name[range])
+        switch id {
+        case "BTC":
+            return "Bitcoin"
+        case "ETH":
+            return "Ethereum"
+        case "LTC":
+            return "Litecoin"
+        case "BCH":
+            return "Bitcoin Cash"
+        case "ETC":
+            return "Ethereum Classic"
+        default:
+            return "..."
+        }
+    }
+    
+    
 }
 
 /* Ticker Example
