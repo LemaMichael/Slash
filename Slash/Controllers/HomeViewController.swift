@@ -10,12 +10,17 @@ import Foundation
 import UIKit
 import Alamofire
 import GDAXSocketSwift
+import GDAXKit
+import Charts
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var coins: [CoinDetail] = [CoinDetail]() {
         didSet {
             self.collectionView.reloadData()
+            if coins.count >= 5 {
+                getHistoricData()
+            }
         }
     }
     var socketClient: GDAXSocketClient = GDAXSocketClient()
@@ -24,8 +29,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let timeFormatter: DateFormatter = DateFormatter()
     
     
+    var values = [ChartDataEntry]()
+    
     static let coinCellId = "cellId"
-
+    
     var interval: TimeInterval!
     var timer: Timer!
     var firstPrice = ""
@@ -115,10 +122,48 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
         
         updateTimer()
-
+        
         
     }
-
+    
+    func getHistoricData() {
+        // Initialize a client
+        let client = MarketClient()
+        
+        // Call one of the public endpoint methods
+        client.products { products, result in
+            switch result {
+            case .success(_):
+                // Do stuff with the provided products
+                for item in products {
+                    print(item.id,item.baseCurrency,item.quoteCurrency,  item.baseMinSize, item.baseMaxSize, item.quoteIncrement, item.displayName, item.status, item.marginEnabled, item.statusMessage ?? "\n")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        
+        //: Get historic data
+        let pid = "BTC-USD"
+        let range = DateRange.oneDay
+        let granularity = Granularity.fiveMinutes
+        client.historic(pid:pid, range:range, granularity:granularity) { candles, result in
+            switch result {
+            case .success(_):
+                //: Each candle has a time, low, high. open, close, volume
+                for item in candles {
+                    print(item.time, item.open, item.close, item.high, item.low)
+                    let xVal = Double(item.time.timeIntervalSince1970)
+                    let yVal = item.close
+                    self.values.append(ChartDataEntry(x: xVal, y: yVal))
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func setup() {
         if let interval = defaults.object(forKey: UserDefaults.interval.rawValue) as? TimeInterval {
             self.interval = interval
@@ -127,7 +172,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             defaults.set(self.interval, forKey: UserDefaults.interval.rawValue)
         }
     }
-
+    
     
     func updateTimer() {
         if timer != nil {
@@ -138,9 +183,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: self.interval, target: self, selector: #selector(self.updateCells), userInfo: nil, repeats: true)
         }
-
+        
     }
-
+    
     @objc func updateCells() {
         print("updateCells")
         self.collectionView.reloadData()
@@ -156,17 +201,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         updateTimer()
     }
     
-
+    
     //: MARK: CollectionView methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("numberOfItemsInSection called")
         return self.coins.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.coinCellId, for: indexPath) as! CoinCell
         if !coins.isEmpty{
             cell.update(coins[indexPath.item])
+            //cell.setChartData(reference: ReferenceType.month, values: values)
+            print("The current count is: \(values.count)")
+            cell.chartView.setData(values: values)
         }
         return cell
     }
@@ -187,7 +235,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             socketClient.connect()
         }
     }
-
+    
 }
 
 
