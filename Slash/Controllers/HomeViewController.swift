@@ -218,7 +218,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.update(coins[indexPath.item])
             //cell.setChartData(reference: ReferenceType.month, values: values)
             print("The current count is: \(values.count)")
-            cell.setChartData(values: values)
+            //: MAKE SURE TO DO THIS, or else charts will not display!
+            let result = self.values.reversed() as [ChartDataEntry]
+            cell.setChartData(values: result)
             
         }
         return cell
