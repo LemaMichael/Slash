@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import LinearProgressBar
 import Charts
 
 class CoinCell: UICollectionViewCell {
@@ -112,15 +111,19 @@ class CoinCell: UICollectionViewCell {
     }()
     
     //: https://github.com/gordoneliel/LinearProgressBar
-    lazy var progressBar: LinearProgressBar = {
-        let pB = LinearProgressBar()
-        pB.backgroundColor = .clear
-        pB.barColor = .orange
-        pB.trackColor = .lightGray
-        //pB.barThickness = CGFloat(5)
-        pB.progressValue = CGFloat(66)
-        pB.trackPadding = 25
-        return pB
+    lazy var progressView: UIProgressView = {
+        let pV = UIProgressView()
+        pV.progress = Float(0.00)
+        pV.progressTintColor = .orange
+        pV.trackTintColor = .lightGray
+        //: For the track view to be round
+        pV.layer.masksToBounds = true
+        pV.layer.cornerRadius = 2.5
+        
+        //: For the progress view to be round
+        pV.layer.sublayers![1].cornerRadius = 2.5
+        pV.subviews[1].clipsToBounds = true
+        return pV
     }()
     let percentageLabel: UILabel = {
         let label = UILabel()
@@ -141,6 +144,18 @@ class CoinCell: UICollectionViewCell {
         cv.isUserInteractionEnabled = false
         return cv
     }()
+    
+    
+    func setupProgressBarAnimation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.progressView.layoutIfNeeded()
+            self.progressView.setProgress(0.66, animated: true)
+            self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
+        }
+        
+    }
+    
+    
     
     //: Add this back if you want tp display the hours at the bottom
     func setxAxis() {
@@ -225,23 +240,24 @@ class CoinCell: UICollectionViewCell {
         addSubview(coinPrice)
         addSubview(coinPercentage)
         addSubview(coinLabel)
-        addSubview(progressBar)
+        addSubview(progressView)
         addSubview(percentageLabel)
         addSubview(chartView)
         
+        setupProgressBarAnimation()
         setxAxis()
         setLeftAxis()
         setRightAxis()
         
-        percentageLabel.text =  String(format: "%.0f%%", progressBar.progressValue)
+        percentageLabel.text = String(format: "%.0f%%", progressView.progress * 100)
         
         coinImageView.anchor(top: self.topAnchor, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 12, paddingRight: 0, width: 47, height: 47)
         coinPrice.anchor(top: self.topAnchor, bottom: chartView.topAnchor, left: self.coinImageView.rightAnchor, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 2, paddingRight: 0, width: 125, height: 0)
         coinPercentage.anchor(top: self.topAnchor, bottom: chartView.topAnchor, left: self.coinPrice.rightAnchor, right: nil, paddingTop: 20, paddingBottom: 0, paddingLeft: -5, paddingRight: 18, width: 75, height: 0)
         
         coinLabel.anchor(top: nil, bottom: self.bottomAnchor, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: -25, paddingLeft: 18, paddingRight: 0, width: 243, height: 70)
-        progressBar.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 40, width: 0, height: 6)
-        percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressBar.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
+        progressView.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 40, width: 0, height: 6)
+        percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressView.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
         
         chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         

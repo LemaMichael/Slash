@@ -148,7 +148,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXKit/GDAXKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXSocketSwift/GDAXSocketSwift.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/LinearProgressBar/LinearProgressBar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -157,7 +156,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXKit/GDAXKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXSocketSwift/GDAXSocketSwift.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/LinearProgressBar/LinearProgressBar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

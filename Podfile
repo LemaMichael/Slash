@@ -7,10 +7,6 @@ target 'Slash' do
     
     # Pods for Slash
     
-    #LinearProgressBar (Simple progress bar for iOS)
-    # https://github.com/gordoneliel/LinearProgressBar
-    pod "LinearProgressBar"
-    
     # Charts (Beautiful charts for iOS/tvOS/OSX)
     # https://github.com/danielgindi/Charts
     pod 'Charts'

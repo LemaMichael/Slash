@@ -276,20 +276,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.coinCellId, for: indexPath) as! CoinCell
         if !coins.isEmpty{
             cell.update(coins[indexPath.item])
+            //: MAKE SURE TO DO THIS, or else charts will not display!
+            //let result = self.values.reversed() as [ChartDataEntry]
             let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
             //cell.chartView.backgroundColor = colors[indexPath.item]
-            
             cell.setChartData(values: result, lineColor: colors[indexPath.item])
-            //: MAKE SURE TO DO THIS, or else charts will not display!
-//            let result = self.values.reversed() as [ChartDataEntry]
-//            cell.setChartData(values: result)
-            
-//            if indexPath.item < historyArray.count {
-//                print("Current index is \(indexPath.item) which is \(historyArray[indexPath.item])")
-//                let data = historyArray[indexPath.item]
-//                let result = data.reversed() as [ChartDataEntry]
-//                cell.setChartData(values: result)
-//            }
         }
         return cell
     }
@@ -303,7 +294,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let diff = (width-cellWidth) / 2
         return UIEdgeInsets(top: 0, left: diff, bottom: 0, right: diff)
     }
-    
+
+    //: MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !socketClient.isConnected {
