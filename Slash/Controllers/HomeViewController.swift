@@ -14,6 +14,11 @@ import GDAXKit
 import Charts
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    fileprivate let colors: [UIColor] = [UIColor(red:0.91, green:0.73, blue:0.08, alpha:1.0),
+                                         UIColor(red:0.21, green:0.27, blue:0.31, alpha:1.0),
+                                         UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
+                                         UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
+                                         UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
     
     var coins: [CoinDetail] = [CoinDetail]() {
         didSet {
@@ -273,7 +278,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if !coins.isEmpty{
             cell.update(coins[indexPath.item])
             let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
-            cell.setChartData(values: result)
+            //cell.chartView.backgroundColor = colors[indexPath.item]
+            
+            cell.setChartData(values: result, lineColor: colors[indexPath.item])
             //: MAKE SURE TO DO THIS, or else charts will not display!
 //            let result = self.values.reversed() as [ChartDataEntry]
 //            cell.setChartData(values: result)

@@ -142,6 +142,7 @@ class CoinCell: UICollectionViewCell {
         return cv
     }()
     
+    //: Add this back if you want tp display the hours at the bottom
     func setxAxis() {
         let xAxis = chartView.xAxis
 //        xAxis.labelPosition = .bottom
@@ -155,11 +156,13 @@ class CoinCell: UICollectionViewCell {
         xAxis.enabled = false //: CHANGE
     }
     
+    
+    //: Add this back if you want to display the coin price on the left side of the chart
     func setLeftAxis() {
         //This displays the price at the left of the chart
         self.chartView.leftAxis.enabled = true
         self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
-            return Float(value).toCurrencyString(fractionDigits: 0)
+            return Float(value).toCurrencyString(fractionDigits: 2)
         })
         //self.chartView.leftAxis.enabled = false
         
@@ -168,10 +171,10 @@ class CoinCell: UICollectionViewCell {
         self.chartView.rightAxis.enabled = false
     }
     
-    func setChartData(values: [ChartDataEntry]) {
+    func setChartData(values: [ChartDataEntry], lineColor: UIColor) {
         
         
-        let line = self.line(values: values)
+        let line = self.line(values: values, lineColor: lineColor)
         
         let data = LineChartData()
         data.addDataSet(line)
@@ -179,18 +182,24 @@ class CoinCell: UICollectionViewCell {
         
     }
     
-    private func line(values: [ChartDataEntry]) -> LineChartDataSet {
+    private func line(values: [ChartDataEntry], lineColor: UIColor) -> LineChartDataSet {
         //: 1. color
         let set1 = LineChartDataSet(values: values, label: nil)
         // set1.axisDependency = .left
-        set1.setColor(UIColor.red)
-        set1.setCircleColor(.red)
+        //set1.setColor(lineColor)
+        set1.setColor(lineColor, alpha: 0.50)
+        set1.setCircleColor(lineColor)
         set1.lineWidth = 2
         set1.drawCirclesEnabled = false
         set1.drawValuesEnabled = false
-        //set1.fillAlpha = 0.26
-        // set1.fillColor = UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1)
-        // set1.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
+        //: FIXME: Find some colors to mix with.
+        let gradientColors = [lineColor.cgColor,
+                              lineColor.cgColor]
+        let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+        
+        set1.fillAlpha = 0.35
+        set1.fill = Fill(linearGradient: gradient, angle: 0)
+        set1.drawFilledEnabled = true
         set1.drawCircleHoleEnabled = false
         
         for item in values {
