@@ -68,7 +68,7 @@ class CoinCell: UICollectionViewCell {
     
     func updateOffline() {
         DispatchQueue.main.async {
-           // self.coinPrice.text = "Sorry, can't connect"
+            // self.coinPrice.text = "Sorry, can't connect"
             self.coinPercentage.text = "Sorry, can't connect."
             self.coinPercentage.textColor = self.red
         }
@@ -130,18 +130,82 @@ class CoinCell: UICollectionViewCell {
     }()
     
     //: FIXME: Do chart view
-    var chartView = ChartView()
-    func setChartData(reference: ReferenceType, values: [ChartDataEntry]) {
-        //self.referenceLabel.text = reference.rawValue.localized
-        chartView.setData(values: values)
+    lazy var chartView: LineChartView = {
+        let cv = LineChartView()
+        cv.chartDescription?.text = ""
+        cv.backgroundColor = .white
+        cv.legend.enabled = false //: Remove dataSet label
+        return cv
+    }()
+    
+    func setxAxis() {
+        let xAxis = chartView.xAxis
+        xAxis.labelPosition = .bottom
+        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
+        xAxis.labelTextColor = UIColor.red
+        xAxis.drawAxisLineEnabled = false //: The bottom axis isn't needed
+        xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
+        xAxis.centerAxisLabelsEnabled = true
+        xAxis.granularity = 3600 // 60*60 one hour
+        xAxis.valueFormatter = DateValueFormatter()
+        //xAxis.enabled = false //: CHANGE
     }
+    
+    func setLeftAxis() {
+        self.chartView.leftAxis.enabled = true
+        self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
+            return Float(value).toCurrencyString(fractionDigits: 0)
+        })
+        
+    }
+    func setRightAxis() {
+        self.chartView.rightAxis.enabled = false
+    }
+    
+    func setChartData(values: [ChartDataEntry]) {
+        
+        
+        let line = self.line(values: values)
+        
+        let data = LineChartData()
+        data.addDataSet(line)
+        self.chartView.data = data
+        
+    }
+    
+    private func line(values: [ChartDataEntry]) -> LineChartDataSet {
+        //: 1. color
+        let set1 = LineChartDataSet(values: values, label: nil)
+        // set1.axisDependency = .left
+        set1.setColor(UIColor.red)
+        set1.setCircleColor(.red)
+        set1.lineWidth = 2
+        set1.drawCirclesEnabled = false
+        set1.drawValuesEnabled = false
+        //set1.fillAlpha = 0.26
+        // set1.fillColor = UIColor(red: 51/255, green: 181/255, blue: 229/255, alpha: 1)
+        // set1.highlightColor = UIColor(red: 244/255, green: 117/255, blue: 117/255, alpha: 1)
+        set1.drawCircleHoleEnabled = false
+        
+        for item in values {
+            print("i am here: \(item)")
+        }
+        //        let data = LineChartData(dataSet: set1)
+        //        data.setValueTextColor(.white)
+        //        data.setValueFont(.systemFont(ofSize: 9, weight: .light))
+        //        chartView.data = data
+        //        data.setValueTextColor(.white)
+        //        data.setValueFont(.systemFont(ofSize: 9, weight: .light))
+        
+        return set1
+    }
+    
     
     func setupCell() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         self.backgroundColor = .white
-        chartView.backgroundColor = .lightGray
         addSubview(coinImageView)
         addSubview(coinPrice)
         addSubview(coinPercentage)
@@ -149,6 +213,10 @@ class CoinCell: UICollectionViewCell {
         addSubview(progressBar)
         addSubview(percentageLabel)
         addSubview(chartView)
+        
+        setxAxis()
+        setLeftAxis()
+        setRightAxis()
         
         percentageLabel.text =  String(format: "%.0f%%", progressBar.progressValue)
         
@@ -163,13 +231,29 @@ class CoinCell: UICollectionViewCell {
         chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
         
         
-//        //: Setting up coin
-//        guard let coin = coin else { return }
-//        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-//        coinImageView.image = UIImage(named: coin.id)
-//        coinPrice.text = coin.currentPrice
-//        coinPercentage.text = coin.currentPrice
-//        coinLabel.text = coin.name
-
+        //        //: Setting up coin
+        //        guard let coin = coin else { return }
+        //        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        //        coinImageView.image = UIImage(named: coin.id)
+        //        coinPrice.text = coin.currentPrice
+        //        coinPercentage.text = coin.currentPrice
+        //        coinLabel.text = coin.name
+        
     }
 }
+
+
+public class DateValueFormatter: NSObject, IAxisValueFormatter {
+    private let dateFormatter = DateFormatter()
+    
+    override init() {
+        super.init()
+        //dateFormatter.dateFormat = "dd MMM HH:mm"
+        dateFormatter.dateFormat = "HH"
+    }
+    
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
+    }
+}
+

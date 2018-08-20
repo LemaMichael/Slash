@@ -147,7 +147,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //: Get historic data
         let pid = "BTC-USD"
         let range = DateRange.oneDay
-        let granularity = Granularity.fiveMinutes
+        let granularity = Granularity.oneHour
         client.historic(pid:pid, range:range, granularity:granularity) { candles, result in
             switch result {
             case .success(_):
@@ -155,8 +155,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 for item in candles {
                     print(item.time, item.open, item.close, item.high, item.low)
                     let xVal = Double(item.time.timeIntervalSince1970)
+                    print(xVal)
                     let yVal = item.close
-                    self.values.append(ChartDataEntry(x: xVal, y: yVal))
+                    if self.values.count < 24 {
+                        print(":\(self.values.count)")
+                        self.values.append(ChartDataEntry(x: xVal, y: yVal))
+                    }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -214,7 +218,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.update(coins[indexPath.item])
             //cell.setChartData(reference: ReferenceType.month, values: values)
             print("The current count is: \(values.count)")
-            cell.chartView.setData(values: values)
+            cell.setChartData(values: values)
+            
         }
         return cell
     }
