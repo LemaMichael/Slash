@@ -37,10 +37,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // Initialize a client
     let client = MarketClient()
     
-    //var values = [ChartDataEntry]()
-    //var historyArray = [[ChartDataEntry]]()
-    //var coinID = ["BTC-USD", "ETH-USD", "LTC-USD", "BCH-USD", "ETC-USD"]
-    
     static let coinCellId = "cellId"
     
     var interval: TimeInterval!
@@ -281,6 +277,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
             //cell.chartView.backgroundColor = colors[indexPath.item]
             cell.setChartData(values: result, lineColor: colors[indexPath.item])
+            cell.coinImageView.tintColor = colors[indexPath.item]
         }
         return cell
     }

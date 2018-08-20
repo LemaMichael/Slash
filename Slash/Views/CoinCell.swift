@@ -101,7 +101,6 @@ class CoinCell: UICollectionViewCell {
         return label
     }()
     
-    
     let coinLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
@@ -110,7 +109,18 @@ class CoinCell: UICollectionViewCell {
         return label
     }()
     
-    //: https://github.com/gordoneliel/LinearProgressBar
+    let intervalButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("24h", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 10)
+        button.titleLabel?.textColor = .white
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.backgroundColor = UIColor(red:0.85, green:0.88, blue:0.91, alpha:1.0) //: Light gray color
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 8
+        return button
+    }()
+    
     lazy var progressView: UIProgressView = {
         let pV = UIProgressView()
         pV.progress = Float(0.00)
@@ -155,18 +165,17 @@ class CoinCell: UICollectionViewCell {
     }
     
     
-    
     //: Add this back if you want tp display the hours at the bottom
     func setxAxis() {
         let xAxis = chartView.xAxis
-//        xAxis.labelPosition = .bottom
-//        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
-//        xAxis.labelTextColor = UIColor.red
-//        xAxis.drawAxisLineEnabled = false //: The bottom axis isn't needed
-//        xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
-//        xAxis.centerAxisLabelsEnabled = true
-//        xAxis.granularity = 3600 // 60*60 one hour
-//        xAxis.valueFormatter = DateValueFormatter()
+        //        xAxis.labelPosition = .bottom
+        //        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
+        //        xAxis.labelTextColor = UIColor.red
+        //        xAxis.drawAxisLineEnabled = false //: The bottom axis isn't needed
+        //        xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
+        //        xAxis.centerAxisLabelsEnabled = true
+        //        xAxis.granularity = 3600 // 60*60 one hour
+        //        xAxis.valueFormatter = DateValueFormatter()
         xAxis.enabled = false //: CHANGE
     }
     
@@ -175,10 +184,10 @@ class CoinCell: UICollectionViewCell {
     func setLeftAxis() {
         //This displays the price at the left of the chart
         /*
-        self.chartView.leftAxis.enabled = true
-        self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
-            return Float(value).toCurrencyString(fractionDigits: 2)
-        }) */
+         self.chartView.leftAxis.enabled = true
+         self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
+         return Float(value).toCurrencyString(fractionDigits: 2)
+         }) */
         self.chartView.leftAxis.enabled = false
         
     }
@@ -239,6 +248,7 @@ class CoinCell: UICollectionViewCell {
         addSubview(coinPrice)
         addSubview(coinPercentage)
         addSubview(coinLabel)
+        addSubview(intervalButton)
         addSubview(progressView)
         addSubview(percentageLabel)
         addSubview(chartView)
@@ -259,6 +269,8 @@ class CoinCell: UICollectionViewCell {
         percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressView.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
         
         chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
+        intervalButton.anchor(top: self.chartView.bottomAnchor, bottom: nil, left: nil, right: self.rightAnchor, paddingTop: 15, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 25, height: 21)
+
         
         
         //        //: Setting up coin
