@@ -29,7 +29,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let timeFormatter: DateFormatter = DateFormatter()
     
     
-    var values = [ChartDataEntry]()
+    // Initialize a client
+    let client = MarketClient()
+    
+    //var values = [ChartDataEntry]()
+    //var historyArray = [[ChartDataEntry]]()
+    //var coinID = ["BTC-USD", "ETH-USD", "LTC-USD", "BCH-USD", "ETC-USD"]
     
     static let coinCellId = "cellId"
     
@@ -127,8 +132,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func getHistoricData() {
-        // Initialize a client
-        let client = MarketClient()
         
         // Call one of the public endpoint methods
         client.products { products, result in
@@ -145,28 +148,81 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         
         //: Get historic data
-        let pid = "BTC-USD"
-        let range = DateRange.oneDay
-        let granularity = Granularity.oneHour
-        client.historic(pid:pid, range:range, granularity:granularity) { candles, result in
-            switch result {
-            case .success(_):
-                //: Each candle has a time, low, high. open, close, volume
-                for item in candles {
-                    print(item.time, item.open, item.close, item.high, item.low)
-                    let xVal = Double(item.time.timeIntervalSince1970)
-                    print(xVal)
-                    let yVal = item.close
-                    if self.values.count < 24 {
-                        print(":\(self.values.count)")
-                        self.values.append(ChartDataEntry(x: xVal, y: yVal))
+        //let pid = "BTC-USD"
+        print("WE HAVE \(coins.count) itemss")
+        for coin in coins {
+            let range = DateRange.oneDay
+            let granularity = Granularity.oneHour
+            client.historic(pid:coin.id, range:range, granularity:granularity) { candles, result in
+                switch result {
+                case .success(_):
+                    //: Each candle has a time, low, high. open, close, volume
+                    for item in candles {
+                        print(item.time, item.open, item.close, item.high, item.low)
+                        let xVal = Double(item.time.timeIntervalSince1970)
+                        print(xVal)
+                        let yVal = item.close
+                        //: FIXME: This is not a good way check
+                        if coin.chartDataEntry.count < 24 {
+                            print(":\(coin.chartDataEntry.count)")
+                            coin.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
+                        }
                     }
+                    print("We are now appending: pid \(coin.id)")
+    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    //: One of the reasons we are here because we are making too much requests at a time
+                    print("The current pid was not added \(coin.id)")
+                    self.requestAgain(coin)
+
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
             }
         }
     }
+    
+    func requestAgain(_ coin: CoinDetail) {
+      
+        let deadlineTime = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
+            print("I am in request again")
+            let range = DateRange.oneDay
+            let granularity = Granularity.oneHour
+            let correctIndex = self.coins.index(of: coin) //: Finds the index of coin in the array coins
+            guard let index = correctIndex else {return }
+            let coin = self.coins[index]
+            self.client.historic(pid: coin.id, range:range, granularity:granularity) { candles, result in
+                switch result {
+                case .success(_):
+                    //: Each candle has a time, low, high. open, close, volume
+                    for item in candles {
+                        print(item.time, item.open, item.close, item.high, item.low)
+                        let xVal = Double(item.time.timeIntervalSince1970)
+                        print(xVal)
+                        let yVal = item.close
+                        //: FIXME: This is not a good way check
+                        if coin.chartDataEntry.count < 24 {
+                            coin.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
+                        }
+                    }
+                    print("Was able to add: pid \(coin.id)")
+                    //: Hmmm
+                   // self.collectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    //: One of the reasons we are here because we are making too much requests at a time
+                    print("The current pid was not added2 \(coin.id)")
+                    self.requestAgain(coin)
+                    
+                }
+            }
+        })
+    }
+    
+    
+    
+    
+    
     
     func setup() {
         if let interval = defaults.object(forKey: UserDefaults.interval.rawValue) as? TimeInterval {
@@ -216,12 +272,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.coinCellId, for: indexPath) as! CoinCell
         if !coins.isEmpty{
             cell.update(coins[indexPath.item])
-            //cell.setChartData(reference: ReferenceType.month, values: values)
-            print("The current count is: \(values.count)")
-            //: MAKE SURE TO DO THIS, or else charts will not display!
-            let result = self.values.reversed() as [ChartDataEntry]
+            let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
             cell.setChartData(values: result)
+            //: MAKE SURE TO DO THIS, or else charts will not display!
+//            let result = self.values.reversed() as [ChartDataEntry]
+//            cell.setChartData(values: result)
             
+//            if indexPath.item < historyArray.count {
+//                print("Current index is \(indexPath.item) which is \(historyArray[indexPath.item])")
+//                let data = historyArray[indexPath.item]
+//                let result = data.reversed() as [ChartDataEntry]
+//                cell.setChartData(values: result)
+//            }
         }
         return cell
     }

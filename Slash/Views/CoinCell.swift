@@ -156,12 +156,12 @@ class CoinCell: UICollectionViewCell {
     }
     
     func setLeftAxis() {
-        /* This displays the price at the left of the chart
+        //This displays the price at the left of the chart
         self.chartView.leftAxis.enabled = true
         self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
             return Float(value).toCurrencyString(fractionDigits: 0)
-        })*/
-        self.chartView.leftAxis.enabled = false
+        })
+        //self.chartView.leftAxis.enabled = false
         
     }
     func setRightAxis() {

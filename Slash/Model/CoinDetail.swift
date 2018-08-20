@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Charts
 
 
 class CoinDetail: NSObject {
@@ -15,6 +16,10 @@ class CoinDetail: NSObject {
     
     //: Get 24 hour stats, GET /products/<product-id>/stats
     var currentPrice, open, high, low, volume, thirtyDayVolume: String!
+    
+    var chartDataEntry = [ChartDataEntry]()
+    
+    
     let zero = 0.0
     
     func difference () -> Double {
