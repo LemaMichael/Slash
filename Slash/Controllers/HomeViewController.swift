@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Alamofire
 import GDAXSocketSwift
 import GDAXKit
 import Charts
@@ -69,6 +68,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let white = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
     
     
+    let todaysDateLabel: UILabel = {
+        let label = UILabel()
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .long
+        let currentDate = formatter.string(from: date)
+        let text = "TODAY : " + currentDate
+        label.text = text.uppercased()
+        label.font = UIFont(name: "Avenir-Heavy", size: 13)
+        label.textColor = .white
+        return label
+    }()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -105,8 +117,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         view.backgroundColor = UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0)
         self.view.addSubview(collectionView)
-
+        self.view.addSubview(todaysDateLabel)
+        
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
+        
+        let width = self.view.frame.width
+        let cellWidth = (self.view.frame.width - 60)
+        let diff = (width-cellWidth) / 2
+        
+        todaysDateLabel.anchor(top: nil, bottom: collectionView.topAnchor, left: collectionView.leftAnchor, right: collectionView.rightAnchor, paddingTop: 0, paddingBottom: -7, paddingLeft: diff, paddingRight: 0, width: 100, height: 25)
         
         updateTimer()
         
@@ -127,7 +146,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Search"), style: .plain, target: self, action: #selector(searchTapped))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "More Icon"), style: .plain, target: self, action: #selector(searchTapped))
-
+        
         
     }
     
@@ -169,20 +188,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         }
                     }
                     print("We are now appending: pid \(coin.id)")
-    
+                    
                 case .failure(let error):
                     print(error.localizedDescription)
                     //: One of the reasons we are here because we are making too much requests at a time
                     print("The current pid was not added \(coin.id)")
                     self.requestAgain(coin)
-
+                    
                 }
             }
         }
     }
     
     func requestAgain(_ coin: CoinDetail) {
-      
+        
         let deadlineTime = DispatchTime.now() + .seconds(2)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
             print("I am in request again")
@@ -207,7 +226,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                     print("Was able to add: pid \(coin.id)")
                     //: Hmmm
-                   // self.collectionView.reloadData()
+                // self.collectionView.reloadData()
                 case .failure(let error):
                     print(error.localizedDescription)
                     //: One of the reasons we are here because we are making too much requests at a time
@@ -291,7 +310,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let diff = (width-cellWidth) / 2
         return UIEdgeInsets(top: 0, left: diff, bottom: 0, right: diff)
     }
-
+    
     //: MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -309,7 +328,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             case 1:
                 self.animateBackgroundColor(color: colors[1])
             case 2:
-                 self.animateBackgroundColor(color: colors[2])
+                self.animateBackgroundColor(color: colors[2])
             case 3:
                 self.animateBackgroundColor(color: colors[3])
             case 4:
