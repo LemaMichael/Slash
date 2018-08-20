@@ -88,30 +88,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return collectionView
     }()
     
-    var settingsButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "settings").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .white
-        button.adjustsImageWhenHighlighted = false
-        button.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func settingsTapped() {
-        //: Button animation
-        UIView.animate(withDuration: 0.2, animations: {
-            self.settingsButton.transform = CGAffineTransform(scaleX: 0.92, y: 0.96)
-        }) { _ in
-            UIView.animate(withDuration: 0.2, animations: {
-                self.settingsButton.transform = CGAffineTransform.identity
-            })
-        }
+    @objc func searchTapped() {
         //: FIXME: BRing up a tableViewController later
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupNav()
         setup()
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
@@ -126,13 +109,29 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         view.backgroundColor = UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0)
         self.view.addSubview(collectionView)
-        self.view.addSubview(settingsButton)
-        
-        settingsButton.anchor(top: view.topAnchor, bottom: nil, left: nil, right: view.rightAnchor, paddingTop: 40, paddingBottom: 0, paddingLeft: 0, paddingRight: 10, width: 25, height: 25)
+
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
         
         updateTimer()
         
+    }
+    
+    func setupNav() {
+        //: Changing nav bar to be clear
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        
+        //: Adding Title with color
+        self.navigationItem.title = "Slash"
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "Avenir-Heavy", size: 20)!, NSAttributedStringKey.foregroundColor: UIColor.white]
+        
+        //: Changes the bar button icons to white
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Search"), style: .plain, target: self, action: #selector(searchTapped))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "More Icon"), style: .plain, target: self, action: #selector(searchTapped))
+
         
     }
     

@@ -160,11 +160,12 @@ class CoinCell: UICollectionViewCell {
     //: Add this back if you want to display the coin price on the left side of the chart
     func setLeftAxis() {
         //This displays the price at the left of the chart
+        /*
         self.chartView.leftAxis.enabled = true
         self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
             return Float(value).toCurrencyString(fractionDigits: 2)
-        })
-        //self.chartView.leftAxis.enabled = false
+        }) */
+        self.chartView.leftAxis.enabled = false
         
     }
     func setRightAxis() {
@@ -172,7 +173,6 @@ class CoinCell: UICollectionViewCell {
     }
     
     func setChartData(values: [ChartDataEntry], lineColor: UIColor) {
-        
         
         let line = self.line(values: values, lineColor: lineColor)
         
@@ -185,11 +185,11 @@ class CoinCell: UICollectionViewCell {
     private func line(values: [ChartDataEntry], lineColor: UIColor) -> LineChartDataSet {
         //: 1. color
         let set1 = LineChartDataSet(values: values, label: nil)
+        set1.mode = .cubicBezier //: Change this back to linear for default chart
         // set1.axisDependency = .left
-        //set1.setColor(lineColor)
-        set1.setColor(lineColor, alpha: 0.50)
+        set1.setColor(lineColor, alpha: 1.00)
         set1.setCircleColor(lineColor)
-        set1.lineWidth = 2
+        set1.lineWidth = 3.3
         set1.drawCirclesEnabled = false
         set1.drawValuesEnabled = false
         //: FIXME: Find some colors to mix with.
@@ -199,7 +199,7 @@ class CoinCell: UICollectionViewCell {
         
         set1.fillAlpha = 0.35
         set1.fill = Fill(linearGradient: gradient, angle: 0)
-        set1.drawFilledEnabled = true
+        set1.drawFilledEnabled = false //: If true this will draw more than the surface
         set1.drawCircleHoleEnabled = false
         
         for item in values {
@@ -243,7 +243,7 @@ class CoinCell: UICollectionViewCell {
         progressBar.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 40, width: 0, height: 6)
         percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressBar.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
         
-        chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
+        chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         
         
         //        //: Setting up coin
