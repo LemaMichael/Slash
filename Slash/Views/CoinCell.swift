@@ -129,33 +129,39 @@ class CoinCell: UICollectionViewCell {
         return label
     }()
     
-    //: FIXME: Do chart view
     lazy var chartView: LineChartView = {
         let cv = LineChartView()
         cv.chartDescription?.text = ""
         cv.backgroundColor = .white
         cv.legend.enabled = false //: Remove dataSet label
+        cv.dragEnabled = false
+        cv.setScaleEnabled(false)
+        cv.pinchZoomEnabled = false
+        cv.highlightPerDragEnabled = false
+        cv.isUserInteractionEnabled = false
         return cv
     }()
     
     func setxAxis() {
         let xAxis = chartView.xAxis
-        xAxis.labelPosition = .bottom
-        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
-        xAxis.labelTextColor = UIColor.red
-        xAxis.drawAxisLineEnabled = false //: The bottom axis isn't needed
-        xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
-        xAxis.centerAxisLabelsEnabled = true
-        xAxis.granularity = 3600 // 60*60 one hour
-        xAxis.valueFormatter = DateValueFormatter()
-        //xAxis.enabled = false //: CHANGE
+//        xAxis.labelPosition = .bottom
+//        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
+//        xAxis.labelTextColor = UIColor.red
+//        xAxis.drawAxisLineEnabled = false //: The bottom axis isn't needed
+//        xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
+//        xAxis.centerAxisLabelsEnabled = true
+//        xAxis.granularity = 3600 // 60*60 one hour
+//        xAxis.valueFormatter = DateValueFormatter()
+        xAxis.enabled = false //: CHANGE
     }
     
     func setLeftAxis() {
+        /* This displays the price at the left of the chart
         self.chartView.leftAxis.enabled = true
         self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
             return Float(value).toCurrencyString(fractionDigits: 0)
-        })
+        })*/
+        self.chartView.leftAxis.enabled = false
         
     }
     func setRightAxis() {
@@ -228,7 +234,7 @@ class CoinCell: UICollectionViewCell {
         progressBar.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 40, width: 0, height: 6)
         percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressBar.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
         
-        chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
+        chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         
         
         //        //: Setting up coin
