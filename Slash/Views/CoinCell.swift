@@ -152,7 +152,6 @@ class CoinCell: UICollectionViewCell {
             self.progressView.setProgress(0.66, animated: true)
             self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
         }
-        
     }
     
     

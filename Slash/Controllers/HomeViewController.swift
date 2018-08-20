@@ -303,6 +303,48 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let visibleCells = fullyVisibleCells(self.collectionView)
+        for cellArray in visibleCells {
+            switch cellArray[1] {
+            case 0:
+                self.animateBackgroundColor(color: UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0))
+            case 1:
+                self.animateBackgroundColor(color: colors[1])
+            case 2:
+                 self.animateBackgroundColor(color: colors[2])
+            case 3:
+                self.animateBackgroundColor(color: colors[3])
+            case 4:
+                self.animateBackgroundColor(color: colors[4])
+            default:
+                return
+            }
+        }
+    }
+    
+    //: Check if collectionView cell takes up the screen
+    //: https://stackoverflow.com/questions/46829901/how-to-determine-when-a-custom-uicollectionviewcell-is-100-on-the-screen
+    func fullyVisibleCells(_ collectionView: UICollectionView) -> [IndexPath] {
+        var returnCells = [IndexPath]()
+        var visibleCells = collectionView.visibleCells
+        visibleCells = visibleCells.filter({ cell -> Bool in
+            let cellRect = collectionView.convert(cell.frame, to: collectionView.superview)
+            return collectionView.frame.contains(cellRect)
+        })
+        //: Distint from for-in loop
+        visibleCells.forEach({
+            if let indexPath = collectionView.indexPath(for: $0) { returnCells.append(indexPath) }
+        })
+        return returnCells
+    }
+    
+    func animateBackgroundColor(color: UIColor) {
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.view.backgroundColor = color
+        }, completion: nil)
+    }
+    
 }
 
 
