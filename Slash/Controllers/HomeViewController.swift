@@ -40,22 +40,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var interval: TimeInterval!
     var timer: Timer!
-    var firstPrice = ""
-    var secondPrice = ""
-    var thirdPrice = ""
-    var fourthPrice = ""
-    var fifthPrice = ""
     
     var pairs = [Pair]()
     
-    var firstPairID: String!
-    var secondPairID: String!
-    var thirdPairID: String!
-    var fourthPairID: String!
-    var fifthPairID: String!
-    
     var chosenPairs: [Pair] = []
-    var reachability: Reachability?
     var fontPosistive: NSMutableAttributedString!
     var fontNegative: NSMutableAttributedString!
     var font:  [String : NSObject]!
@@ -66,6 +54,26 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let green = UIColor.init(red: 22/256, green: 206/255, blue: 0/256, alpha: 1)
     let red = UIColor.init(red: 255/256, green: 73/255, blue: 0/256, alpha: 1)
     let white = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
+    
+    
+    let accountBalanceLabel: UILabel = {
+       let label = UILabel()
+        label.text = "$73.01"
+        label.textColor = .white
+        label.font = UIFont(name: "Avenir-Black", size: 30)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let accountDescription: UILabel = {
+        let label = UILabel()
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 2
+        label.text = "Hello User,\nThe crypto market is down today."
+        label.font = UIFont(name: "Avenir-Book", size: 15)
+        label.textColor = .white
+        return label
+    }()
     
     
     let todaysDateLabel: UILabel = {
@@ -104,6 +112,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.viewDidLoad()
         setupNav()
         setup()
+
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
         socketClient.logger = GDAXSocketClientDefaultLogger()
@@ -118,6 +127,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         view.backgroundColor = UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0)
         self.view.addSubview(collectionView)
         self.view.addSubview(todaysDateLabel)
+        self.view.addSubview(accountBalanceLabel)
+        self.view.addSubview(accountDescription)
         
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
         
@@ -125,10 +136,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cellWidth = (self.view.frame.width - 60)
         let diff = (width-cellWidth) / 2
         
-        todaysDateLabel.anchor(top: nil, bottom: collectionView.topAnchor, left: collectionView.leftAnchor, right: collectionView.rightAnchor, paddingTop: 0, paddingBottom: -7, paddingLeft: diff, paddingRight: 0, width: 100, height: 25)
+        todaysDateLabel.anchor(top: nil, bottom: collectionView.topAnchor, left: collectionView.leftAnchor, right: collectionView.rightAnchor, paddingTop: 0, paddingBottom: -7, paddingLeft: diff, paddingRight: 0, width: 0, height: 25)
+        
+        
+        if #available(iOS 11, *) {
+            let paddingTop = (self.view.frame.height) / 24 //: This works well
+            accountBalanceLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: paddingTop, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 25)
+        } else {
+            //: We will have to get the bottom anchor fot the nav bar for iPhone x and other models
+        }
+        accountDescription.anchor(top: accountBalanceLabel.bottomAnchor, bottom: todaysDateLabel.topAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 5, paddingBottom: -10, paddingLeft: diff, paddingRight: diff, width: 0, height: 0)
         
         updateTimer()
-        
     }
     
     func setupNav() {

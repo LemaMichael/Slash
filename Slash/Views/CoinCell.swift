@@ -224,10 +224,7 @@ class CoinCell: UICollectionViewCell {
         set1.fill = Fill(linearGradient: gradient, angle: 0)
         set1.drawFilledEnabled = false //: If true this will draw more than the surface
         set1.drawCircleHoleEnabled = false
-        
-        for item in values {
-            print("i am here: \(item)")
-        }
+
         //        let data = LineChartData(dataSet: set1)
         //        data.setValueTextColor(.white)
         //        data.setValueFont(.systemFont(ofSize: 9, weight: .light))

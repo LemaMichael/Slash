@@ -9,10 +9,7 @@
 /* Begin PBXBuildFile section */
 		34DF91F80A204AADBF510835 /* Pods_Slash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C03E22EF35EDD994605E9FF5 /* Pods_Slash.framework */; };
 		4C0A005C212730E700919278 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A005B212730E700919278 /* CoinCell.swift */; };
-		4C0A005E2127828B00919278 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A005D2127828B00919278 /* ChartView.swift */; };
 		4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A005F212787D300919278 /* FloatFormatters.swift */; };
-		4C0A00622127883700919278 /* StringLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A00612127883700919278 /* StringLocalized.swift */; };
-		4C0A00642127888400919278 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A00632127888400919278 /* DateFormatter.swift */; };
 		4C0A006621278B3A00919278 /* ReferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A006521278B3A00919278 /* ReferenceType.swift */; };
 		4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F03F2126019100CEB049 /* AppDelegate.swift */; };
 		4C20F0442126019100CEB049 /* BTCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F0432126019100CEB049 /* BTCController.swift */; };
@@ -23,9 +20,7 @@
 		4C94D97221262272008F80EE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97121262272008F80EE /* Extensions.swift */; };
 		4C94D97521266E63008F80EE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97421266E63008F80EE /* Pair.swift */; };
 		4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97621267049008F80EE /* CurrencyFormatter.swift */; };
-		4C94D97B21267B2E008F80EE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97A21267B2E008F80EE /* Reachability.swift */; };
 		4C94D97D212681CA008F80EE /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97C212681CA008F80EE /* Preferences.swift */; };
-		4C94D97F21268365008F80EE /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97E21268365008F80EE /* Client.swift */; };
 		4C982D582127EA220003C2F9 /* CoinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D572127EA220003C2F9 /* CoinDetail.swift */; };
 		4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989C2126156D008A533A /* HomeViewController.swift */; };
 		4CE298A0212616F4008A533A /* ETHController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989F212616F4008A533A /* ETHController.swift */; };
@@ -36,10 +31,7 @@
 
 /* Begin PBXFileReference section */
 		4C0A005B212730E700919278 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
-		4C0A005D2127828B00919278 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		4C0A005F212787D300919278 /* FloatFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatFormatters.swift; sourceTree = "<group>"; };
-		4C0A00612127883700919278 /* StringLocalized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLocalized.swift; sourceTree = "<group>"; };
-		4C0A00632127888400919278 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		4C0A006521278B3A00919278 /* ReferenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceType.swift; sourceTree = "<group>"; };
 		4C20F03C2126019100CEB049 /* Slash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C20F03F2126019100CEB049 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,9 +44,7 @@
 		4C94D97121262272008F80EE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4C94D97421266E63008F80EE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		4C94D97621267049008F80EE /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
-		4C94D97A21267B2E008F80EE /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		4C94D97C212681CA008F80EE /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		4C94D97E21268365008F80EE /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		4C982D572127EA220003C2F9 /* CoinDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetail.swift; sourceTree = "<group>"; };
 		4CE2989C2126156D008A533A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4CE2989F212616F4008A533A /* ETHController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHController.swift; sourceTree = "<group>"; };
@@ -136,11 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				4C94D97621267049008F80EE /* CurrencyFormatter.swift */,
-				4C94D97A21267B2E008F80EE /* Reachability.swift */,
-				4C94D97E21268365008F80EE /* Client.swift */,
 				4C0A005F212787D300919278 /* FloatFormatters.swift */,
-				4C0A00612127883700919278 /* StringLocalized.swift */,
-				4C0A00632127888400919278 /* DateFormatter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -149,7 +135,6 @@
 			isa = PBXGroup;
 			children = (
 				4C0A005B212730E700919278 /* CoinCell.swift */,
-				4C0A005D2127828B00919278 /* ChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,8 +292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C0A006621278B3A00919278 /* ReferenceType.swift in Sources */,
-				4C0A00642127888400919278 /* DateFormatter.swift in Sources */,
-				4C0A00622127883700919278 /* StringLocalized.swift in Sources */,
 				4C20F0442126019100CEB049 /* BTCController.swift in Sources */,
 				4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */,
 				4C0A005C212730E700919278 /* CoinCell.swift in Sources */,
@@ -317,11 +300,8 @@
 				4CE298A221261700008A533A /* LTCController.swift in Sources */,
 				4C94D97221262272008F80EE /* Extensions.swift in Sources */,
 				4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */,
-				4C94D97F21268365008F80EE /* Client.swift in Sources */,
-				4C0A005E2127828B00919278 /* ChartView.swift in Sources */,
 				4C94D97521266E63008F80EE /* Pair.swift in Sources */,
 				4CE298A421261710008A533A /* BCHController.swift in Sources */,
-				4C94D97B21267B2E008F80EE /* Reachability.swift in Sources */,
 				4C2C9C162128AAD20041175E /* BaseViewController.swift in Sources */,
 				4CE298A621261748008A533A /* ETCController.swift in Sources */,
 				4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */,
