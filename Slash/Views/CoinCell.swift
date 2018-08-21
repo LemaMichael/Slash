@@ -124,8 +124,8 @@ class CoinCell: UICollectionViewCell {
     lazy var progressView: UIProgressView = {
         let pV = UIProgressView()
         pV.progress = Float(0.00)
-        pV.progressTintColor = .orange
-        pV.trackTintColor = .lightGray
+        //pV.progressTintColor = .orange
+        pV.trackTintColor = UIColor(white: 0.80, alpha: 0.75)
         //: For the track view to be round
         pV.layer.masksToBounds = true
         pV.layer.cornerRadius = 2.5

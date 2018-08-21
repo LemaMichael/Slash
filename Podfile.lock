@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (4.7.3)
   - Charts (3.1.1):
     - Charts/Core (= 3.1.1)
   - Charts/Core (3.1.1)
@@ -8,32 +7,37 @@ PODS:
     - Starscream (~> 3.0)
   - GDAXSocketSwift (0.1.2):
     - CryptoSwift
+  - QuickLayout (2.0.2)
   - Starscream (3.0.5)
+  - SwiftEntryKit (0.5.8):
+    - QuickLayout (= 2.0.2)
 
 DEPENDENCIES:
-  - Alamofire
   - Charts
   - GDAXKit
   - GDAXSocketSwift
   - Starscream
+  - SwiftEntryKit
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
     - Charts
     - CryptoSwift
     - GDAXKit
     - GDAXSocketSwift
+    - QuickLayout
     - Starscream
+    - SwiftEntryKit
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
   GDAXKit: 2951b3134861f2369b3079ba26aa50224a04d0f8
   GDAXSocketSwift: c0d01a025fa90b053f2fed19cca9a13b856e3e28
+  QuickLayout: a730730b646b231fd4ef7cffaeb1e81fe0e1ca92
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
+  SwiftEntryKit: ff42f06ff7468ffa6a8b63edf806159c99205681
 
-PODFILE CHECKSUM: 8ceda2123dff0f321df1e60757a8add70473414c
+PODFILE CHECKSUM: 57b26ef7694f7293b00eb7525de1af9989d47048
 
 COCOAPODS: 1.5.3

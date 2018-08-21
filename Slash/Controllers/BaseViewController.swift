@@ -8,7 +8,6 @@
 
 import UIKit
 import UIKit
-import Alamofire
 import GDAXSocketSwift
 
 class BaseViewController: UIViewController {

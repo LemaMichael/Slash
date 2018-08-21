@@ -323,6 +323,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (self.view.frame.width - 60), height: (self.view.frame.height / 2))
     }
@@ -336,6 +337,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("The following was tapped: \(indexPath.item)")
+        
     }
     
     //: MARK: viewWillAppear
