@@ -13,9 +13,10 @@ import GDAXKit
 import Charts
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    fileprivate let colors: [UIColor] = [UIColor(red:0.91, green:0.73, blue:0.08, alpha:1.0),
+    //: Light Green color UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
+    fileprivate let colors: [UIColor] = [UIColor(red:1.00, green:0.60, blue:0.00, alpha:1.0),
                                          UIColor(red:0.21, green:0.27, blue:0.31, alpha:1.0),
-                                         UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
+                                         UIColor(red:0.57, green:0.57, blue:0.57, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
     
@@ -126,7 +127,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         timeFormatter.dateStyle = .short
         timeFormatter.timeStyle = .medium
         
-        view.backgroundColor = UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0)
+        // view.backgroundColor = UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0) //: MARK: Use this blue color someplace else
+        view.backgroundColor = UIColor(red:1.00, green:0.60, blue:0.00, alpha:1.0)
         self.view.addSubview(collectionView)
         self.view.addSubview(todaysDateLabel)
         self.view.addSubview(accountBalanceLabel)
@@ -317,6 +319,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //cell.chartView.backgroundColor = colors[indexPath.item]
             cell.setChartData(values: result, lineColor: colors[indexPath.item])
             cell.coinImageView.tintColor = colors[indexPath.item]
+            cell.progressView.progressTintColor = colors[indexPath.item] // FIXME: Do I really want this?
         }
         return cell
     }
@@ -348,7 +351,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         for cellArray in visibleCells {
             switch cellArray[1] {
             case 0:
-                self.animateBackgroundColor(color: UIColor(red:0.35, green:0.54, blue:0.90, alpha:1.0))
+                self.animateBackgroundColor(color: colors[0])
             case 1:
                 self.animateBackgroundColor(color: colors[1])
             case 2:
