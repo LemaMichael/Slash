@@ -24,6 +24,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.collectionView.reloadData()
             if coins.count >= 5 {
                 getHistoricData()
+                // FIXME: Find a better place to put this
+                self.collectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .centeredHorizontally, animated: true)
             }
         }
     }
@@ -60,7 +62,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
        let label = UILabel()
         label.text = "$73.01"
         label.textColor = .white
-        label.font = UIFont(name: "Avenir-Black", size: 30)
+        label.font = UIFont(name: "Avenir-Heavy", size: 30)
         label.textAlignment = .center
         return label
     }()
@@ -166,7 +168,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Search"), style: .plain, target: self, action: #selector(searchTapped))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "More Icon"), style: .plain, target: self, action: #selector(searchTapped))
         
-        
     }
     
     func getHistoricData() {
@@ -210,7 +211,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     
                 case .failure(let error):
                     print(error.localizedDescription)
-                    //: One of the reasons we are here because we are making too much requests at a time
+                    //: One of the reasons we are here is because we are making too much requests at a time
                     print("The current pid was not added \(coin.id)")
                     self.requestAgain(coin)
                     
@@ -330,6 +331,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return UIEdgeInsets(top: 0, left: diff, bottom: 0, right: diff)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("The following was tapped: \(indexPath.item)")
+    }
+    
     //: MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -380,6 +385,27 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }, completion: nil)
     }
     
+}
+
+//: MARK: UIScrollViewDelegate
+extension HomeViewController: UIScrollViewDelegate {
+    //: https://gist.github.com/benjaminsnorris/a19cb14082b28027d183/revisions
+    func snapToCenter() {
+        let centerPoint = self.view.convert(self.view.center, to: collectionView)
+        guard let centerIndexPath = collectionView.indexPathForItem(at: centerPoint) else {return}
+        //: FIXME: There is an issue when user scrolls the first or last cell repeatedly
+        collectionView.scrollToItem(at: centerIndexPath, at: .centeredHorizontally, animated: true)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        snapToCenter()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (!decelerate) {
+            snapToCenter()
+        }
+    }
 }
 
 

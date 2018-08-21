@@ -37,7 +37,7 @@ class CoinCell: UICollectionViewCell {
                 self.coinPercentage.text = "..."
                 return
             }
-            self.coinPrice.text = price
+            self.coinPrice.text = "$\(price)" //: FIXME: Find a better way to do this
             guard let pair = coin.id else {
                 self.coinLabel.text = "Loading..."
                 return
