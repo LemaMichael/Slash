@@ -146,12 +146,12 @@ class CoinCell: UICollectionViewCell {
         let cv = LineChartView()
         cv.chartDescription?.text = ""
         cv.backgroundColor = .white
+        cv.isUserInteractionEnabled = false
         cv.legend.enabled = false //: Remove dataSet label
         cv.dragEnabled = false
         cv.setScaleEnabled(false)
         cv.pinchZoomEnabled = false
         cv.highlightPerDragEnabled = false
-        cv.isUserInteractionEnabled = false
         return cv
     }()
     

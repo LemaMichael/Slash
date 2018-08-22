@@ -11,6 +11,7 @@ import UIKit
 import GDAXSocketSwift
 import GDAXKit
 import Charts
+import SwiftEntryKit
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     //: Light Green color UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
@@ -60,7 +61,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     let accountBalanceLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "$73.01"
         label.textColor = .white
         label.font = UIFont(name: "Avenir-Heavy", size: 30)
@@ -77,7 +78,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         label.textColor = .white
         return label
     }()
-    
     
     let todaysDateLabel: UILabel = {
         let label = UILabel()
@@ -115,7 +115,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.viewDidLoad()
         setupNav()
         setup()
-
+        
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
         socketClient.logger = GDAXSocketClientDefaultLogger()
@@ -338,7 +338,74 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("The following was tapped: \(indexPath.item)")
         
+        let currentCell = collectionView.cellForItem(at: indexPath) as! CoinCell
+        let image = #imageLiteral(resourceName: "Supply")
+        let title = "Success!"
+        let description = "You have added \(currentCell.coinLabel.text ?? "this coin") to your portfolio"
+
+        
+        var attributes = EKAttributes()
+        attributes.name = nil
+        //: Display
+        attributes.windowLevel = .statusBar
+        attributes.position = .bottom
+        attributes.displayPriority = .normal
+        attributes.displayDuration = .infinity
+        attributes.positionConstraints.keyboardRelation = .unbind
+        attributes.positionConstraints.size = .init(width: .offset(value: 0), height: .intrinsic)
+        attributes.positionConstraints.maxSize = .init(width: .intrinsic, height: .intrinsic)
+        attributes.positionConstraints.verticalOffset = CGFloat(0)
+        attributes.positionConstraints.safeArea = .empty(fillSafeArea: true)
+        
+        //: User Interaction
+        attributes.screenInteraction = .init(defaultAction: .dismissEntry, customTapActions: [])
+        attributes.entryInteraction = .init(defaultAction: .absorbTouches, customTapActions: [])
+        attributes.scroll = .edgeCrossingDisabled(swipeable: true)
+        attributes.hapticFeedbackType = .success
+        attributes.lifecycleEvents = .init(willAppear: .none, didAppear: .none, willDisappear: .none, didDisappear: .none)
+        
+        //: Theme & Style - These colors are of the pop up view
+        var firstColor = UIColor(red: 1, green: 0.603922, blue: 0.619608, alpha: 1)
+        var secondColor = UIColor(red: 0.980392, green: 0.815686, blue: 0.768627, alpha: 1)
+        attributes.entryBackground = .gradient(gradient: .init(colors: [firstColor, secondColor], startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 1, y: 1)))
+        
+        let grayColor = UIColor(white: 0.392157, alpha: 0.3) /// hmm
+        attributes.screenBackground = .color(color: grayColor)
+        attributes.shadow = .active(with: .init(color: UIColor(white: 0, alpha: 1), opacity: 0.300000012, radius: 8, offset: CGSize(width: 0, height: 0)))
+        attributes.roundCorners = .top(radius: 20)
+        attributes.border = .none
+        
+        let spring = EKAttributes.Animation.Spring.init(damping: CGFloat(1), initialVelocity: CGFloat(0))
+        let translation = EKAttributes.Animation.Translate.init(duration: 0.5, anchorPosition: .automatic, delay: 0, spring: spring)
+        attributes.entranceAnimation = .init(translate: translation, scale: .none, fade: .none)
+        let exitTranslation = EKAttributes.Animation.Translate.init(duration: 0.2, anchorPosition: .automatic, delay: 0, spring: .none)
+        attributes.exitAnimation = .init(translate: exitTranslation, scale: .none, fade: .none)
+        let popTranslate = EKAttributes.Animation.Translate.init(duration: 0.2, anchorPosition: .automatic, delay: 0, spring: .none)
+        attributes.popBehavior = .animated(animation: EKAttributes.Animation.init(translate: popTranslate, scale: .none, fade: .none))
+        
+        showPopupMessage(attributes: attributes, title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: UIColor(red: 0.380392, green: 0.380392, blue: 0.380392, alpha: 1), buttonBackgroundColor: .white, image: image)
+        
     }
+    
+    private func showPopupMessage(attributes: EKAttributes, title: String, titleColor: UIColor, description: String, descriptionColor: UIColor, buttonTitleColor: UIColor, buttonBackgroundColor: UIColor, image: UIImage? = nil) {
+        
+        var themeImage: EKPopUpMessage.ThemeImage?
+        
+        if let image = image {
+            themeImage = .init(image: .init(image: image, size: CGSize(width: 60, height: 60), contentMode: .scaleAspectFit))
+        }
+        
+        let title = EKProperty.LabelContent(text: title, style: .init(font: MainFont.medium.with(size: 24), color: titleColor, alignment: .center))
+        let description = EKProperty.LabelContent(text: description, style: .init(font: MainFont.light.with(size: 16), color: descriptionColor, alignment: .center))
+        let button = EKProperty.ButtonContent(label: .init(text: "Got it!", style: .init(font: MainFont.bold.with(size: 16), color: buttonTitleColor)), backgroundColor: buttonBackgroundColor, highlightedBackgroundColor: buttonTitleColor.withAlphaComponent(0.05))
+        let message = EKPopUpMessage(themeImage: themeImage, title: title, description: description, button: button) {
+            SwiftEntryKit.dismiss()
+        }
+        
+        let contentView = EKPopUpMessageView(with: message)
+        SwiftEntryKit.display(entry: contentView, using: attributes)
+    }
+    
     
     //: MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
@@ -473,3 +540,30 @@ extension HomeViewController: GDAXSocketClientDelegate {
         timer.invalidate()
     }
 }
+
+
+
+typealias MainFont = Font.HelveticaNeue
+
+enum Font {
+    enum HelveticaNeue: String {
+        case ultraLightItalic = "UltraLightItalic"
+        case medium = "Medium"
+        case mediumItalic = "MediumItalic"
+        case ultraLight = "UltraLight"
+        case italic = "Italic"
+        case light = "Light"
+        case thinItalic = "ThinItalic"
+        case lightItalic = "LightItalic"
+        case bold = "Bold"
+        case thin = "Thin"
+        case condensedBlack = "CondensedBlack"
+        case condensedBold = "CondensedBold"
+        case boldItalic = "BoldItalic"
+        
+        func with(size: CGFloat) -> UIFont {
+            return UIFont(name: "HelveticaNeue-\(rawValue)", size: size)!
+        }
+    }
+}
+
