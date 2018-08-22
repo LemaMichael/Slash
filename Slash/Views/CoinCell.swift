@@ -153,6 +153,7 @@ class CoinCell: UICollectionViewCell {
         cv.highlightPerDragEnabled = false
         return cv
     }()
+    //: FIXME: ImageView disapears when cell is tapped
     var miningImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = false
@@ -172,7 +173,7 @@ class CoinCell: UICollectionViewCell {
     }
     func animateImages(imageView: UIImageView, images: [UIImage]) {
         imageView.animationImages = images
-        imageView.animationDuration = 2.0
+        imageView.animationDuration = 1.45
         imageView.animationRepeatCount = 0
         imageView.startAnimating()
     }
@@ -287,7 +288,7 @@ class CoinCell: UICollectionViewCell {
         setRightAxis()
         
         //: Animatation
-        miningImages = createImageArray(totalImages: 27, imageName: "Mining")
+        miningImages = createImageArray(totalImages: 51, imageName: "Mining")
         
         percentageLabel.text = String(format: "%.0f%%", progressView.progress * 100)
         
