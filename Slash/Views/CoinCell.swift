@@ -73,7 +73,6 @@ class CoinCell: UICollectionViewCell {
         }
     }
     
-    
     let coinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -85,7 +84,7 @@ class CoinCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .lightGray
         label.text = "$6,567.08"
-        label.font =  UIFont(name: "AvenirNext", size: 50)
+        label.font =  UIFont(name: "AvenirNext", size: 50) //: TODO: Find a better font and color
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -95,7 +94,7 @@ class CoinCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .lightGray
         label.text = "+240.66 (4.12%)"
-        label.font =  UIFont(name: "AvenirNext", size: 9)
+        label.font =  MainFont.medium.with(size: 14)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
         return label
@@ -154,7 +153,37 @@ class CoinCell: UICollectionViewCell {
         cv.highlightPerDragEnabled = false
         return cv
     }()
+    var miningImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.isUserInteractionEnabled = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    var miningImages = [UIImage]()
+    func createImageArray(totalImages: Int, imageName: String) -> [UIImage] {
+        var imageArray = [UIImage]()
+        for count in 0..<totalImages {
+            let imageName = "\(imageName)-\(count)"
+            let image = UIImage(named: imageName)!
+            imageArray.append(image)
+        }
+        return imageArray
+    }
+    func animateImages(imageView: UIImageView, images: [UIImage]) {
+        imageView.animationImages = images
+        imageView.animationDuration = 2.0
+        imageView.animationRepeatCount = 0
+        imageView.startAnimating()
+    }
     
+    func startAnimating() {
+        animateImages(imageView: miningImageView, images: miningImages)
+    }
+    
+    func stopAnimation() {
+        miningImageView.stopAnimating()
+    }
     
     func setupProgressBarAnimation() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -249,11 +278,16 @@ class CoinCell: UICollectionViewCell {
         addSubview(progressView)
         addSubview(percentageLabel)
         addSubview(chartView)
+        addSubview(miningImageView)
+
         
         setupProgressBarAnimation()
         setxAxis()
         setLeftAxis()
         setRightAxis()
+        
+        //: Animatation
+        miningImages = createImageArray(totalImages: 27, imageName: "Mining")
         
         percentageLabel.text = String(format: "%.0f%%", progressView.progress * 100)
         
@@ -268,6 +302,10 @@ class CoinCell: UICollectionViewCell {
         chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         intervalButton.anchor(top: self.chartView.bottomAnchor, bottom: nil, left: nil, right: self.rightAnchor, paddingTop: 15, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 25, height: 21)
 
+        miningImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        miningImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        miningImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        miningImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
         
         
         //        //: Setting up coin

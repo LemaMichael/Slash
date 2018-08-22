@@ -394,6 +394,13 @@ extension HomeViewController {
             cell.setChartData(values: result, lineColor: colors[indexPath.item])
             cell.coinImageView.tintColor = colors[indexPath.item]
             cell.progressView.progressTintColor = colors[indexPath.item] // FIXME: Do I really want this?
+            
+            //: While the user is waiting for the chart, begin an animation
+            if cell.chartView.isEmpty() {
+                cell.startAnimating()
+            } else {
+                cell.stopAnimation()
+            }
         }
         return cell
     }
