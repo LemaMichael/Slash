@@ -17,6 +17,7 @@
 		4C20F04E2126019200CEB049 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04C2126019200CEB049 /* LaunchScreen.storyboard */; };
 		4C2C9C162128AAD20041175E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C152128AAD20041175E /* BaseViewController.swift */; };
 		4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */; };
+		4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C37EAB9212CFD9D00A5E269 /* Fonts.swift */; };
 		4C94D97221262272008F80EE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97121262272008F80EE /* Extensions.swift */; };
 		4C94D97521266E63008F80EE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97421266E63008F80EE /* Pair.swift */; };
 		4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97621267049008F80EE /* CurrencyFormatter.swift */; };
@@ -41,6 +42,7 @@
 		4C20F04F2126019200CEB049 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C2C9C152128AAD20041175E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleWebSocketClient.swift; sourceTree = "<group>"; };
+		4C37EAB9212CFD9D00A5E269 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4C94D97121262272008F80EE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4C94D97421266E63008F80EE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		4C94D97621267049008F80EE /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				4C94D97621267049008F80EE /* CurrencyFormatter.swift */,
 				4C0A005F212787D300919278 /* FloatFormatters.swift */,
+				4C37EAB9212CFD9D00A5E269 /* Fonts.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */,
 				4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */,
 				4CE298A0212616F4008A533A /* ETHController.swift in Sources */,
+				4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */,
 				4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
