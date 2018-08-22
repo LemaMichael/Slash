@@ -420,6 +420,7 @@ extension HomeViewController {
         print("The following was tapped: \(indexPath.item)")
         
         let currentCell = collectionView.cellForItem(at: indexPath) as! CoinCell
+        if currentCell.isAnimating { currentCell.startAnimating() } //: FIXME: Find a better way to solve this issue
         let image = #imageLiteral(resourceName: "Supply")
         let title = "Success!"
         let description = "You have added \(currentCell.coinLabel.text ?? "this coin") to your portfolio"

@@ -14,6 +14,7 @@ class CoinCell: UICollectionViewCell {
     
     
     var coin: CoinDetail?
+    var isAnimating = false
     
     let green = UIColor(red:0.38, green:0.79, blue:0.00, alpha:1.0)
     let red = UIColor(red:1.00, green:0.29, blue:0.29, alpha:1.0)
@@ -156,7 +157,6 @@ class CoinCell: UICollectionViewCell {
     //: FIXME: ImageView disapears when cell is tapped
     var miningImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.isUserInteractionEnabled = false
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -179,10 +179,12 @@ class CoinCell: UICollectionViewCell {
     }
     
     func startAnimating() {
+        isAnimating = true
         animateImages(imageView: miningImageView, images: miningImages)
     }
     
     func stopAnimation() {
+        isAnimating = false
         miningImageView.stopAnimating()
     }
     
@@ -280,7 +282,6 @@ class CoinCell: UICollectionViewCell {
         addSubview(percentageLabel)
         addSubview(chartView)
         addSubview(miningImageView)
-
         
         setupProgressBarAnimation()
         setxAxis()
