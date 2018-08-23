@@ -29,7 +29,6 @@ class CoinDetail: NSObject {
         guard let open = self.open else { return zero }
         guard let openDouble = Double(open) else { return zero }
         let diff = doublePrice - openDouble
-        print("The price is \(price) for \(self.name) with \(doublePrice) with \(open), \(openDouble), with \(diff)")
         return diff
     }
     func percent() -> Double {

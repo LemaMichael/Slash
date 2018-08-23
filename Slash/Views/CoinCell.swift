@@ -15,6 +15,7 @@ class CoinCell: UICollectionViewCell {
     
     var coin: CoinDetail?
     var isAnimating = false
+    var didFinishAnimatingBar = false
     
     let green = UIColor(red:0.38, green:0.79, blue:0.00, alpha:1.0)
     let red = UIColor(red:1.00, green:0.29, blue:0.29, alpha:1.0)
@@ -189,11 +190,14 @@ class CoinCell: UICollectionViewCell {
     }
     
     func setupProgressBarAnimation(value: Double) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.progressView.layoutIfNeeded()
+        self.progressView.layoutIfNeeded() //: Leave this here.
+        if (!didFinishAnimatingBar) {
             self.progressView.setProgress(Float(value), animated: true)
-            self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
+            didFinishAnimatingBar = true
+        } else {
+            self.progressView.setProgress(Float(value), animated: false)
         }
+        self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
     }
     
     
@@ -283,7 +287,6 @@ class CoinCell: UICollectionViewCell {
         addSubview(chartView)
         addSubview(miningImageView)
         
-        //setupProgressBarAnimation()
         setxAxis()
         setLeftAxis()
         setRightAxis()
