@@ -22,17 +22,20 @@ class CoinDetail: NSObject {
     
     let zero = 0.0
     
-    func difference () -> Double {
+    func difference() -> Double {
         guard let price = self.currentPrice else { return zero }
-        guard let doublePrice = Double(price) else { return zero }
+        let validPrice = price.split(separator: ",").joined(separator: "")  //: Needed to correctly calc percent for Bitcoin
+        guard let doublePrice = Double(validPrice) else { return zero }
         guard let open = self.open else { return zero }
         guard let openDouble = Double(open) else { return zero }
         let diff = doublePrice - openDouble
+        print("The price is \(price) for \(self.name) with \(doublePrice) with \(open), \(openDouble), with \(diff)")
         return diff
     }
     func percent() -> Double {
         guard let price = self.currentPrice else { return zero }
-        guard let doublePrice = Double(price) else { return zero }
+        let validPrice = price.split(separator: ",").joined(separator: "")  //: Needed to correctly calc percent for Bitcoin
+        guard let doublePrice = Double(validPrice) else { return zero }
         guard let open = self.open else { return zero }
         guard let openDouble = Double(open) else { return zero }
         
@@ -69,7 +72,6 @@ class CoinDetail: NSObject {
             return "..."
         }
     }
-    
     
 }
 
