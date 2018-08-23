@@ -197,7 +197,28 @@ class CoinCell: UICollectionViewCell {
         } else {
             self.progressView.setProgress(Float(value), animated: false)
         }
-        self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
+        
+        //: TODO: Let the user decide this
+        /* Option 1- EXAMPLE print 0.4%
+        if (value < 0.01 && value != 0.0) {
+            self.percentageLabel.text = String(format: "%.1f%%", self.progressView.progress * 100)
+        } else {
+            self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
+        } */
+        
+        //: Option 2 - Example prints < 1%
+        switch value {
+        case 0:
+            self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
+        case (0.0..<0.005) : //: Switch statement executes case 0 if value is 0, therefore we can do a range starting from 0 here
+            self.percentageLabel.text = "< 1%"
+        case (0.99..<1.0): //:Example: (btcBalance: 0.5, ethBalance: 0.01, ltcBalance: 0.02) will result in BTC having 100% without this check.
+            self.percentageLabel.text = "99%"
+        default:
+            self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
+        }
+        //: Option 3 - Default option = Example prints 33%
+       /* self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100) */
     }
     
     
@@ -260,7 +281,7 @@ class CoinCell: UICollectionViewCell {
         set1.fill = Fill(linearGradient: gradient, angle: 0)
         set1.drawFilledEnabled = false //: If true this will draw more than the surface
         set1.drawCircleHoleEnabled = false
-
+        
         //        let data = LineChartData(dataSet: set1)
         //        data.setValueTextColor(.white)
         //        data.setValueFont(.systemFont(ofSize: 9, weight: .light))
@@ -306,7 +327,7 @@ class CoinCell: UICollectionViewCell {
         
         chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         intervalButton.anchor(top: self.chartView.bottomAnchor, bottom: nil, left: nil, right: self.rightAnchor, paddingTop: 15, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 25, height: 21)
-
+        
         miningImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         miningImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         miningImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true

@@ -41,7 +41,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let client = MarketClient()
     
     static let coinCellId = "cellId"
-    let currentUser = User(name: "Michael", btcBalance: 0, ethBalance: 0.0099, ltcBalance: 0.0288, bchBalance: 0, etcBlance: 0)
+    let currentUser = User(name: "Michael", btcBalance: 0.001, ethBalance: 0.006, ltcBalance: 0.006, bchBalance: 0.005, etcBlance: 0.05)
     
     var interval: TimeInterval!
     var timer: Timer!
