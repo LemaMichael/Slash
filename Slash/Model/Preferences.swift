@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum UserDefaults: String {
+enum userDefaults: String {
     case interval = "interval"
     case firstPair = "firstPair"
     case secondPair = "secondPair"

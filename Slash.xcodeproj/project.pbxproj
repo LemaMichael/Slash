@@ -15,6 +15,8 @@
 		4C20F0442126019100CEB049 /* BTCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F0432126019100CEB049 /* BTCController.swift */; };
 		4C20F04B2126019200CEB049 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04A2126019200CEB049 /* Assets.xcassets */; };
 		4C20F04E2126019200CEB049 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04C2126019200CEB049 /* LaunchScreen.storyboard */; };
+		4C29FA96212DCA50007FAF90 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C29FA95212DCA50007FAF90 /* User.swift */; };
+		4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C29FA97212DCF98007FAF90 /* UserDefaultsExtension.swift */; };
 		4C2C9C162128AAD20041175E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C152128AAD20041175E /* BaseViewController.swift */; };
 		4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */; };
 		4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C37EAB9212CFD9D00A5E269 /* Fonts.swift */; };
@@ -40,6 +42,8 @@
 		4C20F04A2126019200CEB049 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C20F04D2126019200CEB049 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C20F04F2126019200CEB049 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C29FA95212DCA50007FAF90 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4C29FA97212DCF98007FAF90 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		4C2C9C152128AAD20041175E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleWebSocketClient.swift; sourceTree = "<group>"; };
 		4C37EAB9212CFD9D00A5E269 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				4C94D97121262272008F80EE /* Extensions.swift */,
+				4C29FA97212DCF98007FAF90 /* UserDefaultsExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 				4C94D97C212681CA008F80EE /* Preferences.swift */,
 				4C0A006521278B3A00919278 /* ReferenceType.swift */,
 				4C982D572127EA220003C2F9 /* CoinDetail.swift */,
+				4C29FA95212DCA50007FAF90 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,6 +312,7 @@
 				4C94D97221262272008F80EE /* Extensions.swift in Sources */,
 				4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */,
 				4C94D97521266E63008F80EE /* Pair.swift in Sources */,
+				4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */,
 				4CE298A421261710008A533A /* BCHController.swift in Sources */,
 				4C2C9C162128AAD20041175E /* BaseViewController.swift in Sources */,
 				4CE298A621261748008A533A /* ETCController.swift in Sources */,
@@ -314,6 +321,7 @@
 				4CE298A0212616F4008A533A /* ETHController.swift in Sources */,
 				4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */,
 				4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */,
+				4C29FA96212DCA50007FAF90 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

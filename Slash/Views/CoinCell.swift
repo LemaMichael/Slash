@@ -188,10 +188,10 @@ class CoinCell: UICollectionViewCell {
         miningImageView.stopAnimating()
     }
     
-    func setupProgressBarAnimation() {
+    func setupProgressBarAnimation(value: Double) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.progressView.layoutIfNeeded()
-            self.progressView.setProgress(0.66, animated: true)
+            self.progressView.setProgress(Float(value), animated: true)
             self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100)
         }
     }
@@ -283,7 +283,7 @@ class CoinCell: UICollectionViewCell {
         addSubview(chartView)
         addSubview(miningImageView)
         
-        setupProgressBarAnimation()
+        //setupProgressBarAnimation()
         setxAxis()
         setLeftAxis()
         setRightAxis()

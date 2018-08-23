@@ -41,6 +41,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let client = MarketClient()
     
     static let coinCellId = "cellId"
+    let currentUser = User(name: "Michael", btcBalance: 0, ethBalance: 0.0099, ltcBalance: 0.0288, bchBalance: 0, etcBlance: 0)
     
     var interval: TimeInterval!
     var timer: Timer!
@@ -60,20 +61,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let white = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
     
     
-    let accountBalanceLabel: UILabel = {
+    lazy var accountBalanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "$73.01"
+        let formattedPrice = priceFormatter.string(from: currentUser.balance() as NSNumber) ?? "0.00"
+        label.text = "$" + formattedPrice //: FIXME: This shouldn't only be for US Dollar
         label.textColor = .white
         label.font = UIFont(name: "Avenir-Heavy", size: 30)
         label.textAlignment = .center
         return label
     }()
     
-    let accountDescription: UILabel = {
+    lazy var accountDescription: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 2
-        label.text = "Hello User,\nThe crypto market is down today."
+        label.text = "Hello \(currentUser.getName()),\nThe crypto market is down today."
         label.font = UIFont(name: "Avenir-Book", size: 15)
         label.textColor = .white
         return label
@@ -262,11 +264,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func setup() {
-        if let interval = defaults.object(forKey: UserDefaults.interval.rawValue) as? TimeInterval {
+        if let interval = defaults.object(forKey: userDefaults.interval.rawValue) as? TimeInterval {
             self.interval = interval
         } else {
             self.interval = TimeInterval(5)  // Default is 5 seconds
-            defaults.set(self.interval, forKey: UserDefaults.interval.rawValue)
+            defaults.set(self.interval, forKey: userDefaults.interval.rawValue)
         }
     }
     
@@ -292,7 +294,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func updateInterval(_ interval: TimeInterval) {
         self.interval = interval
         
-        defaults.set(self.interval, forKey: UserDefaults.interval.rawValue)
+        defaults.set(self.interval, forKey: userDefaults.interval.rawValue)
         defaults.synchronize()
         updateTimer()
     }
@@ -394,17 +396,24 @@ extension HomeViewController {
             cell.setChartData(values: result, lineColor: colors[indexPath.item])
             cell.coinImageView.tintColor = colors[indexPath.item]
             cell.progressView.progressTintColor = colors[indexPath.item] // FIXME: Do I really want this?
-            
             //: While the user is waiting for the chart, begin an animation
             if cell.chartView.isEmpty() {
                 cell.startAnimating()
             } else {
                 cell.stopAnimation()
             }
+            
+            let percentage = currentUser.portfolioPercentage(coinName: coins[indexPath.item].officialName())
+            print("For \(indexPath.item) the percentage is \(percentage)")
+            cell.setupProgressBarAnimation(value: percentage)
         }
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    }
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (self.view.frame.width - 60), height: (self.view.frame.height / 2))
     }
@@ -527,11 +536,35 @@ extension HomeViewController: GDAXSocketClientDelegate {
             if item.id == coin.id {
                 print("Item: \(item.id) is being modified")
                 item.currentPrice = formattedPrice
-                coin.open = String(ticker.open24h)
+                item.open = String(ticker.open24h)
                 item.high = String(ticker.high24h)
                 item.low = String(ticker.low24h)
                 item.volume = String(ticker.volume24h)
                 item.thirtyDayVolume = String(ticker.volume30d)
+                
+                //: Necessary to convert 6,500 to a double value.
+                guard let price = item.currentPrice else {return}
+                let splitPrice = price.split(separator: ",").joined(separator: "")
+                guard let validPrice = Double(splitPrice) else {return}
+                //: Lets store the price
+                switch item.officialName() {
+                case "Bitcoin":
+                    UserDefaults.standard.setBTCPrice(value: validPrice)
+                case "Ethereum":
+                    UserDefaults.standard.setETHPrice(value: validPrice)
+                case "Litecoin":
+                    UserDefaults.standard.setLTCPrice(value: validPrice)
+                case "Bitcoin Cash":
+                    UserDefaults.standard.setBCHPrice(value: validPrice)
+                case "Ethereum Classic":
+                    UserDefaults.standard.setETCPrice(value: validPrice)
+                default:
+                    return
+                }
+                
+                //: TODO: Do I want to update the account balance all the time or should the user decide when to update?
+                let formattedPrice = priceFormatter.string(from: currentUser.balance() as NSNumber) ?? "0.00"
+                self.accountBalanceLabel.text = "$" + formattedPrice //: FIXME: This shouldn't only be for US Dollar
             }
         }
         
