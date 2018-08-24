@@ -72,6 +72,8 @@ class RegisterView: UIView {
     }
     
     func setupView() {
+        //: Dismiss keyboard if user taps outside textfield
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing(_:))))
         addSubview(nameLabel)
         addSubview(nameTextField)
         addSubview(line)

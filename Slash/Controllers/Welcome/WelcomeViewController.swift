@@ -19,11 +19,8 @@ class WelcomeViewController: UIViewController {
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
     var name = ""
-    var btcAmount = 0.0
-    var ethAmount = 0.0
-    var ltcAmount = 0.0
-    var bchAmount = 0.0
-    var etcAmount = 0.0
+    var btcAmount = 0.0, ethAmount = 0.0, ltcAmount = 0.0, bchAmount = 0.0, etcAmount = 0.0
+    var prevButtonItem = UIBarButtonItem()
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -98,6 +95,8 @@ class WelcomeViewController: UIViewController {
             textField.text = ""
             //: change Label text
             coinLabel.text = self.registerView.coinAmounts[1]
+            prevButtonItem.isEnabled = true
+            prevButtonItem.tintColor = .white
         case "ETH":
             ethAmount = invalidInput ? 0.0 : doubleVal
             textField.text = ""
@@ -119,6 +118,31 @@ class WelcomeViewController: UIViewController {
         }
     }
     
+    @objc func prevButtonAction() {
+        let coinLabel: UILabel = self.registerView.coinLabel
+        guard let coinText = coinLabel.text else {return}
+        //: I rather get the substring "BTC" instead of "BTC AMOUNT"
+        let start = coinText.startIndex
+        let end = coinText.index(start, offsetBy: 3)
+        let range = start..<end
+        let currentCoin = coinText[range]
+        
+        switch currentCoin {
+        case "ETH":
+            coinLabel.text = self.registerView.coinAmounts[0]
+            prevButtonItem.isEnabled = false
+            prevButtonItem.tintColor = .clear
+        case "LTC":
+            coinLabel.text = self.registerView.coinAmounts[1]
+        case "BCH":
+            coinLabel.text = self.registerView.coinAmounts[2]
+        case "ETC":
+            coinLabel.text = self.registerView.coinAmounts[3]
+        default:
+            return
+        }
+    }
+    
     override func viewDidLoad() {
         self.view.addSubview(imageView)
         self.view.addSubview(titleLabel)
@@ -128,7 +152,7 @@ class WelcomeViewController: UIViewController {
         self.view.addSubview(pageViewController.view)
         
         //: Textfield
-        self.addNextButtonOnKeyboard()
+        self.addButtonsOnKeyboard()
         self.registerView.nameTextField.delegate = self
         self.registerView.coinTextField.delegate = self
         
@@ -154,18 +178,23 @@ class WelcomeViewController: UIViewController {
         pageViewController.view.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
     
-    func addNextButtonOnKeyboard() {
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+    func addButtonsOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar()
         doneToolbar.barStyle = UIBarStyle.black
         doneToolbar.isTranslucent = true
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(nextButtonAction))
-        done.tintColor = .white
+        prevButtonItem = UIBarButtonItem(title: "Previous", style: .plain, target: self, action: #selector(prevButtonAction))
+        prevButtonItem.isEnabled = false
+        prevButtonItem.tintColor = .clear
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let nextButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonAction))
+        nextButtonItem.tintColor = .white
         
         var items = [UIBarButtonItem]()
+        items.append(prevButtonItem)
         items.append(flexSpace)
-        items.append(done)
+        items.append(nextButtonItem)
         doneToolbar.items = items
         doneToolbar.sizeToFit()
         
