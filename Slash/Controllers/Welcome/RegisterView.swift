@@ -11,6 +11,8 @@ import UIKit
 
 class RegisterView: UIView {
     
+    var coinAmounts = ["BTC AMOUNT", "ETH AMOUNT", "LTC AMOUNT", "BCH AMOUNT", "ETC AMOUNT"]
+    
     var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "NAME"
@@ -41,46 +43,15 @@ class RegisterView: UIView {
         return view
     }()
     
-    var btcLabel: UILabel = {
+    lazy var coinLabel: UILabel = {
         let label = UILabel()
-        label.text = "BTC AMOUNT"
+        label.text = coinAmounts[0]
         label.font = UIFont(name: "Avenir-Medium", size: 13)
         label.textAlignment = .left
         label.textColor = .orange
         return label
     }()
-    var ethLabel: UILabel = {
-        let label = UILabel()
-        label.text = "ETH"
-        label.font = UIFont(name: "Avenir-Medium", size: 13)
-        label.textAlignment = .left
-        label.textColor = .lightGray
-        return label
-    }()
-    var ltcLabel: UILabel = {
-        let label = UILabel()
-        label.text = "LTC"
-        label.font = UIFont(name: "Avenir-Medium", size: 13)
-        label.textAlignment = .left
-        label.textColor = .lightGray
-        return label
-    }()
-    var bchLabel: UILabel = {
-        let label = UILabel()
-        label.text = "BCH"
-        label.font = UIFont(name: "Avenir-Medium", size: 13)
-        label.textAlignment = .left
-        label.textColor = .lightGray
-        return label
-    }()
-    var etcLabel: UILabel = {
-        let label = UILabel()
-        label.text = "ETC"
-        label.font = UIFont(name: "Avenir-Medium", size: 13)
-        label.textAlignment = .right
-        label.textColor = .lightGray
-        return label
-    }()
+   
     var coinTextField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont(name: "Avenir-Medium", size: 13)
@@ -91,16 +62,6 @@ class RegisterView: UIView {
         return textField
     }()
     
-    lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.addArrangedSubview(btcLabel)
-        stackView.addArrangedSubview(ethLabel)
-        stackView.addArrangedSubview(ltcLabel)
-        stackView.addArrangedSubview(bchLabel)
-        stackView.addArrangedSubview(etcLabel)
-        stackView.distribution = .equalSpacing
-        return stackView
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -110,37 +71,14 @@ class RegisterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addDoneButtonOnKeyboard() {
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        doneToolbar.barStyle = UIBarStyle.black
-        doneToolbar.isTranslucent = true
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doneButtonAction))
-        done.tintColor = .white
-        
-        var items = [UIBarButtonItem]()
-        items.append(flexSpace)
-        items.append(done)
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.coinTextField.inputAccessoryView = doneToolbar
-    }
-    
-    @objc func doneButtonAction() {
-        self.coinTextField.resignFirstResponder()
-    }
-    
     func setupView() {
         addSubview(nameLabel)
         addSubview(nameTextField)
         addSubview(line)
         
-        addSubview(stackView)
+        addSubview(coinLabel)
         addSubview(coinTextField)
         addSubview(line2)
-        self.addDoneButtonOnKeyboard()
 
         //: Name
         nameLabel.anchor(top: self.topAnchor, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 45, height: 25)
@@ -148,8 +86,8 @@ class RegisterView: UIView {
         line.anchor(top: nameTextField.bottomAnchor, bottom: nil, left: nameTextField.leftAnchor, right: nameTextField.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 1)
         
         //: BTC
-        stackView.anchor(top: self.line.bottomAnchor, bottom: nil, left: self.nameLabel.leftAnchor, right: self.rightAnchor, paddingTop: 35, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 0, height: 25)
-        coinTextField.anchor(top: self.btcLabel.bottomAnchor, bottom: nil, left: nameLabel.leftAnchor, right: self.rightAnchor, paddingTop: 4, paddingBottom: 0, paddingLeft: 0, paddingRight: 20, width: 0, height: 25)
+        coinLabel.anchor(top: self.line.bottomAnchor, bottom: nil, left: self.nameLabel.leftAnchor, right: self.rightAnchor, paddingTop: 35, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 0, height: 25)
+        coinTextField.anchor(top: self.coinLabel.bottomAnchor, bottom: nil, left: nameLabel.leftAnchor, right: self.rightAnchor, paddingTop: 4, paddingBottom: 0, paddingLeft: 0, paddingRight: 20, width: 0, height: 25)
         line2.anchor(top: coinTextField.bottomAnchor, bottom: nil, left: nameTextField.leftAnchor, right: nameTextField.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 1)
         
     }

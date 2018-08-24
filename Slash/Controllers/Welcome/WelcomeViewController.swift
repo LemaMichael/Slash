@@ -18,6 +18,13 @@ class WelcomeViewController: UIViewController {
                                          UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
+    var name = ""
+    var btcAmount = 0.0
+    var ethAmount = 0.0
+    var ltcAmount = 0.0
+    var bchAmount = 0.0
+    var etcAmount = 0.0
+    
     let imageView: UIImageView = {
         let imageView = UIImageView()
         let welcomeImage = #imageLiteral(resourceName: "Welcome")
@@ -42,7 +49,6 @@ class WelcomeViewController: UIViewController {
         return view
     }()
     
-    
     lazy var startButton: UIButton = {
         let button = UIButton(type: .system)
         button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 22)
@@ -65,11 +71,52 @@ class WelcomeViewController: UIViewController {
     @objc func startTapped() {
         print("Start Button tapped")
         UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
-//            self.startButton.isHidden = true
+            //            self.startButton.isHidden = true
             self.registerView.isHidden = false
         })
-
+    }
+    
+    @objc func nextButtonAction() {
+        let textField: UITextField = self.registerView.coinTextField
+        let coinLabel: UILabel = self.registerView.coinLabel
         
+        guard let coinText = coinLabel.text else {return}
+        //: I rather get the substring "BTC" instead of "BTC AMOUNT"
+        let start = coinText.startIndex
+        let end = coinText.index(start, offsetBy: 3)
+        let range = start..<end
+        let currentCoin = coinText[range]
+        
+        guard let inputText = textField.text else { return }
+        let doubleVal = Double(inputText) ?? 0.0
+        let invalidInput: Bool = (inputText.isEmpty || doubleVal == 0.0)
+        
+        switch currentCoin {
+        case "BTC":
+            btcAmount = invalidInput ? 0.0 : doubleVal
+            //: Clear out
+            textField.text = ""
+            //: change Label text
+            coinLabel.text = self.registerView.coinAmounts[1]
+        case "ETH":
+            ethAmount = invalidInput ? 0.0 : doubleVal
+            textField.text = ""
+            coinLabel.text = self.registerView.coinAmounts[2]
+        case "LTC":
+            ltcAmount = invalidInput ? 0.0 : doubleVal
+            textField.text = ""
+            coinLabel.text = self.registerView.coinAmounts[3]
+        case "BCH":
+            bchAmount = invalidInput ? 0.0 : doubleVal
+            textField.text = ""
+            coinLabel.text = self.registerView.coinAmounts[4]
+        case "ETC":
+            etcAmount = invalidInput ? 0.0 : doubleVal
+            let user = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount)
+            textField.resignFirstResponder()
+        default:
+            textField.resignFirstResponder()
+        }
     }
     
     override func viewDidLoad() {
@@ -79,6 +126,11 @@ class WelcomeViewController: UIViewController {
         self.view.addSubview(registerView)
         self.addChildViewController(pageViewController)
         self.view.addSubview(pageViewController.view)
+        
+        //: Textfield
+        self.addNextButtonOnKeyboard()
+        self.registerView.nameTextField.delegate = self
+        self.registerView.coinTextField.delegate = self
         
         
         let height = self.view.bounds.height
@@ -90,7 +142,7 @@ class WelcomeViewController: UIViewController {
         registerView.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: self.view.bounds.height / 2)
         registerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         registerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-
+        
         imageView.anchor(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         
         startButton.anchor(top: nil, bottom: self.view.bottomAnchor, left: nil, right: nil, paddingTop: 0, paddingBottom: -30, paddingLeft: 0, paddingRight: 0, width: 200, height: 0)
@@ -100,6 +152,24 @@ class WelcomeViewController: UIViewController {
         pageViewController.view.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -40).isActive = true
         pageViewController.view.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
         pageViewController.view.heightAnchor.constraint(equalToConstant: 100).isActive = true
+    }
+    
+    func addNextButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.black
+        doneToolbar.isTranslucent = true
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(nextButtonAction))
+        done.tintColor = .white
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.registerView.coinTextField.inputAccessoryView = doneToolbar
     }
     
     //: MARK: - viewWillAppear & viewWillDisappear
@@ -113,4 +183,29 @@ class WelcomeViewController: UIViewController {
     }
 }
 
+
+//: MARK: - UITextFieldDelegate
+extension WelcomeViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == self.registerView.nameTextField {
+        } else if textField == self.registerView.coinTextField  {
+        }
+        return true
+    }
+    
+    //: Use this method to validate the current text
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField == self.registerView.nameTextField {
+            if let validName = self.registerView.nameTextField.text { name = validName }
+        }
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.registerView.coinTextField.becomeFirstResponder()
+        if let validName = self.registerView.nameTextField.text { name = validName }
+        return true
+    }
+}
 
