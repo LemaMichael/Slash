@@ -42,7 +42,7 @@ class WelcomeViewController: UIViewController {
     let registerView: RegisterView = {
         let view = RegisterView()
         view.backgroundColor = .clear
-        view.isHidden = false
+        view.isHidden = true
         return view
     }()
     
@@ -66,11 +66,16 @@ class WelcomeViewController: UIViewController {
     }()
     
     @objc func startTapped() {
-        print("Start Button tapped")
-        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            //            self.startButton.isHidden = true
-            self.registerView.isHidden = false
-        })
+        // https://stackoverflow.com/questions/37722323/how-to-present-view-controller-from-right-to-left-in-ios-using-swift
+        let transition = CATransition()
+        transition.duration = 0.6
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        self.registerView.layer.add(transition, forKey: kCATransition)
+        self.registerView.isHidden = false
+        self.registerView.alpha = 1
+        self.registerView.nameTextField.becomeFirstResponder()
     }
     
     @objc func nextButtonAction() {

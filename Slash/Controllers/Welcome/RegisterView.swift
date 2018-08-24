@@ -93,6 +93,15 @@ class RegisterView: UIView {
         line2.anchor(top: coinTextField.bottomAnchor, bottom: nil, left: nameTextField.leftAnchor, right: nameTextField.rightAnchor, paddingTop: 2, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 1)
         
     }
+    
+    override func endEditing(_ force: Bool) -> Bool {
+        nameTextField.resignFirstResponder()
+        coinTextField.resignFirstResponder()
+        UIView.animate(withDuration: 0.61, delay: 0, options: [.curveEaseOut], animations: {
+            self.alpha = 0 
+        }, completion: nil)
+        return true
+    }
 }
 
 
