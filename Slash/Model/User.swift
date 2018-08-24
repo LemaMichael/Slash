@@ -21,11 +21,7 @@ class User {
     var ethereumClassicBalance: Double!
     
     init() {
-        if let username = UserDefaults.standard.getUsername() {
-            name = username
-        } else {
-            name = "User"
-        }
+        name = UserDefaults.standard.getUsername()
         bitcoinBalance = UserDefaults.standard.getBTCBalance()
         ethereumBalance = UserDefaults.standard.getETHBalance()
         litecoinBalance = UserDefaults.standard.getLTCBalance()
@@ -34,14 +30,15 @@ class User {
     }
     
     init(name: String, btcBalance: Double, ethBalance: Double, ltcBalance: Double, bchBalance: Double, etcBlance: Double) {
-        self.name = name
+        
+        self.name = (name.isEmpty) ? "User" : name
         self.bitcoinBalance = btcBalance
         self.ethereumBalance = ethBalance
         self.litecoinBalance = ltcBalance
         self.bitcoinCashBalance = bchBalance
         self.ethereumClassicBalance = etcBlance
         
-        UserDefaults.standard.setUsername(value: name)
+        UserDefaults.standard.setUsername(value: self.name)
         UserDefaults.standard.setBTCBalance(value: bitcoinBalance)
         UserDefaults.standard.setETHBalance(value: ethereumBalance)
         UserDefaults.standard.setLTCBalance(value: litecoinBalance)
@@ -50,8 +47,7 @@ class User {
     }
     
     func getName() -> String {
-        guard let name = UserDefaults.standard.getUsername() else {return "User"}
-        return name
+       return UserDefaults.standard.getUsername()
     }
     
     func getCoinBalance(coinName: String) -> Double {

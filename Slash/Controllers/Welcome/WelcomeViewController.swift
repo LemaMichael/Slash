@@ -18,7 +18,7 @@ class WelcomeViewController: UIViewController {
                                          UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
-    var name = ""
+    var name = String()
     var btcAmount = 0.0, ethAmount = 0.0, ltcAmount = 0.0, bchAmount = 0.0, etcAmount = 0.0
     var prevButtonItem = UIBarButtonItem()
     
@@ -99,31 +99,41 @@ class WelcomeViewController: UIViewController {
             //: Clear out
             textField.text = ""
             //: change Label text
+            self.registerView.animateTextChange(forward: true)
             coinLabel.text = self.registerView.coinAmounts[1]
             prevButtonItem.isEnabled = true
             prevButtonItem.tintColor = .white
+            
         case "ETH":
             ethAmount = invalidInput ? 0.0 : doubleVal
             textField.text = ""
+            self.registerView.animateTextChange(forward: true)
             coinLabel.text = self.registerView.coinAmounts[2]
         case "LTC":
             ltcAmount = invalidInput ? 0.0 : doubleVal
             textField.text = ""
+            self.registerView.animateTextChange(forward: true)
             coinLabel.text = self.registerView.coinAmounts[3]
         case "BCH":
             bchAmount = invalidInput ? 0.0 : doubleVal
             textField.text = ""
+            self.registerView.animateTextChange(forward: true)
             coinLabel.text = self.registerView.coinAmounts[4]
         case "ETC":
-            etcAmount = invalidInput ? 0.0 : doubleVal
-            let user = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount)
             textField.resignFirstResponder()
+            etcAmount = invalidInput ? 0.0 : doubleVal
+            let homeController = HomeViewController()
+            let user = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount)
+            homeController.currentUser = user
+            self.navigationController?.pushViewController(homeController, animated: true)
         default:
             textField.resignFirstResponder()
         }
     }
     
     @objc func prevButtonAction() {
+        let textField: UITextField = self.registerView.coinTextField
+
         let coinLabel: UILabel = self.registerView.coinLabel
         guard let coinText = coinLabel.text else {return}
         //: I rather get the substring "BTC" instead of "BTC AMOUNT"
@@ -134,14 +144,22 @@ class WelcomeViewController: UIViewController {
         
         switch currentCoin {
         case "ETH":
+            textField.text = ""
+            self.registerView.animateTextChange(forward: false)
             coinLabel.text = self.registerView.coinAmounts[0]
             prevButtonItem.isEnabled = false
             prevButtonItem.tintColor = .clear
         case "LTC":
+            textField.text = ""
+            self.registerView.animateTextChange(forward: false)
             coinLabel.text = self.registerView.coinAmounts[1]
         case "BCH":
+            textField.text = ""
+            self.registerView.animateTextChange(forward: false)
             coinLabel.text = self.registerView.coinAmounts[2]
         case "ETC":
+            textField.text = ""
+            self.registerView.animateTextChange(forward: false)
             coinLabel.text = self.registerView.coinAmounts[3]
         default:
             return

@@ -19,8 +19,9 @@ extension UserDefaults {
         set(value, forKey: UserDefaultKeys.Username.rawValue)
         synchronize()
     }
-    func getUsername() -> String? {
-        return string(forKey: UserDefaultKeys.Username.rawValue)
+    func getUsername() -> String {
+        guard let validName = string(forKey: UserDefaultKeys.Username.rawValue) else { return "User" }
+        return validName
     }
     //: Number of coins user has
     func setBTCBalance(value: Double)  {

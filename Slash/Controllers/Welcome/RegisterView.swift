@@ -71,6 +71,15 @@ class RegisterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func animateTextChange(forward: Bool) {
+        let transition = CATransition()
+        transition.duration = 0.6
+        transition.type = kCATransitionPush
+        transition.subtype = forward ? kCATransitionFromRight : kCATransitionFromLeft
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        self.coinLabel.layer.add(transition, forKey: kCATransition)
+    }
+    
     func setupView() {
         //: Dismiss keyboard if user taps outside textfield
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing(_:))))
