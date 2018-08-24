@@ -16,7 +16,7 @@ class RegisterView: UIView {
     var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "NAME"
-        label.font = UIFont(name: "Avenir-Medium", size: 13)
+        label.font = UIFont(name: "Avenir-Heavy", size: 13)
         label.textAlignment = .left
         label.textColor = .orange
         return label
@@ -46,7 +46,7 @@ class RegisterView: UIView {
     lazy var coinLabel: UILabel = {
         let label = UILabel()
         label.text = coinAmounts[0]
-        label.font = UIFont(name: "Avenir-Medium", size: 13)
+        label.font = UIFont(name: "Avenir-Heavy", size: 13)
         label.textAlignment = .left
         label.textColor = .orange
         return label

@@ -402,7 +402,7 @@ extension HomeViewController {
             } else {
                 cell.stopAnimation()
             }
-            print("Chart data: For \(coins[indexPath.item].officialName()), HIGH: \(cell.chartView.data?.getYMax()) LOW: \(cell.chartView.data?.getYMin())")
+            print("Chart data: For \(coins[indexPath.item].officialName()), HIGH: \(String(describing: cell.chartView.data?.getYMax())) LOW: \(String(describing: cell.chartView.data?.getYMin()))")
             let percentage = currentUser.portfolioPercentage(coinName: coins[indexPath.item].officialName())
             print("For \(indexPath.item) the percentage is \(percentage)")
             cell.setupProgressBarAnimation(value: percentage)
