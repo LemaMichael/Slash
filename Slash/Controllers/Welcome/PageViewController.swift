@@ -11,6 +11,8 @@ import UIKit
 
 class PageViewController: UIPageViewController {
     
+    fileprivate var timer = Timer()
+    
     fileprivate lazy var pages: [UIViewController] = {
         let page1 = Page()
         page1.headingLabel.text = "Welcome"
@@ -21,7 +23,7 @@ class PageViewController: UIPageViewController {
         let page3 = Page()
         page3.headingLabel.text = "Your Portfolio"
         page3.subLabel.text = "Watch your coin portfolio progress by letting Slash do the hard work!"
-       return [page1, page2, page3]
+        return [page1, page2, page3]
     }()
     
     var pageControl = UIPageControl()
@@ -46,6 +48,21 @@ class PageViewController: UIPageViewController {
         if let firstVC = pages.first {
             setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
+        startTimer()
+    }
+    
+    func startTimer() {
+        self.timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(moveToNextController), userInfo: nil, repeats: true)
+    }
+    func resetTimer(){
+        self.timer.invalidate()
+        startTimer()
+    }
+    @objc func moveToNextController() {
+        guard let currentViewController = self.viewControllers?.first else { return }
+        guard let nextViewController = dataSource?.pageViewController(self, viewControllerAfter: currentViewController) else { return }
+        self.pageControl.currentPage = pages.index(of: nextViewController)!
+        setViewControllers([nextViewController], direction: .forward, animated: true, completion: nil)
     }
 }
 
@@ -70,6 +87,7 @@ extension PageViewController: UIPageViewControllerDataSource {
 
 extension PageViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        resetTimer()
         let viewControllerIndex = pageViewController.viewControllers![0]
         self.pageControl.currentPage = pages.index(of: viewControllerIndex)!
     }
