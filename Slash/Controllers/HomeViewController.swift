@@ -26,7 +26,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.collectionView.reloadData()
             if coins.count >= 5 {
                 getHistoricData()
-                // FIXME: Find a better place to put this
+                // FIXME: Find a better place to put this. NOTE this should scroll to the cell with the highest percentage holding
                 self.collectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .centeredHorizontally, animated: true)
             }
         }
@@ -402,7 +402,7 @@ extension HomeViewController {
             } else {
                 cell.stopAnimation()
             }
-            
+            print("Chart data: For \(coins[indexPath.item].officialName()), HIGH: \(cell.chartView.data?.getYMax()) LOW: \(cell.chartView.data?.getYMin())")
             let percentage = currentUser.portfolioPercentage(coinName: coins[indexPath.item].officialName())
             print("For \(indexPath.item) the percentage is \(percentage)")
             cell.setupProgressBarAnimation(value: percentage)
