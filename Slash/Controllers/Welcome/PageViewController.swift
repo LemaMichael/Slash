@@ -62,7 +62,7 @@ extension PageViewController: UIPageViewControllerDataSource {
         guard let viewControllerIndex = pages.index(of: viewController) else { return nil }
         let nextIndex = viewControllerIndex + 1
         guard nextIndex < pages.count else { return pages.first }
-        guard pages.count > nextIndex else { return nil         }
+        guard pages.count > nextIndex else { return nil }
         return pages[nextIndex]
     }
     
