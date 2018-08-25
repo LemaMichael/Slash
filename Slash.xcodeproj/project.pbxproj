@@ -19,6 +19,7 @@
 		4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C29FA97212DCF98007FAF90 /* UserDefaultsExtension.swift */; };
 		4C2C9C162128AAD20041175E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C152128AAD20041175E /* WelcomeViewController.swift */; };
 		4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */; };
+		4C2D79C42130DCCD001FAF7B /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */; };
 		4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C37EAB9212CFD9D00A5E269 /* Fonts.swift */; };
 		4C94D97221262272008F80EE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97121262272008F80EE /* Extensions.swift */; };
 		4C94D97521266E63008F80EE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97421266E63008F80EE /* Pair.swift */; };
@@ -49,6 +50,7 @@
 		4C29FA97212DCF98007FAF90 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		4C2C9C152128AAD20041175E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleWebSocketClient.swift; sourceTree = "<group>"; };
+		4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		4C37EAB9212CFD9D00A5E269 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4C94D97121262272008F80EE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4C94D97421266E63008F80EE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		4CE2989E212616C4008A533A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */,
 				4C96F73C212F9508001D16D8 /* Welcome */,
 				4CE2989C2126156D008A533A /* HomeViewController.swift */,
 				4C20F0432126019100CEB049 /* BTCController.swift */,
@@ -337,6 +340,7 @@
 				4CE298A621261748008A533A /* ETCController.swift in Sources */,
 				4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */,
 				4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */,
+				4C2D79C42130DCCD001FAF7B /* MainNavigationController.swift in Sources */,
 				4CE298A0212616F4008A533A /* ETHController.swift in Sources */,
 				4C96F73E212F9520001D16D8 /* PageViewController.swift in Sources */,
 				4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */,

@@ -18,6 +18,7 @@ class WelcomeViewController: UIViewController {
                                          UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
+    
     var name = String()
     var btcAmount = 0.0, ethAmount = 0.0, ltcAmount = 0.0, bchAmount = 0.0, etcAmount = 0.0
     var prevButtonItem = UIBarButtonItem()
@@ -122,10 +123,10 @@ class WelcomeViewController: UIViewController {
         case "ETC":
             textField.resignFirstResponder()
             etcAmount = invalidInput ? 0.0 : doubleVal
-            let homeController = HomeViewController()
-            let user = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount)
-            homeController.currentUser = user
-            self.navigationController?.pushViewController(homeController, animated: true)
+            _ = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount)
+            
+            UserDefaults.standard.setIsLoggedIn(value: true)
+            self.present(HomeViewController(), animated: false, completion: nil)
         default:
             textField.resignFirstResponder()
         }

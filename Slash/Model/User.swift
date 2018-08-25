@@ -10,24 +10,15 @@ import Foundation
 import UIKit
 
 
-class User {
+class User: Codable {
     
-    var name: String!
+    var name: String
     //: Coins available
-    var bitcoinBalance: Double!
-    var ethereumBalance: Double!
-    var litecoinBalance: Double!
-    var bitcoinCashBalance: Double!
-    var ethereumClassicBalance: Double!
-    
-    init() {
-        name = UserDefaults.standard.getUsername()
-        bitcoinBalance = UserDefaults.standard.getBTCBalance()
-        ethereumBalance = UserDefaults.standard.getETHBalance()
-        litecoinBalance = UserDefaults.standard.getLTCBalance()
-        bitcoinCashBalance = UserDefaults.standard.getBCHBalance()
-        ethereumClassicBalance = UserDefaults.standard.getETCBalance()
-    }
+    var bitcoinBalance: Double
+    var ethereumBalance: Double
+    var litecoinBalance: Double
+    var bitcoinCashBalance: Double
+    var ethereumClassicBalance: Double
     
     init(name: String, btcBalance: Double, ethBalance: Double, ltcBalance: Double, bchBalance: Double, etcBlance: Double) {
         
@@ -44,6 +35,10 @@ class User {
         UserDefaults.standard.setLTCBalance(value: litecoinBalance)
         UserDefaults.standard.setBCHBalance(value: bitcoinCashBalance)
         UserDefaults.standard.setETCBalance(value: ethereumClassicBalance)
+        
+        //: Must save user
+        let userData = try! JSONEncoder().encode(self)
+        UserDefaults.standard.setUser(value: userData)
     }
     
     func getName() -> String {

@@ -12,6 +12,20 @@ extension UserDefaults {
     enum UserDefaultKeys: String {
         case Username, BTCBalance, ETHBalance, LTCBalance, BCHBalance, ETCBalance
         case BTCPrice, ETHPrice, LTCPrice, BCHPrice, ETCPrice
+        case isLoggedIn, isFirstLaunch
+        case user
+    }
+    
+    func setUser(value: Data) {
+        set(value, forKey: UserDefaultKeys.user.rawValue)
+        synchronize()
+    }
+    func getUser() -> User {
+        guard let userData = UserDefaults.standard.data(forKey: UserDefaultKeys.user.rawValue) else {
+            return User(name: "User", btcBalance: 0, ethBalance: 0, ltcBalance: 0, bchBalance: 0, etcBlance: 0)
+        }
+        let user = try! JSONDecoder().decode(User.self, from: userData)
+        return user
     }
     
     //: Anything else to add?
@@ -97,7 +111,24 @@ extension UserDefaults {
         return double(forKey: UserDefaultKeys.ETCPrice.rawValue)
     }
     
-    //: Find the last date & time it was updated.
+    //:TODO- Find the last date & time it was updated.
+    
+    //: Determine if the user has logged in before
+    func setIsLoggedIn(value: Bool) {
+        set(value, forKey: UserDefaultKeys.isLoggedIn.rawValue)
+        synchronize()
+    }
+    func isLoggedIn() -> Bool {
+        return bool(forKey: UserDefaultKeys.isLoggedIn.rawValue)
+    }
+    
+    //: TODO: Do something with this
+    func setIsFirstLaunch(value: Bool) {
+        set(value, forKey: UserDefaultKeys.isFirstLaunch.rawValue)
+    }
+    func isFirstLaunch() -> Bool {
+        return bool(forKey: UserDefaultKeys.isFirstLaunch.rawValue)
+    }
     
 }
 
