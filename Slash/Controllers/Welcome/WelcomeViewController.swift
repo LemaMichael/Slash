@@ -124,9 +124,8 @@ class WelcomeViewController: UIViewController {
             textField.resignFirstResponder()
             etcAmount = invalidInput ? 0.0 : doubleVal
             _ = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount)
-            
             UserDefaults.standard.setIsLoggedIn(value: true)
-            self.present(HomeViewController(), animated: false, completion: nil)
+            self.navigationController?.pushViewController(HomeViewController(), animated: false)
         default:
             textField.resignFirstResponder()
         }

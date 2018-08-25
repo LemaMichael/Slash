@@ -20,7 +20,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                          UIColor(red:0.57, green:0.57, blue:0.57, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
-    
     var coins: [CoinDetail] = [CoinDetail]() {
         didSet {
             self.collectionView.reloadData()
@@ -28,6 +27,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 getHistoricData()
                 // FIXME: Find a better place to put this. NOTE this should scroll to the cell with the highest percentage holding
                 self.collectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .centeredHorizontally, animated: true)
+                
+                //: Once we have all the coins, lets do a quick anaylsis.
+                quickAnalysis()
             }
         }
     }
@@ -76,7 +78,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 2
-        label.text = "Hello \(currentUser.getName()),\nThe crypto market is down today."
+        label.text = "Hello \(currentUser.getName()),\n"
         label.font = UIFont(name: "Avenir-Book", size: 15)
         label.textColor = .white
         return label
@@ -109,6 +111,31 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.register(CoinCell.self, forCellWithReuseIdentifier: HomeViewController.coinCellId)
         return collectionView
     }()
+    
+    func quickAnalysis() {
+        var postiveVal = 0, negativeVal = 0
+        let count = coins.count
+        let label = accountDescription
+        if (count == 0) { //: Perhaps no connection?
+            return
+        }
+        for coin in coins {
+            if coin.difference() < 0 {
+                negativeVal += 1
+            } else {
+                postiveVal += 1
+            }
+        }
+        label.text! += "The crypto market is "
+        if (negativeVal > postiveVal) {
+            label.text! += "down today."
+        } else if (negativeVal < postiveVal) {
+            label.text! += "up today."
+        } else { //: negativeVal == postiveVal
+            label.text! += "up to something today."
+        }
+    }
+    
     
     @objc func searchTapped() {
         //: FIXME: BRing up a tableViewController later

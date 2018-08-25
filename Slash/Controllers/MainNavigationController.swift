@@ -22,6 +22,9 @@ class MainNavigationController: UINavigationController {
         super.viewDidLoad()
         //self.view.insertSubview(backgroundImage, at: 0)
         
+        //: For testing
+        //UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        //UserDefaults.standard.synchronize()
         if isLoggedIn() {
             perform(#selector(showHomeViewController), with: nil, afterDelay: 0.00) //0.70
         } else {
@@ -33,18 +36,17 @@ class MainNavigationController: UINavigationController {
     fileprivate func isLoggedIn() -> Bool {
         return UserDefaults.standard.isLoggedIn()
     }
-    //: MARK: - viewDidDisappear
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
     
     @objc func showHomeViewController() {
-        self.present(HomeViewController(), animated: false, completion: nil)
-        //self.pushViewController(homeViewController, animated: true)
+        self.pushViewController(HomeViewController(), animated: false)
     }
-    
+    //: MARK: - viewWillAppear & viewWillDisappear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
