@@ -26,7 +26,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if coins.count >= 5 {
                 getHistoricData()
                 // FIXME: Find a better place to put this. NOTE this should scroll to the cell with the highest percentage holding
-                self.collectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .centeredHorizontally, animated: true)
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
                 
                 //: Once we have all the coins, lets do a quick anaylsis.
                 quickAnalysis()
@@ -471,7 +471,11 @@ extension HomeViewController {
         let title = "Success!"
         let description = "You have added \(currentCell.coinLabel.text ?? "this coin") to your portfolio"
         
-        self.navigationController?.pushViewController(CoinController(), animated: true)
+        let coinControl = CoinController()
+        let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
+
+        coinControl.chartView.setData(values: result, lineColor: colors[indexPath.item])
+        self.navigationController?.pushViewController(coinControl, animated: true)
         //showPopupMessage(attributes: defaultAttributes(), title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: UIColor(red: 0.380392, green: 0.380392, blue: 0.380392, alpha: 1), buttonBackgroundColor: .white, image: image)
     }
     

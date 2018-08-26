@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 class CoinController: UIViewController {
     
@@ -26,6 +27,9 @@ class CoinController: UIViewController {
     }()
     
     let priceContentView = PriceContentView()
+    
+    lazy var chartView = ChartView()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +37,7 @@ class CoinController: UIViewController {
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(priceContentView)
+        contentView.addSubview(chartView)
         
         setupConstraints()
     }
@@ -47,6 +52,8 @@ class CoinController: UIViewController {
             priceContentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true
         }
         priceContentView.anchor(top: nil, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 130)
+        
+        chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 340)
     }
     
     override func viewWillAppear(_ animated: Bool) {
