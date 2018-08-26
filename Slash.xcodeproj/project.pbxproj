@@ -12,7 +12,7 @@
 		4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A005F212787D300919278 /* FloatFormatters.swift */; };
 		4C0A006621278B3A00919278 /* ReferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A006521278B3A00919278 /* ReferenceType.swift */; };
 		4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F03F2126019100CEB049 /* AppDelegate.swift */; };
-		4C20F0442126019100CEB049 /* BTCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F0432126019100CEB049 /* BTCController.swift */; };
+		4C20F0442126019100CEB049 /* CoinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F0432126019100CEB049 /* CoinController.swift */; };
 		4C20F04B2126019200CEB049 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04A2126019200CEB049 /* Assets.xcassets */; };
 		4C20F04E2126019200CEB049 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04C2126019200CEB049 /* LaunchScreen.storyboard */; };
 		4C29FA96212DCA50007FAF90 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C29FA95212DCA50007FAF90 /* User.swift */; };
@@ -21,6 +21,7 @@
 		4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */; };
 		4C2D79C42130DCCD001FAF7B /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */; };
 		4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C37EAB9212CFD9D00A5E269 /* Fonts.swift */; };
+		4C8DFFE521326BAD00374EC3 /* PriceContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */; };
 		4C94D97221262272008F80EE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97121262272008F80EE /* Extensions.swift */; };
 		4C94D97521266E63008F80EE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97421266E63008F80EE /* Pair.swift */; };
 		4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97621267049008F80EE /* CurrencyFormatter.swift */; };
@@ -42,7 +43,7 @@
 		4C0A006521278B3A00919278 /* ReferenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceType.swift; sourceTree = "<group>"; };
 		4C20F03C2126019100CEB049 /* Slash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C20F03F2126019100CEB049 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4C20F0432126019100CEB049 /* BTCController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCController.swift; sourceTree = "<group>"; };
+		4C20F0432126019100CEB049 /* CoinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinController.swift; sourceTree = "<group>"; };
 		4C20F04A2126019200CEB049 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C20F04D2126019200CEB049 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C20F04F2126019200CEB049 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,6 +53,7 @@
 		4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleWebSocketClient.swift; sourceTree = "<group>"; };
 		4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		4C37EAB9212CFD9D00A5E269 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceContentView.swift; sourceTree = "<group>"; };
 		4C94D97121262272008F80EE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4C94D97421266E63008F80EE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		4C94D97621267049008F80EE /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				4C0A005B212730E700919278 /* CoinCell.swift */,
+				4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -173,7 +176,7 @@
 				4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */,
 				4C96F73C212F9508001D16D8 /* Welcome */,
 				4CE2989C2126156D008A533A /* HomeViewController.swift */,
-				4C20F0432126019100CEB049 /* BTCController.swift */,
+				4C20F0432126019100CEB049 /* CoinController.swift */,
 				4CE2989F212616F4008A533A /* ETHController.swift */,
 				4CE298A121261700008A533A /* LTCController.swift */,
 				4CE298A321261710008A533A /* BCHController.swift */,
@@ -323,7 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C0A006621278B3A00919278 /* ReferenceType.swift in Sources */,
-				4C20F0442126019100CEB049 /* BTCController.swift in Sources */,
+				4C20F0442126019100CEB049 /* CoinController.swift in Sources */,
 				4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */,
 				4C0A005C212730E700919278 /* CoinCell.swift in Sources */,
 				4C94D97D212681CA008F80EE /* Preferences.swift in Sources */,
@@ -343,6 +346,7 @@
 				4C2D79C42130DCCD001FAF7B /* MainNavigationController.swift in Sources */,
 				4CE298A0212616F4008A533A /* ETHController.swift in Sources */,
 				4C96F73E212F9520001D16D8 /* PageViewController.swift in Sources */,
+				4C8DFFE521326BAD00374EC3 /* PriceContentView.swift in Sources */,
 				4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */,
 				4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */,
 				4C29FA96212DCA50007FAF90 /* User.swift in Sources */,

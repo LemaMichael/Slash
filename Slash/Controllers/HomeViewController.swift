@@ -44,7 +44,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     static let coinCellId = "cellId"
     var currentUser = UserDefaults.standard.getUser()
-    //let currentUser = User(name: "Michael", btcBalance: 0.001, ethBalance: 0.006, ltcBalance: 0.006, bchBalance: 0.005, etcBlance: 0.05)
     
     var interval: TimeInterval!
     var timer: Timer!
@@ -113,6 +112,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }()
     
     func quickAnalysis() {
+        print("quick analysis: \(currentUser.bitcoinBalance, currentUser.ethereumBalance, currentUser.litecoinBalance, currentUser.bitcoinCashBalance, currentUser.ethereumClassicBalance)")
         var postiveVal = 0, negativeVal = 0
         let count = coins.count
         let label = accountDescription
@@ -139,6 +139,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @objc func searchTapped() {
         //: FIXME: BRing up a tableViewController later
+    }
+    @objc func moreTapped() {
+        
     }
     
     override func viewDidLoad() {
@@ -178,6 +181,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             accountBalanceLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: paddingTop, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 25)
         } else {
             //: We will have to get the bottom anchor fot the nav bar for iPhone x and other models
+            accountBalanceLabel.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 25)
+            accountBalanceLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 26).isActive = true
         }
         accountDescription.anchor(top: accountBalanceLabel.bottomAnchor, bottom: todaysDateLabel.topAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 5, paddingBottom: -10, paddingLeft: diff, paddingRight: diff, width: 0, height: 0)
         
@@ -193,12 +198,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         //: Adding Title with color
         self.navigationItem.title = "Slash"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font: UIFont(name: "Avenir-Heavy", size: 20)!, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir-Heavy", size: 20)!, NSAttributedStringKey.foregroundColor: UIColor.white]
+        
+        //: Changing default back button
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
         
         //: Changes the bar button icons to white
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Search"), style: .plain, target: self, action: #selector(searchTapped))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "More Icon"), style: .plain, target: self, action: #selector(searchTapped))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "More Icon"), style: .plain, target: self, action: #selector(moreTapped))
         
     }
     
@@ -443,12 +452,12 @@ extension HomeViewController {
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (self.view.frame.width - 60), height: (self.view.frame.height / 2))
+        return CGSize(width: (self.view.frame.width - 65), height: (self.view.frame.height / 2))
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         //: Adjust the cell position
         let width = self.view.frame.width
-        let cellWidth = (self.view.frame.width - 60)
+        let cellWidth = (self.view.frame.width - 65)
         let diff = (width-cellWidth) / 2
         return UIEdgeInsets(top: 0, left: diff, bottom: 0, right: diff)
     }
@@ -462,7 +471,8 @@ extension HomeViewController {
         let title = "Success!"
         let description = "You have added \(currentCell.coinLabel.text ?? "this coin") to your portfolio"
         
-        showPopupMessage(attributes: defaultAttributes(), title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: UIColor(red: 0.380392, green: 0.380392, blue: 0.380392, alpha: 1), buttonBackgroundColor: .white, image: image)
+        self.navigationController?.pushViewController(CoinController(), animated: true)
+        //showPopupMessage(attributes: defaultAttributes(), title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: UIColor(red: 0.380392, green: 0.380392, blue: 0.380392, alpha: 1), buttonBackgroundColor: .white, image: image)
     }
     
     //: Check if collectionView cell takes up the screen

@@ -85,7 +85,7 @@ class CoinCell: UICollectionViewCell {
     let coinPrice: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.text = "$6,567.08"
+        //label.text = "$6,567.08"
         label.font =  UIFont(name: "AvenirNext", size: 50) //: TODO: Find a better font and color
         label.textColor = .black
         label.textAlignment = .center
@@ -95,7 +95,7 @@ class CoinCell: UICollectionViewCell {
     let coinPercentage: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.text = "+240.66 (4.12%)"
+        //label.text = "+240.66 (4.12%)"
         label.font =  MainFont.medium.with(size: 14)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
@@ -107,6 +107,7 @@ class CoinCell: UICollectionViewCell {
         label.textColor = .lightGray
         label.font =  UIFont(name: "Avenir", size: 30)
         label.textAlignment = .left
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
