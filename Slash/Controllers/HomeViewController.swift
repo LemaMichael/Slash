@@ -471,9 +471,10 @@ extension HomeViewController {
         let title = "Success!"
         let description = "You have added \(currentCell.coinLabel.text ?? "this coin") to your portfolio"
         
+        let coinDetail = coins[indexPath.item]
         let coinControl = CoinController()
-        let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
-
+        let result = coinDetail.chartDataEntry.reversed() as [ChartDataEntry]
+        coinControl.coin = coinDetail
         coinControl.chartView.setData(values: result, lineColor: colors[indexPath.item])
         self.navigationController?.pushViewController(coinControl, animated: true)
         //showPopupMessage(attributes: defaultAttributes(), title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: UIColor(red: 0.380392, green: 0.380392, blue: 0.380392, alpha: 1), buttonBackgroundColor: .white, image: image)

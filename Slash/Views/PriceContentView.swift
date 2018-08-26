@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 class PriceContentView: UIView {
-    fileprivate let shadeGray = UIColor(red:0.61, green:0.65, blue:0.69, alpha:1.0)
-    fileprivate let customRed = UIColor(red: 1, green: 0.451, blue: 0.447, alpha: 1)
+    let shadeGray = UIColor(red:0.61, green:0.65, blue:0.69, alpha:1.0)
+    let customRed = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -22,7 +22,7 @@ class PriceContentView: UIView {
     
     lazy var coinPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = "$6,624.01"
+        label.text = "..."
         label.textColor = shadeGray
         let font = UIFont(name: "AvenirNext-DemiBold", size: 25)
         label.textAlignment = .center
@@ -32,7 +32,7 @@ class PriceContentView: UIView {
     
     lazy var percentageLabel: UILabel = {
         let label = UILabel()
-        label.text = "-$9.00 (0.14%) this hour"
+        label.text = "-$9.00 (0.14%) this hour" //TODO:  Default Value should be: "$0.00 (0.00%) this hour"
         label.textColor = customRed //: We'll have to change this color based on the price
         label.font = UIFont(name: "AvenirNext-Medium", size: 16)
         label.textAlignment = .center
