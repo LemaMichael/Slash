@@ -31,6 +31,16 @@ class CoinDetail: NSObject {
         let diff = doublePrice - openDouble
         return diff
     }
+    
+    
+    func difference(to value: Double) -> Double {
+        guard let openVal = self.open else { return zero }
+        let validOpenPrice = openVal.split(separator: ",").joined(separator: "")
+        guard let openPrice = Double(validOpenPrice) else { return zero } //: Properly convert to Double
+        let diff = value - openPrice
+        return diff
+    }
+    
     func percent() -> Double {
         guard let price = self.currentPrice else { return zero }
         let validPrice = price.split(separator: ",").joined(separator: "")  //: Needed to correctly calc percent for Bitcoin
@@ -39,6 +49,15 @@ class CoinDetail: NSObject {
         guard let openDouble = Double(open) else { return zero }
         
         let percent = ((1/(openDouble / doublePrice)) - 1) * 100
+        return percent
+    }
+    
+    func percent(to value: Double) -> Double {
+        guard let openVal = self.open else { return zero }
+        let validOpenPrice = openVal.split(separator: ",").joined(separator: "")
+        guard let openPrice = Double(validOpenPrice) else { return zero } //: Properly convert to Double
+        
+        let percent = ((1/(openPrice / value)) - 1) * 100
         return percent
     }
     
