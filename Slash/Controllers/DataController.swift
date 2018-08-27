@@ -15,7 +15,7 @@ class DataController: UIViewController {
     // Initialize a client
     let client = MarketClient()
     var chartDataEntry = [ChartDataEntry]()
-
+    
     
     func getHistoricData(coinID: String, selectedRange: String) {
         
@@ -40,116 +40,116 @@ class DataController: UIViewController {
             print("! 1W CALLED")
             //: Can't do ONEWEEK and 6hours, fifteenMinutes, fiveMinutes
             range = DateRange.oneWeek
-           //granularity = Granularity.sixHours - can't do
+            //granularity = Granularity.sixHours - can't do
             granularity = Granularity.sixHours //: Gives more than a week
         case "1M":
             print("! 1M CALLED")
             range = DateRange.oneDay
             granularity = Granularity.oneDay
         case "1Y":
-            //: NOTE: range (DateRange.fiveDays) and granularity (Granularity.oneHour) gives 24 hour day result
-            //: NOTE: range (DateRange.fiveDays) and granularity (Granularity.sixhours) gives 1 week result
-            //: NOTE: range (DateRange.fiveDays) and granularity (Granularity.oneDay) gives almost 1 month result
-            //: NOTE: range (DateRange.oneQuarter) and granularity (Granularity.oneDay) gives almost 1 month result
-            //: NOTE: range (DateRange.threeDays) and granularity (Granularity.fifteenMinutes) gives 6 hour day
-            //: NOTE: range (DateRange.threeDays) and granularity (Granularity.onehour) gives 24 hour day result
-            //: NOTE: range (DateRange.oneMonth) and granularity (Granularity.sixhours) almost 1 week result (6 day result)
-            //: NOTE: range (DateRange.oneMonth) and granularity (Granularity.ondeDay) almost 1 month
-
+            //: NOTE: range (DateRange.fiveDays) and granularity (Granularity.oneHour) aug 14 - aug 27
+            //: NOTE: range (DateRange.fiveDays) and granularity (Granularity.sixhours) jun 12 - aug 26
+            //: NOTE: range (DateRange.fiveDays) and granularity (Granularity.oneDay) oct 31 2017 - aug 26
+            //: NOTE: range (DateRange.oneQuarter) and granularity (Granularity.oneDay) oct 31 2017 - aug 26
+            //: NOTE: range (DateRange.threeDays) and granularity (Granularity.fifteenMinutes) aug 23 - aug 26
+            //: NOTE: range (DateRange.threeDays) and granularity (Granularity.onehour) aug 14 2017 - aug 27
+            //: NOTE: range (DateRange.oneMonth) and granularity (Granularity.sixhours) jun 12 - aug 27
+            //: NOTE: range (DateRange.oneMonth) and granularity (Granularity.ondeDay) oct 31, 2017 - aug 26
+            
             print("! 1Y CALLED")
-//            range = DateRange.oneYear
-//            granularity = Granularity.oneDay
-//            granularity = Granularity.sixHours
-//            granularity = Granularity.oneHour
-//            granularity = Granularity.fifteenMinutes
-//            granularity = Granularity.fiveMinutes
-//            granularity = Granularity.oneMinute
-
-//            range = DateRange.fiveDays
-//            granularity = Granularity.oneMinute
-//            granularity = Granularity.fiveMinutes
-//            granularity = Granularity.fifteenMinutes
-//            granularity = Granularity.oneHour
-//            granularity = Granularity.sixHours
-//            granularity = Granularity.oneDay
+            //            range = DateRange.oneYear
+            //            granularity = Granularity.oneDay
+            //            granularity = Granularity.sixHours
+            //            granularity = Granularity.oneHour
+            //            granularity = Granularity.fifteenMinutes
+            //            granularity = Granularity.fiveMinutes
+            //            granularity = Granularity.oneMinute
             
-//            range = DateRange.oneQuarter
-//            granularity = Granularity.oneMinute
-//            granularity = Granularity.fiveMinutes
-//             granularity = Granularity.fifteenMinutes
-//            granularity = Granularity.oneHour
-//           granularity = Granularity.sixHours
-//            granularity = Granularity.oneDay
+            //            range = DateRange.fiveDays
+            //            granularity = Granularity.oneMinute
+            //            granularity = Granularity.fiveMinutes
+            //            granularity = Granularity.fifteenMinutes
+            //            granularity = Granularity.oneHour
+            //            granularity = Granularity.sixHours
+            //            granularity = Granularity.oneDay
             
-//            range = DateRange.threeDays
-//            granularity = Granularity.oneMinute
-//            granularity = Granularity.fiveMinutes
-//             granularity = Granularity.fifteenMinutes
-//             granularity = Granularity.oneHour
-//            granularity = Granularity.sixHours
-//             granularity = Granularity.oneDay
+            //            range = DateRange.oneQuarter
+            //            granularity = Granularity.oneMinute
+            //            granularity = Granularity.fiveMinutes
+            //             granularity = Granularity.fifteenMinutes
+            //            granularity = Granularity.oneHour
+            //           granularity = Granularity.sixHours
+            //            granularity = Granularity.oneDay
+            
+            //            range = DateRange.threeDays
+            //            granularity = Granularity.oneMinute
+            //            granularity = Granularity.fiveMinutes
+            //             granularity = Granularity.fifteenMinutes
+            //             granularity = Granularity.oneHour
+            //            granularity = Granularity.sixHours
+            //             granularity = Granularity.oneDay
             
             range = DateRange.oneMonth
-//            granularity = Granularity.oneMinute
-//            granularity = Granularity.fiveMinutes
-//              granularity = Granularity.fifteenMinutes
-//              granularity = Granularity.oneHour
-//granularity = Granularity.sixHours
+            //            granularity = Granularity.oneMinute
+            //            granularity = Granularity.fiveMinutes
+            //              granularity = Granularity.fifteenMinutes
+            //              granularity = Granularity.oneHour
+            //            granularity = Granularity.sixHours
             granularity = Granularity.oneDay
-
-
+            
+            
         case "All":
             print("! All CALLED")
-            //: NOTE: range (DateRange.oneWeek) and granularity (Granularity.oneHour) gives 1 day result
-            //: NOTE: range (DateRange.oneWeek) and granularity (Granularity.sixhours) almost 1 week result (6 day result)
-            //: NOTE: range (DateRange.oneWeek) and granularity (Granularity.oneDay) almost 1 month result
-            //: NOTE: range (DateRange.fiveYears) and granularity (Granularity.sixHours) almost 1 week result (6 day result)
-//            range = DateRange.fiveYears
-//            granularity = Granularity.oneDay
-//            granularity = Granularity.fifteenMinutes
-//            granularity = Granularity.oneHour
-//            granularity = Granularity.fiveMinutes
-//            granularity = Granularity.oneMinute
-//            granularity = Granularity.sixHours
+            //: NOTE: range (DateRange.oneWeek) and granularity (Granularity.oneHour) aug 14 - aug 26
+            //: NOTE: range (DateRange.oneWeek) and granularity (Granularity.sixhours) jun 12 - aug 26
+            //: NOTE: range (DateRange.oneWeek) and granularity (Granularity.oneDay) nov 1 2017 - aug 26
             
-//            range = DateRange.oneYear
-//            granularity = Granularity.oneMinute
-//              granularity = Granularity.fiveMinutes
-//            granularity = Granularity.fifteenMinutes
-//            granularity = Granularity.oneHour
-//            granularity = Granularity.sixHours
-//            granularity = Granularity.oneDay
-
-//            range = DateRange.threeYears
-//            granularity = Granularity.oneMinute
-//              granularity = Granularity.fiveMinutes
-//            granularity = Granularity.fifteenMinutes
-//            granularity = Granularity.oneHour
-//            granularity = Granularity.sixHours
-//            granularity = Granularity.oneDay
+            //            range = DateRange.fiveYears
+            //            granularity = Granularity.oneDay
+            //            granularity = Granularity.fifteenMinutes
+            //            granularity = Granularity.oneHour
+            //            granularity = Granularity.fiveMinutes
+            //            granularity = Granularity.oneMinute
+            //            granularity = Granularity.sixHours
             
-//            range = DateRange.oneWeek
-//             granularity = Granularity.oneMinute
-//            granularity = Granularity.fiveMinutes
-//            granularity = Granularity.fifteenMinutes
-//            granularity = Granularity.oneHour
-//            granularity = Granularity.sixHours
-//            granularity = Granularity.oneDay
-
-//            range = DateRange.fiveYears
-//            granularity = Granularity.oneMinute
-//            granularity = Granularity.fiveMinutes
-//            granularity = Granularity.fifteenMinutes
-//              granularity = Granularity.oneHour
-//            granularity = Granularity.sixHours
-//            granularity = Granularity.oneDay
-
-
+            //            range = DateRange.oneYear
+            //            granularity = Granularity.oneMinute
+            //              granularity = Granularity.fiveMinutes
+            //            granularity = Granularity.fifteenMinutes
+            //            granularity = Granularity.oneHour
+            //            granularity = Granularity.sixHours
+            //            granularity = Granularity.oneDay
+            
+            //            range = DateRange.threeYears
+            //            granularity = Granularity.oneMinute
+            //              granularity = Granularity.fiveMinutes
+            //            granularity = Granularity.fifteenMinutes
+            //            granularity = Granularity.oneHour
+            //            granularity = Granularity.sixHours
+            //            granularity = Granularity.oneDay
+            
+            //            range = DateRange.oneWeek
+            //             granularity = Granularity.oneMinute
+            //            granularity = Granularity.fiveMinutes
+            //            granularity = Granularity.fifteenMinutes
+            //            granularity = Granularity.oneHour
+            //            granularity = Granularity.sixHours
+            //            granularity = Granularity.oneDay
+            
+            //            range = DateRange.fiveYears
+            //            granularity = Granularity.oneMinute
+            //            granularity = Granularity.fiveMinutes
+            //            granularity = Granularity.fifteenMinutes
+            //              granularity = Granularity.oneHour
+            //            granularity = Granularity.sixHours
+            //            granularity = Granularity.oneDay
+            
+            
         default:
             return
         }
         
-     
+        
         client.historic(pid:coinID, range:range, granularity:granularity) { candles, result in
             switch result {
             case .success(_):
@@ -159,11 +159,9 @@ class DataController: UIViewController {
                     let xVal = Double(item.time.timeIntervalSince1970)
                     print(xVal)
                     let yVal = item.close
-                    //: FIXME: This is not a good way check
-                    if self.chartDataEntry.count < 24 {
-                        print(":\(self.chartDataEntry.count)")
-                        self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
-                    }
+                    print(":\(self.chartDataEntry.count)")
+                    self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
+                    
                 }
                 print("!We are now appending: pid \(coinID)")
                 
@@ -194,10 +192,8 @@ class DataController: UIViewController {
                         let xVal = Double(item.time.timeIntervalSince1970)
                         print(xVal)
                         let yVal = item.close
-                        //: FIXME: This is not a good way check
-                        if self.chartDataEntry.count < 24 {
-                            self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
-                        }
+                        self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
+                        
                     }
                     print("Was able to add: pid \(coinID)")
                     //: Hmmm
@@ -216,9 +212,9 @@ class DataController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
