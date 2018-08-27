@@ -15,7 +15,7 @@ enum RequestError: Error {
 
 class Request {
 
-    let baseURL = "https://api.gdax.com"
+    let baseURL = "https://api.pro.coinbase.com"
     let session = URLSession.shared
     var dataTask: URLSessionDataTask?
     

@@ -14,6 +14,7 @@ class CoinController: UIViewController {
     let priceContentView = PriceContentView()
     var coin = CoinDetail()
     lazy var chartView = ChartView()
+    fileprivate var buttonArray = [CustomGrayButton]()
     
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -30,6 +31,80 @@ class CoinController: UIViewController {
         return view
     }()
     
+    var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
+        stackView.spacing = CGFloat(12)
+        return stackView
+    }()
+    
+    lazy var button1: CustomGrayButton = {
+        let button = CustomGrayButton()
+        button.defaultChosen() //: 1H button should show it is tapped by default
+        button.setTitle("1H", for: .normal)
+        return button
+    }()
+    lazy var button2: CustomGrayButton = {
+        let button = CustomGrayButton()
+        button.setTitle("1D", for: .normal)
+        return button
+    }()
+    lazy var button3: CustomGrayButton = {
+        let button = CustomGrayButton()
+        button.setTitle("1W", for: .normal)
+        return button
+    }()
+    lazy var button4: CustomGrayButton = {
+        let button = CustomGrayButton()
+        button.setTitle("1M", for: .normal)
+        return button
+    }()
+    lazy var button5: CustomGrayButton = {
+        let button = CustomGrayButton()
+        button.setTitle("1Y", for: .normal)
+        return button
+    }()
+    lazy var button6: CustomGrayButton = {
+        let button = CustomGrayButton()
+        button.setTitle("All", for: .normal)
+        return button
+    }()
+    func setupButtons() {
+        buttonArray = [button1, button2, button3, button4, button5, button6]
+        buttonArray.forEach({ $0.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside) })
+    }
+    
+    @objc func buttonTapped(sender: CustomGrayButton) {
+        buttonArray.forEach({$0.defaultState()})
+        sender.showTappedColor()
+        
+//        switch sender {
+//        case button1:
+//            buttonArray.forEach({$0.defaultState()})
+//            sender.showTappedColor()
+//        case button2:
+//            buttonArray.forEach({$0.defaultState()})
+//            sender.showTappedColor()
+//        case button3:
+//            buttonArray.forEach({$0.defaultState()})
+//            sender.showTappedColor()
+//        case button4:
+//            buttonArray.forEach({$0.defaultState()})
+//            sender.showTappedColor()
+//        case button5:
+//            buttonArray.forEach({$0.defaultState()})
+//            sender.showTappedColor()
+//        case button6:
+//            buttonArray.forEach({$0.defaultState()})
+//            sender.showTappedColor()
+//        default:
+//            return
+//        }
+
+    }
+    
     func formatPrice(value: Double, isScrolling: Bool) {
         //: Modify the percentLabel, ex: -$1,172.30 (14.90%)
         var difference = 0.0, percent = 0.00
@@ -42,13 +117,15 @@ class CoinController: UIViewController {
         
         let percentStr = String(format: "  (%.2f%%)", percent)
         priceContentView.percentageLabel.text = CurrencyFormatter.sharedInstance.formatAmount(difference, currency: "USD", options: options) + percentStr
+        if !isScrolling { priceContentView.percentageLabel.text! += " today"} //: FIXME- Will be different depending on the time frame
         priceContentView.percentageLabel.textColor = (difference < 0) ? priceContentView.customRed : priceContentView.customGreen
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = coin.officialName() + " Price"
-        self.priceContentView.coinPriceLabel.text = "$" + coin.currentPrice // FIXME: Currency shouldn't be placed like this
+        
+        self.priceContentView.coinPriceLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coin.validCurrentPrice(), currency: "USD", options: nil)
         formatPrice(value: 0.0, isScrolling: false)
         
         chartView.delegate = self
@@ -58,6 +135,16 @@ class CoinController: UIViewController {
         scrollView.addSubview(contentView)
         contentView.addSubview(priceContentView)
         contentView.addSubview(chartView)
+        contentView.addSubview(stackView)
+        
+        setupButtons()
+        stackView.addArrangedSubview(button1)
+        stackView.addArrangedSubview(button2)
+        stackView.addArrangedSubview(button3)
+        stackView.addArrangedSubview(button4)
+        stackView.addArrangedSubview(button5)
+        stackView.addArrangedSubview(button6)
+        
         setupConstraints()
     }
     
@@ -76,6 +163,8 @@ class CoinController: UIViewController {
         priceContentView.anchor(top: nil, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 130)
         
         chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: -3, paddingBottom: 0, paddingLeft: -9, paddingRight: -9, width: 0, height: 340)
+        
+        stackView.anchor(top: chartView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 22, paddingRight: 22, width: 0, height: 44)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,4 +197,3 @@ extension CoinController : ChartViewDelegate {
     }
     
 }
-

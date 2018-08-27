@@ -32,7 +32,6 @@ class CoinDetail: NSObject {
         return diff
     }
     
-    
     func difference(to value: Double) -> Double {
         guard let openVal = self.open else { return zero }
         let validOpenPrice = openVal.split(separator: ",").joined(separator: "")
@@ -59,6 +58,14 @@ class CoinDetail: NSObject {
         
         let percent = ((1/(openPrice / value)) - 1) * 100
         return percent
+    }
+    
+    //: Get the current price in type Double
+    func validCurrentPrice() -> Double {
+        guard let price = self.currentPrice else { return zero }
+        let validPrice = price.split(separator: ",").joined(separator: "")
+        guard let doublePrice = Double(validPrice) else { return zero }
+        return doublePrice
     }
     
     func imageName() -> String {
