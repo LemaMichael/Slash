@@ -84,44 +84,15 @@ class CoinController: DataController {
         guard let rangeText = sender.titleLabel?.text else {
             return
         }
+        
         self.getHistoricData(coinID: coin.id, selectedRange: rangeText)
         let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
+    
+        
         chartView.setData(values: newData, lineColor: chartColor)
-        chartView.data?.notifyDataChanged()
         chartView.notifyDataSetChanged()
-//        switch sender {
-//        case button1:
-//
-//            chartView.setData(values: newData, lineColor: chartColor)
-//            chartView.data?.notifyDataChanged()
-//            chartView.notifyDataSetChanged()
-//        case button2:
-//            //:  Default state
-//            buttonArray.forEach({$0.defaultState()})
-//            sender.showTappedColor()
-//        case button3:
-//            buttonArray.forEach({$0.defaultState()})
-//            sender.showTappedColor()
-//
-//            self.getHistoricData(coinID: coin.id, selectedRange: rangeText)
-//            let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
-//
-//            chartView.setData(values: newData, lineColor: chartColor)
-//            chartView.data?.notifyDataChanged()
-//            chartView.notifyDataSetChanged()
-//        case button4:
-//            buttonArray.forEach({$0.defaultState()})
-//            sender.showTappedColor()
-//        case button5:
-//            buttonArray.forEach({$0.defaultState()})
-//            sender.showTappedColor()
-//        case button6:
-//            buttonArray.forEach({$0.defaultState()})
-//            sender.showTappedColor()
-//        default:
-//            return
-//        }
-
+        chartView.data?.notifyDataChanged()
+        
     }
     
     func formatPrice(value: Double, isScrolling: Bool) {

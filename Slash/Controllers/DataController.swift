@@ -151,6 +151,7 @@ class DataController: UIViewController {
         
         
         client.historic(pid:coinID, range:range, granularity:granularity) { candles, result in
+            self.chartDataEntry.removeAll()
             switch result {
             case .success(_):
                 //: Each candle has a time, low, high. open, close, volume
@@ -159,31 +160,29 @@ class DataController: UIViewController {
                     let xVal = Double(item.time.timeIntervalSince1970)
                     print(xVal)
                     let yVal = item.close
-                    print(":\(self.chartDataEntry.count)")
+                    print("!\(self.chartDataEntry.count)")
                     self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                     
                 }
-                print("!We are now appending: pid \(coinID)")
+                print("! We are now appending: pid \(coinID)")
                 
             case .failure(let error):
                 print(error.localizedDescription)
                 //: One of the reasons we are here is because we are making too much requests at a time
                 print("!The current pid was not added \(coinID)")
-                self.requestAgain(coinID, selectedRange: selectedRange)
+                self.requestAgain(coinID, selectedRange: range, granularity: granularity)
                 
             }
         }
         
     }
     
-    func requestAgain(_ coinID: String, selectedRange: String) {
+    func requestAgain(_ coinID: String, selectedRange: DateRange, granularity: Granularity ) {
         
         let deadlineTime = DispatchTime.now() + .seconds(2)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
-            print("I am in request again")
-            let range = DateRange.oneDay
-            let granularity = Granularity.oneHour
-            self.client.historic(pid: coinID, range:range, granularity:granularity) { candles, result in
+            print("! I am in request again")
+            self.client.historic(pid: coinID, range: selectedRange, granularity:granularity) { candles, result in
                 switch result {
                 case .success(_):
                     //: Each candle has a time, low, high. open, close, volume
@@ -195,14 +194,14 @@ class DataController: UIViewController {
                         self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                         
                     }
-                    print("Was able to add: pid \(coinID)")
+                    print("! Was able to add: pid \(coinID)")
                     //: Hmmm
                 // self.collectionView.reloadData()
                 case .failure(let error):
                     print(error.localizedDescription)
                     //: One of the reasons we are here because we are making too much requests at a time
-                    print("The current pid was not added2 \(coinID)")
-                    self.requestAgain(coinID, selectedRange: selectedRange)
+                    print("! The current pid was not added2 \(coinID)")
+                    self.requestAgain(coinID, selectedRange: selectedRange, granularity: granularity)
                     
                 }
             }

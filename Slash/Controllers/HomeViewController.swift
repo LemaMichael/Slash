@@ -167,7 +167,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addSubview(accountBalanceLabel)
         self.view.addSubview(accountDescription)
         
-        collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -70, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
+        collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -55, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
         
         let width = self.view.frame.width
         let cellWidth = (self.view.frame.width - 60)
