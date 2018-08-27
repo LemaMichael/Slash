@@ -9,8 +9,9 @@
 import UIKit
 import Charts
 
-class CoinController: DataController {
+class CoinController: DataController, UIScrollViewDelegate {
     
+    let user = UserDefaults.standard.getUser()
     let priceContentView = PriceContentView()
     var coin = CoinDetail()
     var chartColor = UIColor()
@@ -19,19 +20,17 @@ class CoinController: DataController {
     
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = UIColor.white
+        scrollView.backgroundColor = UIColor(red:0.20, green:0.23, blue:0.27, alpha:1.0)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
-        //scrollView.delegate = self
+        scrollView.delegate = self
         return scrollView
     }()
-    
     let contentView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red:0.20, green:0.23, blue:0.27, alpha:1.0)
         return view
     }()
-    
     var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -40,7 +39,6 @@ class CoinController: DataController {
         stackView.spacing = CGFloat(12)
         return stackView
     }()
-    
     lazy var button1: CustomGrayButton = {
         let button = CustomGrayButton()
         button.setTitle("1H", for: .normal)
@@ -72,6 +70,33 @@ class CoinController: DataController {
         button.setTitle("All", for: .normal)
         return button
     }()
+    let dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.7, alpha: 1)
+        return view
+    }()
+    
+    //:TODO- Change font and color
+    lazy var accountHolding: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 15)
+        let title = "Your " + coin.officialName() + " value: \(user.getCoinBalance(coinName: coin.officialName()))"
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.addTarget(self, action: #selector(displayCoinValue), for: .touchUpInside)
+        return button
+    }()
+    //:TODO- Change font and color
+    lazy var coinDescription: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.backgroundColor = .white
+        label.textColor = .white
+        label.font = UIFont(name: "AvenirNext-Medium", size: 15)
+        return label
+    }()
+    
     func setupButtons() {
         buttonArray = [button1, button2, button3, button4, button5, button6]
         buttonArray.forEach({ $0.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside) })
@@ -87,11 +112,25 @@ class CoinController: DataController {
         
         self.getHistoricData(coinID: coin.id, selectedRange: rangeText)
         let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
-    
         
         chartView.setData(values: newData, lineColor: chartColor)
         chartView.notifyDataSetChanged()
         chartView.data?.notifyDataChanged()
+    }
+    
+    @objc func displayCoinValue() {
+        accountHolding.isSelected = !accountHolding.isSelected
+        if accountHolding.isSelected {
+            let currentPrice = user.getCoinPrice(coinName: coin.officialName())
+            let holdingAmount = user.getCoinBalance(coinName: coin.officialName())
+            let totalPrice = currentPrice * holdingAmount
+            let priceFormat = CurrencyFormatter.sharedInstance.formatAmount(totalPrice, currency: "USD", options:nil)
+            let title = "Your " + coin.officialName() + " value: \(priceFormat)"
+            accountHolding.setTitle(title, for: .normal)
+        } else {
+            let title = "Your " + coin.officialName() + " value: \(user.getCoinBalance(coinName: coin.officialName()))"
+            accountHolding.setTitle(title, for: .normal)
+        }
         
     }
     
@@ -113,8 +152,8 @@ class CoinController: DataController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = coin.officialName() + " Price"
         
+        self.navigationItem.title = coin.officialName() + " Price"
         self.priceContentView.coinPriceLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coin.validCurrentPrice(), currency: "USD", options: nil)
         formatPrice(value: 0.0, isScrolling: false)
         
@@ -126,8 +165,10 @@ class CoinController: DataController {
         contentView.addSubview(priceContentView)
         contentView.addSubview(chartView)
         contentView.addSubview(stackView)
+        contentView.addSubview(dividerView)
+        contentView.addSubview(accountHolding)
+        contentView.addSubview(coinDescription)
         
-        setupButtons()
         stackView.addArrangedSubview(button1)
         stackView.addArrangedSubview(button2)
         stackView.addArrangedSubview(button3)
@@ -135,26 +176,40 @@ class CoinController: DataController {
         stackView.addArrangedSubview(button5)
         stackView.addArrangedSubview(button6)
         
+        setupButtons()
         setupConstraints()
     }
     
     func setupConstraints() {
-        scrollView.anchor(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        contentView.anchor(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        //: Using scroll view with auto layout in 3 steps
+        //: 1 - Set the scroll view constraints
+        view.addConstraintsWithFormat(format: "H:|[v0]|", views: scrollView)
+        view.addConstraintsWithFormat(format: "V:|[v0]|", views: scrollView)
         
+        //: 2- Set the content view (a subview of scroll view) constraints
+        scrollView.addConstraintsWithFormat(format: "H:|[v0]|", views: contentView)
+        scrollView.addConstraintsWithFormat(format: "V:|[v0]|", views: contentView)
+        
+        //: 3- Set equal width and equal height for the content view (without this, Layout issue: 'Scrollable content size is ambiguous for UIScrollView.')
         view.addConstraint(NSLayoutConstraint(item: contentView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1, constant: 0))
         
         if #available(iOS 11, *) {
-            priceContentView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+            priceContentView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         } else {
             priceContentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true
         }
-        priceContentView.anchor(top: nil, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 130)
+        priceContentView.anchor(top: nil, bottom: nil, left: contentView.leftAnchor, right: contentView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 130)
         
-        chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: -3, paddingBottom: 0, paddingLeft: -9, paddingRight: -9, width: 0, height: 340)
+        chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: -3, paddingBottom: 0, paddingLeft: -9, paddingRight: -9, width: 0, height: 340)
         
-        stackView.anchor(top: chartView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 22, paddingRight: 22, width: 0, height: 44)
+        stackView.anchor(top: chartView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 22, paddingRight: 22, width: 0, height: 44)
+        
+        dividerView.anchor(top: stackView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 1)
+        
+        accountHolding.anchor(top: dividerView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 45)
+        
+        coinDescription.anchor(top: accountHolding.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 250)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,6 +217,7 @@ class CoinController: DataController {
     }
 }
 
+//: MARK - ChartViewDelegate
 extension CoinController : ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         print("Chart description: \(entry.description)")
@@ -187,3 +243,4 @@ extension CoinController : ChartViewDelegate {
     }
     
 }
+
