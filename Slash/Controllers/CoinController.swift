@@ -9,10 +9,11 @@
 import UIKit
 import Charts
 
-class CoinController: UIViewController {
+class CoinController: DataController {
     
     let priceContentView = PriceContentView()
     var coin = CoinDetail()
+    var chartColor = UIColor()
     lazy var chartView = ChartView()
     fileprivate var buttonArray = [CustomGrayButton]()
     
@@ -42,12 +43,12 @@ class CoinController: UIViewController {
     
     lazy var button1: CustomGrayButton = {
         let button = CustomGrayButton()
-        button.defaultChosen() //: 1H button should show it is tapped by default
         button.setTitle("1H", for: .normal)
         return button
     }()
     lazy var button2: CustomGrayButton = {
         let button = CustomGrayButton()
+        button.defaultChosen() //: 1D button should show it is tapped by default
         button.setTitle("1D", for: .normal)
         return button
     }()
@@ -80,16 +81,34 @@ class CoinController: UIViewController {
         buttonArray.forEach({$0.defaultState()})
         sender.showTappedColor()
         
+        guard let rangeText = sender.titleLabel?.text else {
+            return
+        }
+        self.getHistoricData(coinID: coin.id, selectedRange: rangeText)
+        let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
+        chartView.setData(values: newData, lineColor: chartColor)
+        chartView.data?.notifyDataChanged()
+        chartView.notifyDataSetChanged()
 //        switch sender {
 //        case button1:
-//            buttonArray.forEach({$0.defaultState()})
-//            sender.showTappedColor()
+//
+//            chartView.setData(values: newData, lineColor: chartColor)
+//            chartView.data?.notifyDataChanged()
+//            chartView.notifyDataSetChanged()
 //        case button2:
+//            //:  Default state
 //            buttonArray.forEach({$0.defaultState()})
 //            sender.showTappedColor()
 //        case button3:
 //            buttonArray.forEach({$0.defaultState()})
 //            sender.showTappedColor()
+//
+//            self.getHistoricData(coinID: coin.id, selectedRange: rangeText)
+//            let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
+//
+//            chartView.setData(values: newData, lineColor: chartColor)
+//            chartView.data?.notifyDataChanged()
+//            chartView.notifyDataSetChanged()
 //        case button4:
 //            buttonArray.forEach({$0.defaultState()})
 //            sender.showTappedColor()
