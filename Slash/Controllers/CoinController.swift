@@ -24,6 +24,8 @@ class CoinController: DataController, UIScrollViewDelegate {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         scrollView.delegate = self
+        //: Notice
+        scrollView.isScrollEnabled = false
         return scrollView
     }()
     let contentView: UIView = {
@@ -76,6 +78,7 @@ class CoinController: DataController, UIScrollViewDelegate {
         return view
     }()
     
+    
     //:TODO- Change font and color
     lazy var accountHolding: UIButton = {
         let button = UIButton(type: .custom)
@@ -91,10 +94,18 @@ class CoinController: DataController, UIScrollViewDelegate {
     lazy var coinDescription: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.backgroundColor = .white
+        label.textAlignment = .center
+        label.text = coin.description(coinName: coin.officialName())
         label.textColor = .white
-        label.font = UIFont(name: "AvenirNext-Medium", size: 15)
+        label.font = UIFont(name: "AvenirNext-Medium", size: 12.2)
+        label.adjustsFontSizeToFitWidth = true
         return label
+    }()
+    
+    let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
     }()
     
     func setupButtons() {
@@ -152,7 +163,6 @@ class CoinController: DataController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationItem.title = coin.officialName() + " Price"
         self.priceContentView.coinPriceLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coin.validCurrentPrice(), currency: "USD", options: nil)
         formatPrice(value: 0.0, isScrolling: false)
@@ -167,7 +177,8 @@ class CoinController: DataController, UIScrollViewDelegate {
         contentView.addSubview(stackView)
         contentView.addSubview(dividerView)
         contentView.addSubview(accountHolding)
-        contentView.addSubview(coinDescription)
+        contentView.addSubview(containerView)
+        containerView.addSubview(coinDescription)
         
         stackView.addArrangedSubview(button1)
         stackView.addArrangedSubview(button2)
@@ -195,9 +206,9 @@ class CoinController: DataController, UIScrollViewDelegate {
         view.addConstraint(NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1, constant: 0))
         
         if #available(iOS 11, *) {
-            priceContentView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+            priceContentView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
         } else {
-            priceContentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true
+            priceContentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 5).isActive = true
         }
         priceContentView.anchor(top: nil, bottom: nil, left: contentView.leftAnchor, right: contentView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 130)
         
@@ -209,11 +220,15 @@ class CoinController: DataController, UIScrollViewDelegate {
         
         accountHolding.anchor(top: dividerView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 45)
         
-        coinDescription.anchor(top: accountHolding.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 250)
+        
+        containerView.anchor(top: accountHolding.bottomAnchor, bottom: self.view.bottomAnchor, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 4, paddingBottom: -22, paddingLeft: 18, paddingRight: 18, width: 0, height: 0)
+        coinDescription.anchor(top: containerView.topAnchor, bottom: containerView.bottomAnchor, left: self.containerView.leftAnchor, right: self.containerView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
 }
 

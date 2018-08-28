@@ -13,7 +13,7 @@ protocol URLRequestProtocol {
 }
 
 enum Router:URLRequestProtocol {
-    static let baseURL = "https://api.gdax.com"
+    static let baseURL = "https://api.pro.coinbase.com"
 
     case products()
     case currencies()

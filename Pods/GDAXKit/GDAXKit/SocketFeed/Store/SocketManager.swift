@@ -19,7 +19,7 @@ class SocketManager {
     let request = SocketRequest()
     var streamType:SocketStreamType = .none
     let socket:WebSocket = WebSocket(
-        url: URL(string:"wss://ws-feed.gdax.com")!
+        url: URL(string:"wss://ws-feed.pro.coinbase.com")!
     )
     
     public func connect(_ client:SocketClient) {

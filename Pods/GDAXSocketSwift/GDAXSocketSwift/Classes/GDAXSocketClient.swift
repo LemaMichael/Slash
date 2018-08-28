@@ -10,7 +10,7 @@ import Foundation
 
 public class GDAXSocketClient {
     
-    public static let baseAPIURLString = "wss://ws-feed.gdax.com"
+    public static let baseAPIURLString = "wss://ws-feed.pro.coinbase.com"
     public static let baseSandboxAPIURLString = "wss://ws-feed-public.sandbox.gdax.com"
     
     internal let apiKey: String?
