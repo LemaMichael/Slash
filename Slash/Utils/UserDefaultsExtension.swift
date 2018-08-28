@@ -111,6 +111,28 @@ extension UserDefaults {
         return double(forKey: UserDefaultKeys.ETCPrice.rawValue)
     }
     
+    func setCoinPrice(name: String, value: Double) {
+        switch name {
+        case "Bitcoin":
+            set(value, forKey: UserDefaultKeys.BTCBalance.rawValue)
+            synchronize()
+        case "Ethereum":
+            set(value, forKey: UserDefaultKeys.ETHBalance.rawValue)
+            synchronize()
+        case "Litecoin":
+            set(value, forKey: UserDefaultKeys.LTCBalance.rawValue)
+            synchronize()
+        case "Bitcoin Cash":
+            set(value, forKey: UserDefaultKeys.BCHBalance.rawValue)
+            synchronize()
+        case "Ethereum Classic":
+            set(value, forKey: UserDefaultKeys.ETCBalance.rawValue)
+            synchronize()
+        default:
+            return
+        }
+    }
+    
     //:TODO- Find the last date & time it was updated.
     
     //: Determine if the user has logged in before

@@ -81,6 +81,7 @@ class ChartView: LineChartView {
         let data = LineChartData()
         data.addDataSet(line)
         self.data = data
+        self.notifyDataSetChanged()
     }
     private func line(values: [ChartDataEntry], lineColor: UIColor) -> LineChartDataSet {
         //: 1. color

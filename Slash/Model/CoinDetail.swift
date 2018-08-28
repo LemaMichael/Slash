@@ -101,15 +101,15 @@ class CoinDetail: NSObject {
     func description(coinName: String) -> String {
         switch coinName {
         case "Bitcoin":
-            return "\"The world’s first cryptocurrency, bitcoin is stored and exchanged securely on the internet through a digital ledger known as a blockchain. Bitcoins are divisible into smaller units known as satoshis — each satoshi is worth 0.00000001 bitcoin.\" - Coinbase"
+            return "The world’s first cryptocurrency, bitcoin is stored and exchanged securely on the internet through a digital ledger known as a blockchain. Bitcoins are divisible into smaller units known as satoshis — each satoshi is worth 0.00000001 bitcoin. \n- Coinbase"
         case "Ethereum":
-            return "\"Ethereum is both a cryptocurrency and a decentralized computing platform. Developers can use Ethereum to create decentralized applications and issue new assets, known as tokens.\" - Coinbase"
+            return "Ethereum is both a cryptocurrency and a decentralized computing platform. Developers can use Ethereum to create decentralized applications and issue new assets, known as tokens. \n- Coinbase"
         case "Litecoin":
-            return "\"Litecoin is a cryptocurrency that uses a faster payment confirmation schedule and a different cryptographic algorithm than Bitcoin.\" - Coinbase"
+            return "Litecoin is a cryptocurrency that uses a faster payment confirmation schedule and a different cryptographic algorithm than Bitcoin. \n- Coinbase"
         case "Bitcoin Cash":
-            return "\"Bitcoin Cash is a fork of Bitcoin that seeks to add more transaction capacity to the network in order to be useful for everyday transactions.\" - Coinbase"
+            return "Bitcoin Cash is a fork of Bitcoin that seeks to add more transaction capacity to the network in order to be useful for everyday transactions. \n- Coinbase"
         case "Ethereum Classic":
-            return "\"Ethereum Classic is a cryptocurrency with a special focus on immutability, popularly expressed as “code is law.\" - Coinbase"
+            return "Ethereum Classic is a cryptocurrency with a special focus on immutability, popularly expressed as “code is law. \n- Coinbase"
         default:
             return "..."
         }

@@ -8,6 +8,8 @@
 
 import UIKit
 import Charts
+import SwiftEntryKit
+
 
 class CoinController: DataController, UIScrollViewDelegate {
     
@@ -86,6 +88,7 @@ class CoinController: DataController, UIScrollViewDelegate {
         let title = "Your " + coin.officialName() + " value: \(user.getCoinBalance(coinName: coin.officialName()))"
         button.setTitle(title, for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.contentHorizontalAlignment = .center
         button.addTarget(self, action: #selector(displayCoinValue), for: .touchUpInside)
         return button
@@ -122,11 +125,12 @@ class CoinController: DataController, UIScrollViewDelegate {
         }
         
         self.getHistoricData(coinID: coin.id, selectedRange: rangeText)
-        let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
         
-        chartView.setData(values: newData, lineColor: chartColor)
-        chartView.notifyDataSetChanged()
-        chartView.data?.notifyDataChanged()
+        //: Is this the best way to do this? Without this, the chartDataEntry was incomplete.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
+            self.chartView.setData(values: newData, lineColor: self.chartColor)
+        }
     }
     
     @objc func displayCoinValue() {
@@ -189,6 +193,43 @@ class CoinController: DataController, UIScrollViewDelegate {
         
         setupButtons()
         setupConstraints()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Add"), style: .plain, target: self, action:  #selector(modifyCoins))
+    }
+    
+    @objc func modifyCoins() {
+        let alertController = UIAlertController(title: "\(coin.officialName()) Amount", message: "Enter size", preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.textAlignment = .center
+            textField.placeholder = "\(self.user.getCoinBalance(coinName: self.coin.officialName()))"
+            textField.keyboardType = UIKeyboardType.decimalPad
+        }
+        let doneAction = UIAlertAction(title: "Done", style: .default) { (action) in
+            let textField = alertController.textFields![0] as UITextField
+            let newAmount = textField.text!
+            var newInput = 0.0
+            if !newAmount.isEmpty {
+                //: Save the coin input amount
+                if let newValue = Double(newAmount) {
+                    newInput = newValue
+                    UserDefaults.standard.setCoinPrice(name: self.coin.officialName(), value: newValue)
+                    let title = "Your " + self.coin.officialName() + " value: \(self.user.getCoinBalance(coinName: self.coin.officialName()))"
+                    self.accountHolding.setTitle(title, for: .normal)
+                }
+                //: Confirmation
+                let image = (newInput == 0) ? #imageLiteral(resourceName: "No Supply") : #imageLiteral(resourceName: "Supply")
+                let title = "Success!"
+                let keyword = (newInput == 0) ? "removed" : "added"
+                let nextKeyword = (newInput == 0) ? "from" : "to"
+                let description = "You have \(keyword) \(self.coin.officialName()) \(nextKeyword) your portfolio"
+                self.showPopupMessage(attributes: self.defaultAttributes(), title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: UIColor(red: 0.380392, green: 0.380392, blue: 0.380392, alpha: 1), buttonBackgroundColor: .white, image: image)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(doneAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     func setupConstraints() {
@@ -221,14 +262,73 @@ class CoinController: DataController, UIScrollViewDelegate {
         accountHolding.anchor(top: dividerView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 45)
         
         
-        containerView.anchor(top: accountHolding.bottomAnchor, bottom: self.view.bottomAnchor, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 4, paddingBottom: -22, paddingLeft: 18, paddingRight: 18, width: 0, height: 0)
+        containerView.anchor(top: accountHolding.bottomAnchor, bottom: self.view.bottomAnchor, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 0, paddingBottom: -22, paddingLeft: 18, paddingRight: 18, width: 0, height: 0)
         coinDescription.anchor(top: containerView.topAnchor, bottom: containerView.bottomAnchor, left: self.containerView.leftAnchor, right: self.containerView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-
+    }
+    
+    //: MARK - Attributes for popup message
+    fileprivate func defaultAttributes() -> EKAttributes {
+        var attributes = EKAttributes()
+        attributes.name = nil
+        //: Display
+        attributes.windowLevel = .statusBar
+        attributes.position = .bottom
+        attributes.displayPriority = .normal
+        attributes.displayDuration = .infinity
+        attributes.positionConstraints.keyboardRelation = .unbind
+        attributes.positionConstraints.size = .init(width: .offset(value: 0), height: .intrinsic)
+        attributes.positionConstraints.maxSize = .init(width: .intrinsic, height: .intrinsic)
+        attributes.positionConstraints.verticalOffset = CGFloat(0)
+        attributes.positionConstraints.safeArea = .empty(fillSafeArea: true)
+        
+        //: User Interaction
+        attributes.screenInteraction = .init(defaultAction: .dismissEntry, customTapActions: [])
+        attributes.entryInteraction = .init(defaultAction: .absorbTouches, customTapActions: [])
+        attributes.scroll = .edgeCrossingDisabled(swipeable: true)
+        attributes.hapticFeedbackType = .success
+        attributes.lifecycleEvents = .init(willAppear: .none, didAppear: .none, willDisappear: .none, didDisappear: .none)
+        
+        //: Theme & Style - These colors are of the pop up view
+        let firstColor = UIColor(red:0.99, green:0.78, blue:0.19, alpha:1.0)
+        let secondColor = UIColor(red:0.95, green:0.45, blue:0.21, alpha:1.0)
+        
+        attributes.entryBackground = .gradient(gradient: .init(colors: [firstColor, secondColor], startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 1, y: 1)))
+        
+        let grayColor = UIColor(white: 0.392157, alpha: 0.3) /// hmm
+        attributes.screenBackground = .color(color: grayColor)
+        attributes.shadow = .active(with: .init(color: UIColor(white: 0, alpha: 1), opacity: 0.300000012, radius: 8, offset: CGSize(width: 0, height: 0)))
+        attributes.roundCorners = .top(radius: 20)
+        attributes.border = .none
+        
+        let spring = EKAttributes.Animation.Spring.init(damping: CGFloat(1), initialVelocity: CGFloat(0))
+        let translation = EKAttributes.Animation.Translate.init(duration: 0.5, anchorPosition: .automatic, delay: 0, spring: spring)
+        attributes.entranceAnimation = .init(translate: translation, scale: .none, fade: .none)
+        let exitTranslation = EKAttributes.Animation.Translate.init(duration: 0.2, anchorPosition: .automatic, delay: 0, spring: .none)
+        attributes.exitAnimation = .init(translate: exitTranslation, scale: .none, fade: .none)
+        let popTranslate = EKAttributes.Animation.Translate.init(duration: 0.2, anchorPosition: .automatic, delay: 0, spring: .none)
+        attributes.popBehavior = .animated(animation: EKAttributes.Animation.init(translate: popTranslate, scale: .none, fade: .none))
+        return attributes
+    }
+    
+    private func showPopupMessage(attributes: EKAttributes, title: String, titleColor: UIColor, description: String, descriptionColor: UIColor, buttonTitleColor: UIColor, buttonBackgroundColor: UIColor, image: UIImage? = nil) {
+        
+        var themeImage: EKPopUpMessage.ThemeImage?
+        if let image = image {
+            themeImage = .init(image: .init(image: image, size: CGSize(width: 60, height: 60), contentMode: .scaleAspectFit))
+        }
+        let title = EKProperty.LabelContent(text: title, style: .init(font: MainFont.medium.with(size: 24), color: titleColor, alignment: .center))
+        let description = EKProperty.LabelContent(text: description, style: .init(font: MainFont.light.with(size: 16), color: descriptionColor, alignment: .center))
+        let button = EKProperty.ButtonContent(label: .init(text: "Got it!", style: .init(font: MainFont.bold.with(size: 16), color: buttonTitleColor)), backgroundColor: buttonBackgroundColor, highlightedBackgroundColor: buttonTitleColor.withAlphaComponent(0.05))
+        let message = EKPopUpMessage(themeImage: themeImage, title: title, description: description, button: button) {
+            SwiftEntryKit.dismiss()
+            //: We can do a custom action here when user presses the button!
+        }
+        let contentView = EKPopUpMessageView(with: message)
+        SwiftEntryKit.display(entry: contentView, using: attributes)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
 }
 
