@@ -136,9 +136,9 @@ class CoinController: DataController, UIScrollViewDelegate {
     @objc func displayCoinValue() {
         accountHolding.isSelected = !accountHolding.isSelected
         if accountHolding.isSelected {
-            let currentPrice = user.getCoinPrice(coinName: coin.officialName())
-            let holdingAmount = user.getCoinBalance(coinName: coin.officialName())
-            let totalPrice = currentPrice * holdingAmount
+            //let currentPrice = user.getCoinPrice(coinName: coin.officialName())
+            //let holdingAmount = user.getCoinBalance(coinName: coin.officialName())
+            let totalPrice = UserDefaults.standard.getTotalPrice(coin: coin.officialName())
             let priceFormat = CurrencyFormatter.sharedInstance.formatAmount(totalPrice, currency: "USD", options:nil)
             let title = "Your " + coin.officialName() + " value: \(priceFormat)"
             accountHolding.setTitle(title, for: .normal)

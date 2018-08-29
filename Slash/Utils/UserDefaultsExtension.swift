@@ -111,6 +111,29 @@ extension UserDefaults {
         return double(forKey: UserDefaultKeys.ETCPrice.rawValue)
     }
     
+//    let currentPrice = user.getCoinPrice(coinName: coin.officialName())
+//    let holdingAmount = user.getCoinBalance(coinName: coin.officialName())
+//    let totalPrice = currentPrice * holdingAmount
+//
+    //: Get the total price, coin amount * current price
+    func getTotalPrice(coin: String) -> Double {
+        switch coin {
+        case "Bitcoin":
+            return getBTCBalance() * getBTCPrice()
+        case "Ethereum":
+            return getETHBalance() * getETHPrice()
+        case "Litecoin":
+            return getLTCBalance() * getLTCPrice()
+        case "Bitcoin Cash":
+            return getBCHBalance() * getBCHPrice()
+        case "Ethereum Classic":
+            return getETCBalance() * getETCPrice()
+        default:
+            return 0
+        }
+    }
+
+    
     func setCoinPrice(name: String, value: Double) {
         switch name {
         case "Bitcoin":

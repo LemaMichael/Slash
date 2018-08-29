@@ -140,7 +140,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //: FIXME: BRing up a tableViewController later
     }
     @objc func moreTapped() {
-        
+        self.navigationController?.pushViewController(PortfolioController(), animated: false)
     }
     
     override func viewDidLoad() {
@@ -169,7 +169,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -55, paddingLeft: 0, paddingRight: 0, width: 0, height: (self.view.frame.height / 2))
         
         let width = self.view.frame.width
-        let cellWidth = (self.view.frame.width - 60)
+        let cellWidth = (self.view.frame.width - 65)
         let diff = (width-cellWidth) / 2
         
         todaysDateLabel.anchor(top: nil, bottom: collectionView.topAnchor, left: collectionView.leftAnchor, right: collectionView.rightAnchor, paddingTop: 0, paddingBottom: -7, paddingLeft: diff, paddingRight: 0, width: 0, height: 25)
@@ -413,6 +413,7 @@ extension HomeViewController {
         coinControl.coin = coinDetail
         coinControl.chartColor = colors[indexPath.item]
         coinControl.chartView.setData(values: result, lineColor: colors[indexPath.item])
+        
         self.navigationController?.pushViewController(coinControl, animated: true)
     }
     
