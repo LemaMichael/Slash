@@ -10,12 +10,14 @@ import UIKit
 import Charts
 
 class PortfolioController: UIViewController {
-    
+  
     fileprivate let cellID = "coinID"
     lazy var pieView = PieView()
     var user: User = UserDefaults.standard.getUser() //: Very handy
     var coinHoldings = UserDefaults.standard.getUser().getAllHoldings()
-    var previousPortfolioValue = ""
+    let options = CurrencyFormatterOptions()
+    var coins = [CoinDetail]()
+    var previousPortfolioValue: String = String()
     
     var totalPortfolioValue: UIButton = {
         let button = UIButton(type: .custom)
@@ -33,7 +35,6 @@ class PortfolioController: UIViewController {
     }()
     var changeLabel: UILabel = {
        let label = UILabel()
-        label.text = "+ $30.50 today"
         label.textColor = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
         label.textAlignment = .center
         label.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
@@ -69,6 +70,34 @@ class PortfolioController: UIViewController {
         return priceAmount * USDtoBTC
     }
     
+    func calculateGainLoss(coinName: String, coinPrice: Double) -> Double {
+        //: Lets get the coin detail
+        if let coin = coins.first(where: {$0.officialName() == coinName}) {
+            let percent = coin.percent() //: This is the day percentage for the coin
+            let originalPrice =  coinPrice / (1 + percent/100) // equivalent = coinPrice * (100/(100 + percent))
+            let gainLoss = (coinPrice - originalPrice)
+            UserDefaults.standard.setGainLoss(percent: gainLoss, coin: coinName) //: Perhaps do something with this value later?
+            return gainLoss
+        } else {
+            return 0.0
+        }
+    }
+    
+    func calculateTotalGainLoss() {
+        var totalGainLoss = 0.0
+        for coin in coinHoldings {
+            if let coinDetail = coins.first(where: {$0.officialName() == coin}) {
+                let percent = coinDetail.percent() //: This is the day percentage for the coin
+                let currentPrice = user.getTotalCost(coinName: coin)
+                let originalPrice =  currentPrice / (1 + percent/100) // equivalent = coinPrice * (100/(100 + percent))
+                let gainLoss = (currentPrice - originalPrice)
+                totalGainLoss += gainLoss
+            }
+        }
+        //: Keep track of all the coin gains/loss
+        changeLabel.text = "\(CurrencyFormatter.sharedInstance.formatAmountString("\(totalGainLoss)", currency: "USD", options: options)) today"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Portfolio"
@@ -84,7 +113,11 @@ class PortfolioController: UIViewController {
         self.view.addSubview(coinCollectionView)
         setupViews()
         
+        options.showPositivePrefix = true
+        options.showNegativePrefix = true
+        
         previousPortfolioValue = totalPortfolioValue.titleLabel?.text  ?? ""
+        calculateTotalGainLoss()
     }
     
     func setupViews(){
@@ -144,9 +177,11 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
         let coinPrice = user.getTotalCost(coinName: coinHoldings[indexPath.item])
         cell.totalValueLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coinPrice, currency: "USD", options: nil)
         
-        //:TODO: set gainLossLabel
+        //: Calulate the coin gain/loss
+        let calculatedGain = self.calculateGainLoss(coinName: coinHoldings[indexPath.item], coinPrice: coinPrice)
+        let text = "\(calculatedGain)"
+        cell.gainLossLabel.text = "\(CurrencyFormatter.sharedInstance.formatAmountString(text, currency: "USD", options: options))"
         cell.imageView.image = UIImage(named: coinHoldings[indexPath.item])
-        
         return cell
     }
     
@@ -170,7 +205,6 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
         default:
             return
         }
-        
     }
 }
 

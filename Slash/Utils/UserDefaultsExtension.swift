@@ -12,6 +12,7 @@ extension UserDefaults {
     enum UserDefaultKeys: String {
         case Username, BTCBalance, ETHBalance, LTCBalance, BCHBalance, ETCBalance
         case BTCPrice, ETHPrice, LTCPrice, BCHPrice, ETCPrice
+        case BTCPercent, ETHPercent, LTCPercent, BCHPercent, ETCPercent
         case isLoggedIn, isFirstLaunch
         case user
     }
@@ -153,6 +154,44 @@ extension UserDefaults {
     }
     
     //:TODO- Find the last date & time it was updated.
+    func setGainLoss(percent: Double, coin: String) {
+        switch coin {
+        case "Bitcoin":
+            set(percent, forKey: UserDefaultKeys.BTCPercent.rawValue)
+            synchronize()
+        case "Ethereum":
+            set(percent, forKey: UserDefaultKeys.ETHPercent.rawValue)
+            synchronize()
+        case "Litecoin":
+            set(percent, forKey: UserDefaultKeys.LTCPercent.rawValue)
+            synchronize()
+        case "Bitcoin Cash":
+            set(percent, forKey: UserDefaultKeys.BCHPercent.rawValue)
+            synchronize()
+        case "Ethereum Classic":
+            set(percent, forKey: UserDefaultKeys.ETCPercent.rawValue)
+            synchronize()
+        default:
+            return
+        }
+    }
+    func getGainLoss(coin: String)  -> Double {
+        switch coin {
+        case "Bitcoin":
+           return double(forKey:UserDefaultKeys.BTCPercent.rawValue)
+        case "Ethereum":
+            return double(forKey:UserDefaultKeys.ETHPercent.rawValue)
+        case "Litecoin":
+            return double(forKey:UserDefaultKeys.LTCPercent.rawValue)
+        case "Bitcoin Cash":
+            return double(forKey:UserDefaultKeys.BCHPercent.rawValue)
+        case "Ethereum Classic":
+            return double(forKey:UserDefaultKeys.ETCPercent.rawValue)
+        default:
+            return 0.0
+        }
+    }
+    
     
     //: Determine if the user has logged in before
     func setIsLoggedIn(value: Bool) {

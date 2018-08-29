@@ -87,6 +87,14 @@ class PortfolioCell: UICollectionViewCell {
         return sv
     }()
     
+    //: Perhaps add this in the future?
+    lazy var identityView: UIView = {
+        let view = UIView()
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 3
+        return view
+    }()
+    
     let divider: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.rgb(red: 47, green: 47, blue: 64)
@@ -98,6 +106,7 @@ class PortfolioCell: UICollectionViewCell {
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(divider)
+//        addSubview(identityView)
     
       
         imageView.anchor(top: nil, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 35, height: 35)
@@ -114,5 +123,12 @@ class PortfolioCell: UICollectionViewCell {
         rightStackView.centerYAnchor.constraint(equalTo: self.leftStackView.centerYAnchor).isActive = true
         
         divider.anchor(top: nil, bottom: self.bottomAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 1)
+//        identityView.anchor(top: self.topAnchor, bottom: self.bottomAnchor, left: nil, right: self.rightAnchor, paddingTop: 1, paddingBottom: -1, paddingLeft: 0, paddingRight: 0, width: 4, height: 0)
+      
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        //: Modify identityView here if adding gradient colors
     }
 }

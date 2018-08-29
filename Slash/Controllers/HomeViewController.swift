@@ -142,6 +142,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @objc func moreTapped() {
         let portfolioController = PortfolioController()
         portfolioController.totalPortfolioValue.setTitle(self.accountBalanceLabel.text, for: .normal)
+        portfolioController.coins = self.coins
         self.navigationController?.pushViewController(portfolioController, animated: false)
     }
     
