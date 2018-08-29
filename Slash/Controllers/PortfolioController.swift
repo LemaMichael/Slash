@@ -13,6 +13,8 @@ class PortfolioController: UIViewController {
     
     fileprivate let cellID = "coinID"
     lazy var pieView = PieView()
+    var user: User = UserDefaults.standard.getUser() //: Very handy
+    var coinHoldings = UserDefaults.standard.getUser().getAllHoldings()
     
     var totalPortfolioValue: UIButton = {
         let button = UIButton(type: .system)
@@ -111,10 +113,21 @@ extension PortfolioController: ChartViewDelegate {
 //: MARK - UICollectionViewDelegate, UICollectionViewDataSource
 extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return coinHoldings.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! PortfolioCell
+        cell.nameLabel.text = coinHoldings[indexPath.item]
+        let holdingAmount = user.getCoinBalance(coinName: coinHoldings[indexPath.item])
+        let holdingText = String(format: "%.2f%", holdingAmount)
+        cell.holdingButton.setTitle(holdingText, for: .normal)
+        
+        let coinPrice = user.getTotalCost(coinName: coinHoldings[indexPath.item])
+        cell.totalValueLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coinPrice, currency: "USD", options: nil)
+        
+        //:TODO: set gainLossLabel
+        cell.imageView.image = UIImage(named: coinHoldings[indexPath.item])
+        
         return cell
     }
 }

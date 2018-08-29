@@ -62,6 +62,8 @@ class User: Codable {
         }
     }
     
+    /// Returns the current coin price
+    /// - parameter coinName:: String
     func getCoinPrice(coinName: String) -> Double {
         switch coinName {
         case "Bitcoin":
@@ -77,6 +79,16 @@ class User: Codable {
         default:
             return 0.00
         }
+    }
+    
+    /// Returns the total cost of a coin. (Current coin price * coin balance)
+    /// - parameter coinName:: String
+    func getTotalCost(coinName: String) -> Double {
+        let coinBalance = getCoinBalance(coinName: coinName)
+        let coinPrice = getCoinPrice(coinName: coinName)
+        
+        let holdingValue = coinBalance * coinPrice
+        return holdingValue
     }
     
     
@@ -109,6 +121,18 @@ class User: Codable {
         let ethereumClassicBalance = UserDefaults.standard.getETCBalance()
         
         return bitcoinBalance + ethereumBalance + litecoinBalance + bitcoinCashBalance + ethereumClassicBalance
+    }
+    
+    /// This returns an array of coin names that have a balance > 0.
+    func getAllHoldings() -> [String] {
+        var supportedCoins = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic"]
+        
+        for (index, coin) in supportedCoins.enumerated() {
+            if (getCoinBalance(coinName: coin) == 0) {
+                supportedCoins.remove(at: index)
+            }
+        }
+        return supportedCoins
     }
     
     

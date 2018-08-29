@@ -23,8 +23,8 @@ class PortfolioCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
-        imageView.image = #imageLiteral(resourceName: "BCH")
         return imageView
     }()
     
@@ -102,7 +102,7 @@ class PortfolioCell: UICollectionViewCell {
         addSubview(divider)
     
       
-        imageView.anchor(top: nil, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 40, height: 40)
+        imageView.anchor(top: nil, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 35, height: 35)
         imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
         let width = self.bounds.width
