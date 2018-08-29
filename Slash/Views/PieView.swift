@@ -16,6 +16,7 @@ class PieView: PieChartView {
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupNoData()
@@ -49,14 +50,14 @@ class PieView: PieChartView {
         self.drawSlicesUnderHoleEnabled = false
         self.holeColor = .clear
         self.holeRadiusPercent = 0.78
-//        self.transparentCircleRadiusPercent = 1.10
+//        self.transparentCircleRadiusPercent = 0.785
         self.chartDescription?.enabled = false
         self.setExtraOffsets(left: 12, top: 10, right: 12, bottom: 10)
         
+        //: Center text
         self.drawCenterTextEnabled = true
         
         //: Demo
-
         self.drawHoleEnabled = true
         self.rotationAngle = 0
         self.rotationEnabled = true
@@ -64,15 +65,15 @@ class PieView: PieChartView {
         
         self.entryLabelColor = .white
         self.entryLabelFont = .systemFont(ofSize: 12, weight: .light)
+        self.drawEntryLabelsEnabled = false //: Doesn't display the labels such as Bitcoin, Litecoin, etc.
     }
     
     func setData() {
-        let userDefaults = UserDefaults.standard
         let coinName = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic"]
 
         var coinPrices = [Double]()
         for name in coinName {
-            let totalPrice = userDefaults.getTotalPrice(coin: name)
+            let totalPrice = UserDefaults.standard.getTotalPrice(coin: name)
             if totalPrice != 0 {
                 coinPrices.append(totalPrice)
             }
@@ -80,14 +81,13 @@ class PieView: PieChartView {
         
         let entries = (0..<coinPrices.count).map { (i) -> PieChartDataEntry in
             return PieChartDataEntry(value: coinPrices[i],
-                                     label: nil,
+                                     label: coinName[i],
                                      icon: nil)
         }
         
         let set = PieChartDataSet(values: entries, label: nil)
         set.drawIconsEnabled = false
         set.sliceSpace = 3
-        
         
         set.colors = colors
         
