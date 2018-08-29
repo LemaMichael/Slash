@@ -140,7 +140,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //: FIXME: BRing up a tableViewController later
     }
     @objc func moreTapped() {
-        self.navigationController?.pushViewController(PortfolioController(), animated: false)
+        let portfolioController = PortfolioController()
+        portfolioController.totalPortfolioValue.setTitle(self.accountBalanceLabel.text, for: .normal)
+        self.navigationController?.pushViewController(portfolioController, animated: false)
     }
     
     override func viewDidLoad() {

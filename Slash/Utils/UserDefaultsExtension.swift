@@ -111,10 +111,6 @@ extension UserDefaults {
         return double(forKey: UserDefaultKeys.ETCPrice.rawValue)
     }
     
-//    let currentPrice = user.getCoinPrice(coinName: coin.officialName())
-//    let holdingAmount = user.getCoinBalance(coinName: coin.officialName())
-//    let totalPrice = currentPrice * holdingAmount
-//
     //: Get the total price, coin amount * current price
     func getTotalPrice(coin: String) -> Double {
         switch coin {
