@@ -18,6 +18,8 @@ class PortfolioController: UIViewController {
     let options = CurrencyFormatterOptions()
     var coins = [CoinDetail]()
     var previousPortfolioValue: String = String()
+    let customRed = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
+    let customGreen = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
     
     var totalPortfolioValue: UIButton = {
         let button = UIButton(type: .custom)
@@ -96,6 +98,7 @@ class PortfolioController: UIViewController {
         }
         //: Keep track of all the coin gains/loss
         changeLabel.text = "\(CurrencyFormatter.sharedInstance.formatAmountString("\(totalGainLoss)", currency: "USD", options: options)) today"
+        changeLabel.textColor = (totalGainLoss < 0) ? self.customRed : self.customRed
     }
     
     override func viewDidLoad() {
@@ -122,8 +125,9 @@ class PortfolioController: UIViewController {
     
     func setupViews(){
         pieView.anchor(top: view.topAnchor, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 100, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 300)
-        //: Fix portfolio width
-        totalPortfolioValue.anchor(top: pieView.bottomAnchor, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 10, paddingRight: 10, width: 0, height: 54.6)
+
+        totalPortfolioValue.anchor(top: pieView.bottomAnchor, bottom: nil, left: nil, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: (view.bounds.width / 2), height: 54.6)
+        totalPortfolioValue.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         let width = (view.bounds.width / 2) - 50
         dividerView.anchor(top: totalPortfolioValue.bottomAnchor, bottom: nil, left: nil, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: width, height: 1)
@@ -179,8 +183,9 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
         
         //: Calulate the coin gain/loss
         let calculatedGain = self.calculateGainLoss(coinName: coinHoldings[indexPath.item], coinPrice: coinPrice)
-        let text = "\(calculatedGain)"
-        cell.gainLossLabel.text = "\(CurrencyFormatter.sharedInstance.formatAmountString(text, currency: "USD", options: options))"
+        cell.gainLossLabel.text = "\(CurrencyFormatter.sharedInstance.formatAmountString("\(calculatedGain)", currency: "USD", options: options))"
+        cell.gainLossLabel.textColor = (calculatedGain < 0) ? self.customRed : self.customRed
+        
         cell.imageView.image = UIImage(named: coinHoldings[indexPath.item])
         return cell
     }
