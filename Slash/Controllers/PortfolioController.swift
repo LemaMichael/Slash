@@ -151,7 +151,7 @@ extension PortfolioController: ChartViewDelegate {
         paragraphStyle.alignment = .center
         
         let centerText = NSMutableAttributedString(string: "\(formatPrice)\n\(validText)")
-        centerText.setAttributes([.font : UIFont(name: "HelveticaNeue-Light", size: 13)!,
+        centerText.setAttributes([.font : UIFont(name: "Avenir-Heavy", size: 13)!,
                                   .paragraphStyle : paragraphStyle], range: NSRange(location: 0, length: centerText.length))
         centerText.addAttributes([.foregroundColor : UIColor.white], range: NSRange(location: 0, length: centerText.length))
         pieView.centerAttributedText = centerText;

@@ -50,7 +50,8 @@ class PieView: PieChartView {
         self.drawSlicesUnderHoleEnabled = false
         self.holeColor = .clear
         self.holeRadiusPercent = 0.78
-//        self.transparentCircleRadiusPercent = 0.785
+        self.transparentCircleRadiusPercent = 0.8035
+//        self.transparentCircleColor = .white
         self.chartDescription?.enabled = false
         self.setExtraOffsets(left: 12, top: 10, right: 12, bottom: 10)
         
@@ -64,7 +65,7 @@ class PieView: PieChartView {
         self.highlightPerTapEnabled = true
         
         self.entryLabelColor = .white
-        self.entryLabelFont = .systemFont(ofSize: 12, weight: .light)
+        self.entryLabelFont = UIFont(name: "Avenir-Heavy", size: 13)
         self.drawEntryLabelsEnabled = false //: Doesn't display the labels such as Bitcoin, Litecoin, etc.
     }
     
@@ -106,7 +107,7 @@ class PieView: PieChartView {
         pFormatter.percentSymbol = " %"
         data.setValueFormatter(DefaultValueFormatter(formatter: pFormatter))
         
-        data.setValueFont(.systemFont(ofSize: 11, weight: .light))
+        data.setValueFont(UIFont(name: "Avenir-Heavy", size: 11))
         data.setValueTextColor(.white)
         
         self.data = data
