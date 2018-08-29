@@ -12,6 +12,7 @@ import UIKit
 class PortfolioCell: UICollectionViewCell {
     let customRed = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
     let customGreen = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
+    var currentTap = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,15 +39,13 @@ class PortfolioCell: UICollectionViewCell {
         return label
     }()
     
-    let holdingButton: UIButton = {
-        let button = UIButton(type: .system)
-        let color = UIColor.rgb(red: 134, green: 134, blue: 145)
-        button.setTitleColor(color, for: .normal)
-        button.setTitle("1.00", for: .normal)
-        button.contentHorizontalAlignment = .left
-        button.titleLabel?.font =  UIFont(name: "Avenir-Heavy", size: 13)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        return button
+    let holdingLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.rgb(red: 134, green: 134, blue: 145)
+        label.textAlignment = .left
+        label.font =  UIFont(name: "Avenir-Heavy", size: 13)
+        label.adjustsFontSizeToFitWidth = true
+        return label
     }()
     
     let totalValueLabel: UILabel = {
@@ -72,7 +71,7 @@ class PortfolioCell: UICollectionViewCell {
     lazy var leftStackView: UIStackView = {
         let sv = UIStackView()
         sv.addArrangedSubview(nameLabel)
-        sv.addArrangedSubview(holdingButton)
+        sv.addArrangedSubview(holdingLabel)
         sv.distribution = .fillProportionally
         sv.spacing = 3
         sv.axis = .vertical
@@ -93,7 +92,6 @@ class PortfolioCell: UICollectionViewCell {
         view.backgroundColor = UIColor.rgb(red: 47, green: 47, blue: 64)
         return view
     }()
-    
     
     func setupCell() {
         addSubview(imageView)

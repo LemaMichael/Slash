@@ -15,13 +15,15 @@ class PortfolioController: UIViewController {
     lazy var pieView = PieView()
     var user: User = UserDefaults.standard.getUser() //: Very handy
     var coinHoldings = UserDefaults.standard.getUser().getAllHoldings()
+    var previousPortfolioValue = ""
     
     var totalPortfolioValue: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font =  UIFont(name: "AvenirNext-DemiBold", size: 25)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(convertPortfolioValue), for: .touchUpInside)
         return button
     }()
     var dividerView: UIView = {
@@ -51,6 +53,21 @@ class PortfolioController: UIViewController {
         return collectionView
     }()
     
+    @objc func convertPortfolioValue() {
+        totalPortfolioValue.isSelected = !totalPortfolioValue.isSelected
+        let btcAmount = convertToBTC(priceAmount: user.balance())
+        let btcValue = String(format: "₿%.9f", btcAmount)
+        
+        let text = totalPortfolioValue.isSelected ? btcValue : previousPortfolioValue
+        totalPortfolioValue.setTitle(text, for: .normal)
+    }
+    
+    func convertToBTC(priceAmount: Double) -> Double {
+        //: First get the current BTC price
+        let btcUSD = user.getCoinPrice(coinName: "Bitcoin")
+        let USDtoBTC = 1/btcUSD
+        return priceAmount * USDtoBTC
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +83,8 @@ class PortfolioController: UIViewController {
         self.view.addSubview(changeLabel)
         self.view.addSubview(coinCollectionView)
         setupViews()
+        
+        previousPortfolioValue = totalPortfolioValue.titleLabel?.text  ?? ""
     }
     
     func setupViews(){
@@ -120,7 +139,7 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
         cell.nameLabel.text = coinHoldings[indexPath.item]
         let holdingAmount = user.getCoinBalance(coinName: coinHoldings[indexPath.item])
         let holdingText = String(format: "%.2f%", holdingAmount)
-        cell.holdingButton.setTitle(holdingText, for: .normal)
+        cell.holdingLabel.text = "≈ " + holdingText
         
         let coinPrice = user.getTotalCost(coinName: coinHoldings[indexPath.item])
         cell.totalValueLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coinPrice, currency: "USD", options: nil)
@@ -129,6 +148,29 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
         cell.imageView.image = UIImage(named: coinHoldings[indexPath.item])
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! PortfolioCell
+        let holdingAmount = user.getCoinBalance(coinName: coinHoldings[indexPath.item])
+        let coinPrice = user.getTotalCost(coinName: coinHoldings[indexPath.item])
+        
+        switch (cell.currentTap) {
+        case 0:
+            cell.holdingLabel.text = String(format: "%.9f%", holdingAmount)
+            cell.currentTap += 1
+        case 1:
+            // Convert to btc
+            cell.totalValueLabel.text = String(format: "₿%.9f", convertToBTC(priceAmount: coinPrice))
+            cell.currentTap += 1
+        case 2:
+            cell.holdingLabel.text = "≈ " + String(format: "%.2f%", holdingAmount)
+            cell.totalValueLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coinPrice, currency: "USD", options: nil)
+            cell.currentTap = 0
+        default:
+            return
+        }
+        
     }
 }
 

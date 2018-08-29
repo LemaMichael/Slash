@@ -91,7 +91,7 @@ class User: Codable {
         return holdingValue
     }
     
-    
+    /// Total Portfolio Balance
     func balance() -> Double {
         //: 1- We need to get the total balance of all the coins
         let bitcoinBalance = UserDefaults.standard.getBTCBalance()
