@@ -144,6 +144,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/CryptoCompKit/CryptoCompKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXKit/GDAXKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXSocketSwift/GDAXSocketSwift.framework"
@@ -153,6 +154,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Charts/Charts.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/CryptoCompKit/CryptoCompKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXKit/GDAXKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/GDAXSocketSwift/GDAXSocketSwift.framework"

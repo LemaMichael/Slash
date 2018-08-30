@@ -20,4 +20,7 @@ target 'Slash' do
     
     # GDAXKit (Client Library for GDAX.com's API)
     pod 'GDAXKit'
+    
+    # CryptoCompKit
+    pod 'CryptoCompKit'
 end

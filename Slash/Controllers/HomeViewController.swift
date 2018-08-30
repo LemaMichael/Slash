@@ -138,7 +138,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     @objc func searchTapped() {
-        //: FIXME: BRing up a tableViewController later
+        self.navigationController?.pushViewController(DiscoverViewController(), animated: false)
     }
     @objc func moreTapped() {
         let portfolioController = PortfolioController()

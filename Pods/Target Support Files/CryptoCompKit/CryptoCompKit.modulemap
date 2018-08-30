@@ -1,0 +1,6 @@
+framework module CryptoCompKit {
+  umbrella header "CryptoCompKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
