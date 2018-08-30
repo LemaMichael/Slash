@@ -11,7 +11,7 @@ import Charts
 import SwiftEntryKit
 
 
-class CoinController: DataController, UIScrollViewDelegate {
+class CoinController: DataController {
     
     let user = UserDefaults.standard.getUser()
     let priceContentView = PriceContentView()
@@ -20,21 +20,6 @@ class CoinController: DataController, UIScrollViewDelegate {
     lazy var chartView = ChartView()
     fileprivate var buttonArray = [CustomGrayButton]()
     
-    lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.backgroundColor = UIColor(red:0.20, green:0.23, blue:0.27, alpha:1.0)
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.alwaysBounceVertical = true
-        scrollView.delegate = self
-        //: Notice
-        scrollView.isScrollEnabled = false
-        return scrollView
-    }()
-    let contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red:0.20, green:0.23, blue:0.27, alpha:1.0)
-        return view
-    }()
     var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -167,6 +152,7 @@ class CoinController: DataController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red:0.20, green:0.23, blue:0.27, alpha:1.0)
         self.navigationItem.title = coin.officialName() + " Price"
         self.priceContentView.coinPriceLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coin.validCurrentPrice(), currency: "USD", options: nil)
         formatPrice(value: 0.0, isScrolling: false)
@@ -174,14 +160,12 @@ class CoinController: DataController, UIScrollViewDelegate {
         chartView.delegate = self
         chartView.xAxis.labelFont = UIFont(name: "AvenirNext-Regular", size: 11)!
         
-        self.view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(priceContentView)
-        contentView.addSubview(chartView)
-        contentView.addSubview(stackView)
-        contentView.addSubview(dividerView)
-        contentView.addSubview(accountHolding)
-        contentView.addSubview(containerView)
+        self.view.addSubview(priceContentView)
+        self.view.addSubview(chartView)
+        self.view.addSubview(stackView)
+        self.view.addSubview(dividerView)
+        self.view.addSubview(accountHolding)
+        self.view.addSubview(containerView)
         containerView.addSubview(coinDescription)
         
         stackView.addArrangedSubview(button1)
@@ -233,37 +217,26 @@ class CoinController: DataController, UIScrollViewDelegate {
     }
     
     func setupConstraints() {
-        //: Using scroll view with auto layout in 3 steps
-        //: 1 - Set the scroll view constraints
-        view.addConstraintsWithFormat(format: "H:|[v0]|", views: scrollView)
-        view.addConstraintsWithFormat(format: "V:|[v0]|", views: scrollView)
-        
-        //: 2- Set the content view (a subview of scroll view) constraints
-        scrollView.addConstraintsWithFormat(format: "H:|[v0]|", views: contentView)
-        scrollView.addConstraintsWithFormat(format: "V:|[v0]|", views: contentView)
-        
-        //: 3- Set equal width and equal height for the content view (without this, Layout issue: 'Scrollable content size is ambiguous for UIScrollView.')
-        view.addConstraint(NSLayoutConstraint(item: contentView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1, constant: 0))
-        
         if #available(iOS 11, *) {
-            priceContentView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+            priceContentView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         } else {
-            priceContentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 5).isActive = true
+            priceContentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
-        priceContentView.anchor(top: nil, bottom: nil, left: contentView.leftAnchor, right: contentView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 130)
+        let customHeight = self.view.frame.height * 0.15
+        priceContentView.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: customHeight)
         
-        chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: -3, paddingBottom: 0, paddingLeft: -9, paddingRight: -9, width: 0, height: 340)
+        let custom = (self.view.frame.height / 2) - customHeight
+        chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: -3, paddingBottom: 0, paddingLeft: -9, paddingRight: -9, width: 0, height: custom)
         
-        stackView.anchor(top: chartView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 22, paddingRight: 22, width: 0, height: 44)
+        stackView.anchor(top: chartView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 22, paddingRight: 22, width: 0, height: 44)
         
-        dividerView.anchor(top: stackView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 1)
+        dividerView.anchor(top: stackView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 1)
         
-        accountHolding.anchor(top: dividerView.bottomAnchor, bottom: nil, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 45)
+        accountHolding.anchor(top: dividerView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 35)
         
-        
-        containerView.anchor(top: accountHolding.bottomAnchor, bottom: self.view.bottomAnchor, left: self.contentView.leftAnchor, right: self.contentView.rightAnchor, paddingTop: 0, paddingBottom: -22, paddingLeft: 18, paddingRight: 18, width: 0, height: 0)
-        coinDescription.anchor(top: containerView.topAnchor, bottom: containerView.bottomAnchor, left: self.containerView.leftAnchor, right: self.containerView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        containerView.anchor(top: accountHolding.bottomAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 0)
+        coinDescription.anchor(top:  containerView.topAnchor, bottom: containerView.bottomAnchor, left: self.containerView.leftAnchor, right: self.containerView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+
     }
     
     //: MARK - Attributes for popup message

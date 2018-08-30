@@ -35,11 +35,13 @@
 		4C96F740212F969B001D16D8 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96F73F212F969B001D16D8 /* Page.swift */; };
 		4C96F742212FDDB6001D16D8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96F741212FDDB6001D16D8 /* RegisterView.swift */; };
 		4C982D582127EA220003C2F9 /* CoinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D572127EA220003C2F9 /* CoinDetail.swift */; };
+		4CC0478E21375897009D9177 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0478D21375897009D9177 /* BarView.swift */; };
+		4CC0479221375B3F009D9177 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0479121375B3F009D9177 /* BarViewController.swift */; };
 		4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989C2126156D008A533A /* HomeViewController.swift */; };
 		4CE298A0212616F4008A533A /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989F212616F4008A533A /* DataController.swift */; };
 		4CE298A221261700008A533A /* PortfolioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A121261700008A533A /* PortfolioController.swift */; };
-		4CE298A421261710008A533A /* BCHController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A321261710008A533A /* BCHController.swift */; };
-		4CE298A621261748008A533A /* ETCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A521261748008A533A /* ETCController.swift */; };
+		4CE298A421261710008A533A /* PieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A321261710008A533A /* PieViewController.swift */; };
+		4CE298A621261748008A533A /* PagePortfolioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A521261748008A533A /* PagePortfolioController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,11 +74,13 @@
 		4C96F73F212F969B001D16D8 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		4C96F741212FDDB6001D16D8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		4C982D572127EA220003C2F9 /* CoinDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetail.swift; sourceTree = "<group>"; };
+		4CC0478D21375897009D9177 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
+		4CC0479121375B3F009D9177 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
 		4CE2989C2126156D008A533A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4CE2989F212616F4008A533A /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4CE298A121261700008A533A /* PortfolioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioController.swift; sourceTree = "<group>"; };
-		4CE298A321261710008A533A /* BCHController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCHController.swift; sourceTree = "<group>"; };
-		4CE298A521261748008A533A /* ETCController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCController.swift; sourceTree = "<group>"; };
+		4CE298A321261710008A533A /* PieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewController.swift; sourceTree = "<group>"; };
+		4CE298A521261748008A533A /* PagePortfolioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagePortfolioController.swift; sourceTree = "<group>"; };
 		5381EE55B5C6C38E55D9DED8 /* Pods-Slash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Slash.release.xcconfig"; path = "Pods/Target Support Files/Pods-Slash/Pods-Slash.release.xcconfig"; sourceTree = "<group>"; };
 		B8E351820A56351957C6451F /* Pods-Slash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Slash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Slash/Pods-Slash.debug.xcconfig"; sourceTree = "<group>"; };
 		C03E22EF35EDD994605E9FF5 /* Pods_Slash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Slash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,6 +174,7 @@
 				4C2C314821337E9A0001AEB9 /* CustomGrayButton.swift */,
 				4C6618F521361A3F00DD8CBA /* PieView.swift */,
 				4C26CA032136594F0096B4E7 /* PortfolioCell.swift */,
+				4CC0478D21375897009D9177 /* BarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -194,8 +199,9 @@
 				4C20F0432126019100CEB049 /* CoinController.swift */,
 				4CE2989F212616F4008A533A /* DataController.swift */,
 				4CE298A121261700008A533A /* PortfolioController.swift */,
-				4CE298A321261710008A533A /* BCHController.swift */,
-				4CE298A521261748008A533A /* ETCController.swift */,
+				4CE298A321261710008A533A /* PieViewController.swift */,
+				4CE298A521261748008A533A /* PagePortfolioController.swift */,
+				4CC0479121375B3F009D9177 /* BarViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -346,6 +352,7 @@
 				4C8DFFEB2132980B00374EC3 /* BalloonMarker.swift in Sources */,
 				4C26CA042136594F0096B4E7 /* PortfolioCell.swift in Sources */,
 				4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */,
+				4CC0479221375B3F009D9177 /* BarViewController.swift in Sources */,
 				4C0A005C212730E700919278 /* CoinCell.swift in Sources */,
 				4C94D97D212681CA008F80EE /* Preferences.swift in Sources */,
 				4C982D582127EA220003C2F9 /* CoinDetail.swift in Sources */,
@@ -358,14 +365,15 @@
 				4C94D97521266E63008F80EE /* Pair.swift in Sources */,
 				4C6618F621361A3F00DD8CBA /* PieView.swift in Sources */,
 				4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */,
-				4CE298A421261710008A533A /* BCHController.swift in Sources */,
+				4CE298A421261710008A533A /* PieViewController.swift in Sources */,
 				4C2C9C162128AAD20041175E /* WelcomeViewController.swift in Sources */,
-				4CE298A621261748008A533A /* ETCController.swift in Sources */,
+				4CE298A621261748008A533A /* PagePortfolioController.swift in Sources */,
 				4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */,
 				4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */,
 				4C2D79C42130DCCD001FAF7B /* MainNavigationController.swift in Sources */,
 				4CE298A0212616F4008A533A /* DataController.swift in Sources */,
 				4C96F73E212F9520001D16D8 /* PageViewController.swift in Sources */,
+				4CC0478E21375897009D9177 /* BarView.swift in Sources */,
 				4C8DFFE521326BAD00374EC3 /* PriceContentView.swift in Sources */,
 				4C37EABA212CFD9D00A5E269 /* Fonts.swift in Sources */,
 				4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */,

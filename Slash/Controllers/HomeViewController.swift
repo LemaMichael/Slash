@@ -69,6 +69,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         label.textColor = .white
         label.font = UIFont(name: "Avenir-Heavy", size: 30)
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -177,15 +178,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         todaysDateLabel.anchor(top: nil, bottom: collectionView.topAnchor, left: collectionView.leftAnchor, right: collectionView.rightAnchor, paddingTop: 0, paddingBottom: -7, paddingLeft: diff, paddingRight: 0, width: 0, height: 25)
         
-        
         if #available(iOS 11, *) {
-            let paddingTop = (self.view.frame.height) / 24 //: This works well
-            accountBalanceLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: paddingTop, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 25)
+            accountBalanceLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+
         } else {
-            //: We will have to get the bottom anchor fot the nav bar for iPhone x and other models
-            accountBalanceLabel.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 25)
-            accountBalanceLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 26).isActive = true
+            accountBalanceLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 5).isActive = true
         }
+        accountBalanceLabel.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 55)
         accountDescription.anchor(top: accountBalanceLabel.bottomAnchor, bottom: todaysDateLabel.topAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 5, paddingBottom: -10, paddingLeft: diff, paddingRight: diff, width: 0, height: 0)
         
         updateTimer()

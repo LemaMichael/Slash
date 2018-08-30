@@ -16,7 +16,6 @@ class PieView: PieChartView {
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupNoData()
@@ -61,7 +60,7 @@ class PieView: PieChartView {
         //: Demo
         self.drawHoleEnabled = true
         self.rotationAngle = 0
-        self.rotationEnabled = true
+        self.rotationEnabled = false //: Will be a bad experience if set to true with PagePortfolioController
         self.highlightPerTapEnabled = true
         
         self.entryLabelColor = .white

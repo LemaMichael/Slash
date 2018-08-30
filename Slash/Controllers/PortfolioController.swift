@@ -12,7 +12,6 @@ import Charts
 class PortfolioController: UIViewController {
   
     fileprivate let cellID = "coinID"
-    lazy var pieView = PieView()
     var user: User = UserDefaults.standard.getUser() //: Very handy
     var coinHoldings = UserDefaults.standard.getUser().getAllHoldings()
     let options = CurrencyFormatterOptions()
@@ -20,6 +19,13 @@ class PortfolioController: UIViewController {
     var previousPortfolioValue: String = String()
     let customRed = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
     let customGreen = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
+    
+    let pagePortfolioController: PagePortfolioController = {
+        let pvc = PagePortfolioController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        pvc.view.translatesAutoresizingMaskIntoConstraints = false
+        pvc.view.backgroundColor = .clear
+        return pvc
+    }()
     
     var totalPortfolioValue: UIButton = {
         let button = UIButton(type: .custom)
@@ -104,12 +110,10 @@ class PortfolioController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Portfolio"
-        pieView.delegate = self
-        pieView.setData()
-        pieView.animate(xAxisDuration: 1.4, easingOption: .easeOutBack)
         
         view.backgroundColor = UIColor.rgb(red: 43, green: 44, blue: 62)
-        self.view.addSubview(pieView)
+        self.addChildViewController(pagePortfolioController)
+        self.view.addSubview(pagePortfolioController.view)
         self.view.addSubview(totalPortfolioValue)
         self.view.addSubview(dividerView)
         self.view.addSubview(changeLabel)
@@ -124,9 +128,15 @@ class PortfolioController: UIViewController {
     }
     
     func setupViews(){
-        pieView.anchor(top: view.topAnchor, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 100, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 300)
-
-        totalPortfolioValue.anchor(top: pieView.bottomAnchor, bottom: nil, left: nil, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: (view.bounds.width / 2), height: 54.6)
+        
+        if #available(iOS 11, *) {
+            pagePortfolioController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        } else {
+             pagePortfolioController.view.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 5).isActive = true
+        }
+         pagePortfolioController.view.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 300)
+        
+        totalPortfolioValue.anchor(top: pagePortfolioController.view.bottomAnchor, bottom: nil, left: nil, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: (view.bounds.width / 2), height: 54.6)
         totalPortfolioValue.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         let width = (view.bounds.width / 2) - 50
@@ -141,29 +151,6 @@ class PortfolioController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-}
-
-//: MARK - ChartViewDelegate
-extension PortfolioController: ChartViewDelegate {
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        guard let dataEntry = entry as? PieChartDataEntry else { return }
-        guard let validText = dataEntry.label else { return }
-        let formatPrice = CurrencyFormatter.sharedInstance.formatAmount(entry.y, currency: "USD", options:nil)
-        
-        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-        paragraphStyle.lineBreakMode = .byTruncatingTail
-        paragraphStyle.alignment = .center
-        
-        let centerText = NSMutableAttributedString(string: "\(formatPrice)\n\(validText)")
-        centerText.setAttributes([.font : UIFont(name: "Avenir-Heavy", size: 13)!,
-                                  .paragraphStyle : paragraphStyle], range: NSRange(location: 0, length: centerText.length))
-        centerText.addAttributes([.foregroundColor : UIColor.white], range: NSRange(location: 0, length: centerText.length))
-        pieView.centerAttributedText = centerText;
-    }
-    
-    func chartValueNothingSelected(_ chartView: ChartViewBase) {
-        pieView.centerAttributedText = nil
-    }
 }
 
 //: MARK - UICollectionViewDelegate, UICollectionViewDataSource
@@ -216,7 +203,7 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
 //: MARK - UICollectionViewDelegateFlowLayout
 extension PortfolioController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: (collectionView.frame.height / 4)) 
+        return CGSize(width: self.view.frame.width, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
