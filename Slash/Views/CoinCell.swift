@@ -58,6 +58,7 @@ class CoinCell: UICollectionViewCell {
             options.showNegativePrefix = true
             
             self.coinPercentage.text = "\(CurrencyFormatter.sharedInstance.formatAmountString(diffString, currency: "USD", options: options))  \(percentString)"
+//            self.coinPercentage.text = percentString
             
             if coin.difference() < 0 {
                 self.coinPercentage.textColor = self.red
@@ -84,19 +85,19 @@ class CoinCell: UICollectionViewCell {
     
     let coinPrice: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
-        //label.text = "$6,567.08"
-        label.font =  UIFont(name: "AvenirNext", size: 50) //: TODO: Find a better font and color
         label.textColor = .black
-        label.textAlignment = .center
+        //label.text = "$6,567.08"
+        label.font =  UIFont(name: "Avenir-Heavy", size: 18) //: TODO: Find a better font and color
+        label.textAlignment = .left
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     let coinPercentage: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .black
         //label.text = "+240.66 (4.12%)"
-        label.font =  MainFont.medium.with(size: 14)
+        label.font =  UIFont(name: "Avenir-Heavy", size: 12)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
         return label
@@ -156,6 +157,48 @@ class CoinCell: UICollectionViewCell {
         cv.highlightPerDragEnabled = false
         return cv
     }()
+    
+    lazy var leftStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.addArrangedSubview(coinPrice)
+        sv.addArrangedSubview(coinPercentage)
+        sv.distribution = .fillProportionally
+        sv.spacing = 1
+        sv.axis = .vertical
+        return sv
+    }()
+    
+    let highPrice: UILabel = {
+        let label = UILabel()
+//        label.backgroundColor = UIColor(red:0.85, green:0.88, blue:0.91, alpha:1.0)
+        label.textColor = .black
+        label.text = "H: ∞"
+        label.font =  UIFont(name: "Avenir-Heavy", size: 12)
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .right
+        return label
+    }()
+    let lowPrice: UILabel = {
+        let label = UILabel()
+//        label.backgroundColor = UIColor(red:0.85, green:0.88, blue:0.91, alpha:1.0)
+        label.textColor = .black
+        label.text = "L: ∞"
+        label.font =  UIFont(name: "Avenir-Heavy", size: 12)
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .right
+        return label
+    }()
+    
+    lazy var rightStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.addArrangedSubview(highPrice)
+        sv.addArrangedSubview(lowPrice)
+        sv.distribution = .fillProportionally
+        
+        sv.axis = .vertical
+        return sv
+    }()
+    
     //: FIXME: ImageView disapears when cell is tapped
     var miningImageView: UIImageView = {
         let imageView = UIImageView()
@@ -299,15 +342,15 @@ class CoinCell: UICollectionViewCell {
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         self.backgroundColor = .white
-        addSubview(coinImageView)
-        addSubview(coinPrice)
-        addSubview(coinPercentage)
+        addSubview(leftStackView)
+        addSubview(rightStackView)
         addSubview(coinLabel)
         addSubview(intervalButton)
         addSubview(progressView)
         addSubview(percentageLabel)
         addSubview(chartView)
         addSubview(miningImageView)
+        chartView.addSubview(coinImageView)
         
         setxAxis()
         setLeftAxis()
@@ -318,21 +361,7 @@ class CoinCell: UICollectionViewCell {
         
         percentageLabel.text = String(format: "%.0f%%", progressView.progress * 100)
         
-        coinImageView.anchor(top: self.topAnchor, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 12, paddingRight: 0, width: 47, height: 47)
-        coinPrice.anchor(top: self.topAnchor, bottom: chartView.topAnchor, left: self.coinImageView.rightAnchor, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 2, paddingRight: 0, width: 125, height: 0)
-        coinPercentage.anchor(top: self.topAnchor, bottom: chartView.topAnchor, left: self.coinPrice.rightAnchor, right: nil, paddingTop: 20, paddingBottom: 0, paddingLeft: -5, paddingRight: 18, width: 75, height: 0)
-        
-        coinLabel.anchor(top: nil, bottom: self.bottomAnchor, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: -25, paddingLeft: 18, paddingRight: 0, width: 243, height: 70)
-        progressView.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 40, width: 0, height: 6)
-        percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressView.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
-        
-        chartView.anchor(top: coinImageView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
-        intervalButton.anchor(top: self.chartView.bottomAnchor, bottom: nil, left: nil, right: self.rightAnchor, paddingTop: 15, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 25, height: 21)
-        
-        miningImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        miningImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        miningImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        miningImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        setupConstraints()
         
         
         //        //: Setting up coin
@@ -343,6 +372,29 @@ class CoinCell: UICollectionViewCell {
         //        coinPercentage.text = coin.currentPrice
         //        coinLabel.text = coin.name
         
+    }
+    func setupConstraints() {
+        let cellWidth = (self.frame.width - 5 - 30 - 10) / 2
+        
+        
+        leftStackView.anchor(top: self.topAnchor, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: cellWidth, height: 40)
+        rightStackView.anchor(top: self.topAnchor, bottom: nil, left: self.leftStackView.rightAnchor, right: self.rightAnchor, paddingTop: 18, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 0, height: 40)
+        coinLabel.anchor(top: nil, bottom: self.bottomAnchor, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: -25, paddingLeft: 18, paddingRight: 0, width: 0, height: 70)
+        chartView.anchor(top: leftStackView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
+        
+        progressView.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 40, width: 0, height: 6)
+        percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressView.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
+        
+        intervalButton.anchor(top: self.chartView.bottomAnchor, bottom: nil, left: nil, right: self.rightAnchor, paddingTop: 15, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 25, height: 21)
+        coinLabel.rightAnchor.constraint(equalTo: intervalButton.leftAnchor, constant: -14).isActive = true
+        
+        coinImageView.anchor(top: chartView.topAnchor, bottom: nil, left: nil, right: chartView.rightAnchor, paddingTop: 4, paddingBottom: 0, paddingLeft: 0, paddingRight: 4, width: 25, height: 25)
+
+        
+        miningImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        miningImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        miningImageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        miningImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
     }
 }
 
