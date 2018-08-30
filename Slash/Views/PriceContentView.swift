@@ -63,7 +63,7 @@ class PriceContentView: UIView {
         coinPriceLabel.anchor(top: self.topAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 20, paddingBottom: 0, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         percentageLabel.anchor(top: coinPriceLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 4, paddingBottom: 0, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         dateLabel.anchor(top: percentageLabel.bottomAnchor, bottom: self.bottomAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 4, paddingBottom: 0, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
-        dividerView.anchor(top: nil, bottom: self.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 1)
+        dividerView.anchor(top: nil, bottom: self.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0.5)
     }
     
 }

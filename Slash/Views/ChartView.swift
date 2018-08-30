@@ -40,7 +40,8 @@ class ChartView: LineChartView {
         //        self.extraBottomOffset = 3 //: Extra spacing for the label font to fit
         
         xAxis.labelTextColor = UIColor(red: 0.678, green: 0.725, blue: 0.776, alpha: 1)
-        xAxis.drawAxisLineEnabled = false //: The bottom axis isn't needed
+        xAxis.drawAxisLineEnabled = true //: The bottom axis isn't needed
+        xAxis.axisLineColor = UIColor(white: 0.7, alpha: 1)
         xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
         xAxis.centerAxisLabelsEnabled = true
         xAxis.granularity = 3600 // 60*60 one hour

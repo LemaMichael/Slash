@@ -98,6 +98,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C07AC7521380C8000F9239E /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				4CE298A121261700008A533A /* PortfolioController.swift */,
+				4CE298A321261710008A533A /* PieViewController.swift */,
+				4CE298A521261748008A533A /* PagePortfolioController.swift */,
+				4CC0479121375B3F009D9177 /* BarViewController.swift */,
+			);
+			path = Portfolio;
+			sourceTree = "<group>";
+		};
+		4C07AC7621380D0400F9239E /* Coin */ = {
+			isa = PBXGroup;
+			children = (
+				4C20F0432126019100CEB049 /* CoinController.swift */,
+				4CE2989F212616F4008A533A /* DataController.swift */,
+			);
+			path = Coin;
+			sourceTree = "<group>";
+		};
 		4C20F0332126019100CEB049 = {
 			isa = PBXGroup;
 			children = (
@@ -194,14 +214,10 @@
 			isa = PBXGroup;
 			children = (
 				4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */,
-				4C96F73C212F9508001D16D8 /* Welcome */,
 				4CE2989C2126156D008A533A /* HomeViewController.swift */,
-				4C20F0432126019100CEB049 /* CoinController.swift */,
-				4CE2989F212616F4008A533A /* DataController.swift */,
-				4CE298A121261700008A533A /* PortfolioController.swift */,
-				4CE298A321261710008A533A /* PieViewController.swift */,
-				4CE298A521261748008A533A /* PagePortfolioController.swift */,
-				4CC0479121375B3F009D9177 /* BarViewController.swift */,
+				4C96F73C212F9508001D16D8 /* Welcome */,
+				4C07AC7621380D0400F9239E /* Coin */,
+				4C07AC7521380C8000F9239E /* Portfolio */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
