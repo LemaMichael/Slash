@@ -20,7 +20,10 @@ class CryptoCoin: NSObject {
 class DiscoverViewController: UIViewController {
     let cryptoCompKit = CryptoCompKit()
     var allCoins = [CryptoCoin]()
-    var baseURL = ""
+    var baseURL = String()
+    var randomStr = String()
+    let dispatchGroup = DispatchGroup()
+
     
     func setBackgroundImage() {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
@@ -51,13 +54,9 @@ class DiscoverViewController: UIViewController {
         
         let defaultCoins = ["BTC","ETH","LTC", "BCH", "ETC", "XMR", "NANO"]
         let randomIndex = Int(arc4random_uniform(UInt32(defaultCoins.count)))
-        let randomStr = defaultCoins[randomIndex]
-        getCoinList()
+        randomStr = defaultCoins[randomIndex]
         getPriceList(coinID: randomStr)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.2, execute: {
-            self.setData(coinID: randomStr)
-        })
-
+        getCoinList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -103,10 +102,16 @@ extension DiscoverViewController {
             switch result {
             case .success(_):
                 self.baseURL = list.baseLinkURL
+                self.dispatchGroup.enter()
                 for coin in list.coins {
                     let cryptoCoin = CryptoCoin(data: coin.value)
                     self.allCoins.append(cryptoCoin)
                 }
+                self.dispatchGroup.leave()
+                self.dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                    self.setData(coinID: self.randomStr)
+                })
+                
             case let .failure(error):
                 print(error.localizedDescription)
             }
@@ -114,7 +119,6 @@ extension DiscoverViewController {
     }
     
     func setData(coinID: String ){
-        print("!! \(allCoins.count)")
         guard let coin = self.allCoins.first(where:{$0.data.symbol == coinID}) else {return}
         self.setDescription(id: coin.data.id)
         if let validURL = coin.data.imageURL {
