@@ -13,8 +13,15 @@ class CoinTableViewController: UITableViewController {
     
     var coins = [CryptoCoin]() //: TODO: - Arrange the coins by marketCap
     var filteredCoins = [CryptoCoin]()
-    let searchController = UISearchController(searchResultsController: nil)
-
+    
+    lazy var searchController: UISearchController = {
+        let sC = UISearchController(searchResultsController: nil)
+        sC.searchResultsUpdater = self
+        sC.obscuresBackgroundDuringPresentation = false
+        sC.searchBar.placeholder = "Search Coins..."        
+        return sC
+    }()
+    
     private let headerId = "headerId"
     private let cellId = "cellId"
     
@@ -22,19 +29,29 @@ class CoinTableViewController: UITableViewController {
         super.viewDidLoad()
         setupTableView()
         setupSearchController()
-        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     }
     
     func setupSearchController() {
-        self.tableView.tableHeaderView = self.searchController.searchBar
-        UISearchBar.appearance().tintColor = .white //: Changes the cancel button color
-//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white] //: Changes the textColor of the UISearchBar
-//        searchController.searchBar.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Coins..."
+        self.tableView.tableHeaderView = searchController.searchBar
         self.definesPresentationContext = true
+        UISearchBar.appearance().tintColor = .white //: Changes the cancel button color
+        
+        //https://stackoverflow.com/questions/33751292/cannot-change-search-bar-background-color
+        for subView in searchController.searchBar.subviews {
+            for subViewOne in subView.subviews {
+                    subViewOne.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+            }
+        }
+        
+        //: Changes the textColor of the UISearchBar
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        
+        //: Change search bar background color
+        searchController.searchBar.backgroundImage = UIImage()
+        searchController.searchBar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        searchController.searchBar.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        searchController.searchBar.barStyle = .black
     }
     
     /// https://www.raywenderlich.com/472-uisearchcontroller-tutorial-getting-started
@@ -42,17 +59,20 @@ class CoinTableViewController: UITableViewController {
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
+    
     func filterContentForSearchText(_ searchText: String) {
         filteredCoins = coins.filter({( coin : CryptoCoin) -> Bool in
             return coin.data.fullName.lowercased().contains(searchText.lowercased())
         })
         tableView.reloadData()
     }
+    
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
     
     func setupTableView() {
+        tableView.separatorColor = UIColor.rgb(red: 31, green: 31, blue: 31)
         tableView.backgroundColor = UIColor.rgb(red: 39, green: 38, blue: 39)
         tableView.register(CustomTableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerId)
         tableView.register(CoinTableCell.self, forCellReuseIdentifier: cellId)
@@ -82,27 +102,35 @@ class CoinTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CoinTableCell
-        let coin: CryptoCoin
-        if isFiltering() {
-            coin = filteredCoins[indexPath.row]
-        } else {
-            coin = coins[indexPath.row]
-        }
+        cell.selectionStyle = .none //: Get rid of the default color when tapped
+        
+        //: Modify the full width of the divider to
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+
+        let coin = isFiltering() ? filteredCoins[indexPath.row] : coins[indexPath.row]
         cell.symbolLabel.text = coin.data.symbol
         cell.nameSubLabel.text = coin.data.coinName
-        
         return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let coin: CryptoCoin
-        if isFiltering() {
-            coin = filteredCoins[indexPath.row]
-        } else {
-            coin = coins[indexPath.row]
-        }
+        self.tableView.deselectRow(at: indexPath, animated: false)
+        let coin = isFiltering() ? filteredCoins[indexPath.row] : coins[indexPath.row]
         print("!coin: \(coin.data.name) was selected")
     }
     
+    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.contentView.backgroundColor = UIColor.rgb(red: 47, green: 47, blue: 47)
+    }
+    
+    override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.contentView.backgroundColor = UIColor.rgb(red: 35, green: 35, blue: 35)
+    }
+   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isTranslucent = false
@@ -172,6 +200,7 @@ class CoinTableCell: UITableViewCell {
     }
     func setupCell() {
         contentView.backgroundColor = UIColor.rgb(red: 35, green: 35, blue: 35)
+
         addSubview(symbolLabel)
         addSubview(nameSubLabel)
         
