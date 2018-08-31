@@ -104,7 +104,7 @@ class PortfolioController: UIViewController {
         }
         //: Keep track of all the coin gains/loss
         changeLabel.text = "\(CurrencyFormatter.sharedInstance.formatAmountString("\(totalGainLoss)", currency: "USD", options: options)) today"
-        changeLabel.textColor = (totalGainLoss < 0) ? self.customRed : self.customRed
+        changeLabel.textColor = (totalGainLoss < 0) ? self.customRed : self.customGreen
     }
     
     override func viewDidLoad() {
@@ -171,7 +171,7 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
         //: Calulate the coin gain/loss
         let calculatedGain = self.calculateGainLoss(coinName: coinHoldings[indexPath.item], coinPrice: coinPrice)
         cell.gainLossLabel.text = "\(CurrencyFormatter.sharedInstance.formatAmountString("\(calculatedGain)", currency: "USD", options: options))"
-        cell.gainLossLabel.textColor = (calculatedGain < 0) ? self.customRed : self.customRed
+        cell.gainLossLabel.textColor = (calculatedGain < 0) ? self.customRed : self.customGreen
         
         cell.imageView.image = UIImage(named: coinHoldings[indexPath.item])
         return cell

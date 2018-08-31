@@ -44,6 +44,8 @@ class DiscoverViewController: UIViewController {
         //view.backgroundColor = UIColor.rgb(red: 199, green: 190, blue: 177)
         view.backgroundColor = UIColor.rgb(red: 24, green: 50, blue: 50)
         setBackgroundImage()
+        searchBarView.searchButton.isEnabled = false
+        searchBarView.searchButton.addTarget(self, action: #selector(displayTable), for: .touchUpInside)
         self.view.addSubview(searchBarView)
         self.view.addSubview(coinContainerView)
         self.view.addSubview(descriptionView)
@@ -56,6 +58,12 @@ class DiscoverViewController: UIViewController {
         randomStr = defaultCoins[randomIndex]
         getPriceList(coinID: randomStr)
         getCoinList()
+    }
+    
+    @objc func displayTable() {
+        let coinTableController = CoinTableViewController()
+        coinTableController.coins = allCoins
+        self.present(coinTableController, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,6 +116,7 @@ extension DiscoverViewController {
                 }
                 self.dispatchGroup.leave()
                 self.dispatchGroup.notify(queue: DispatchQueue.main, execute: {
+                    self.searchBarView.searchButton.isEnabled = true
                     self.setData(coinID: self.randomStr)
                 })
                 
@@ -134,8 +143,10 @@ extension DiscoverViewController {
         cryptoCompKit.priceList(fSyms:[coinID], tSyms:to) { list, result in
             switch result {
             case .success(_):
-                for item in list.prices[coinID]! {
-                    let coin = item.value
+                guard let coinDict = list.prices[coinID] else { return }
+             
+                for (_, coinData) in coinDict {
+                    let coin = coinData
                     //print("!! \(coin.change24Hour, coin.changeDay, coin.marketCap, coin.fromSymbol, coin.flags, coin.totalVolume24Hour)")
                     DispatchQueue.main.async {
                         let detailView = self.detailContainerView
@@ -177,7 +188,7 @@ extension DiscoverViewController {
                 let decoder = JSONDecoder()
                 let snapshot = try decoder.decode(Stats.self, from: data)
                 let description = snapshot.data.general.description
-                print("!! \(description)")
+
                 DispatchQueue.main.async {
                     let style = NSMutableParagraphStyle()
                     style.lineSpacing = 1.5

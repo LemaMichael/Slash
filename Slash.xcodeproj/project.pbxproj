@@ -30,6 +30,7 @@
 		4C62060D2138639D009FF959 /* DetailOrAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62060C2138639D009FF959 /* DetailOrAddView.swift */; };
 		4C62060F2138C85C009FF959 /* CoinSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62060E2138C85C009FF959 /* CoinSnapshot.swift */; };
 		4C6206112138D3DE009FF959 /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6206102138D3DE009FF959 /* DescriptionView.swift */; };
+		4C62061321392FAB009FF959 /* CoinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62061221392FAB009FF959 /* CoinTableViewController.swift */; };
 		4C6618F621361A3F00DD8CBA /* PieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6618F521361A3F00DD8CBA /* PieView.swift */; };
 		4C8DFFE521326BAD00374EC3 /* PriceContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */; };
 		4C8DFFE721327BA300374EC3 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DFFE621327BA300374EC3 /* ChartView.swift */; };
@@ -76,6 +77,7 @@
 		4C62060C2138639D009FF959 /* DetailOrAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrAddView.swift; sourceTree = "<group>"; };
 		4C62060E2138C85C009FF959 /* CoinSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinSnapshot.swift; sourceTree = "<group>"; };
 		4C6206102138D3DE009FF959 /* DescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
+		4C62061221392FAB009FF959 /* CoinTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTableViewController.swift; sourceTree = "<group>"; };
 		4C6618F521361A3F00DD8CBA /* PieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieView.swift; sourceTree = "<group>"; };
 		4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceContentView.swift; sourceTree = "<group>"; };
 		4C8DFFE621327BA300374EC3 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				4C07AC7821381A4B00F9239E /* DiscoverViewController.swift */,
+				4C62061221392FAB009FF959 /* CoinTableViewController.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				4CC0479221375B3F009D9177 /* BarViewController.swift in Sources */,
 				4C62060921384A45009FF959 /* CoinContainerView.swift in Sources */,
 				4C0A005C212730E700919278 /* CoinCell.swift in Sources */,
+				4C62061321392FAB009FF959 /* CoinTableViewController.swift in Sources */,
 				4C94D97D212681CA008F80EE /* Preferences.swift in Sources */,
 				4C982D582127EA220003C2F9 /* CoinDetail.swift in Sources */,
 				4C62060721384100009FF959 /* SearchBarView.swift in Sources */,
