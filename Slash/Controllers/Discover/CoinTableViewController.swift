@@ -23,19 +23,18 @@ class CoinTableViewController: UITableViewController {
         setupTableView()
         setupSearchController()
         
-        self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     }
     
     func setupSearchController() {
+        self.tableView.tableHeaderView = self.searchController.searchBar
         UISearchBar.appearance().tintColor = .white //: Changes the cancel button color
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white] //: Changes the textColor of the UISearchBar
-        searchController.searchBar.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white] //: Changes the textColor of the UISearchBar
+//        searchController.searchBar.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Coins..."
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+        self.definesPresentationContext = true
     }
     
     /// https://www.raywenderlich.com/472-uisearchcontroller-tutorial-getting-started
@@ -106,9 +105,11 @@ class CoinTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isTranslucent = false
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.isTranslucent = true
     }
 }
 
