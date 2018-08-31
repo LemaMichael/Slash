@@ -24,7 +24,6 @@ class DiscoverViewController: UIViewController {
     var randomStr = String()
     let dispatchGroup = DispatchGroup()
 
-    
     func setBackgroundImage() {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = #imageLiteral(resourceName: "Fire")

@@ -43,9 +43,9 @@ struct General: Codable {
     let features, technology, totalCoinSupply, difficultyAdjustment: String
     let blockRewardReduction, algorithm, proofType, startDate: String
     let twitter, websiteURL, website: String
+    let individualSponsor: IndividualSponsor?
     let lastBlockExplorerUpdateTS, blockNumber, blockTime: Int
-    let netHashesPerSecond, totalCoinsMined: Double
-    let previousTotalCoinsMined: Int
+    let netHashesPerSecond, totalCoinsMined, previousTotalCoinsMined: Double
     let blockReward: Double
     
     enum CodingKeys: String, CodingKey {
@@ -72,6 +72,7 @@ struct General: Codable {
         case twitter = "Twitter"
         case websiteURL = "WebsiteUrl"
         case website = "Website"
+        case individualSponsor = "IndividualSponsor"
         case lastBlockExplorerUpdateTS = "LastBlockExplorerUpdateTS"
         case blockNumber = "BlockNumber"
         case blockTime = "BlockTime"
@@ -79,6 +80,17 @@ struct General: Codable {
         case totalCoinsMined = "TotalCoinsMined"
         case previousTotalCoinsMined = "PreviousTotalCoinsMined"
         case blockReward = "BlockReward"
+    }
+}
+
+struct IndividualSponsor: Codable {
+    let text, link, affiliateLogo, excludedCountries: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case text = "Text"
+        case link = "Link"
+        case affiliateLogo = "AffiliateLogo"
+        case excludedCountries = "ExcludedCountries"
     }
 }
 
