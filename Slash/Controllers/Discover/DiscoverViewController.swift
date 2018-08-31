@@ -62,8 +62,9 @@ class DiscoverViewController: UIViewController {
     
     @objc func displayTable() {
         let coinTableController = CoinTableViewController()
-        coinTableController.coins = allCoins
-        self.present(coinTableController, animated: true, completion: nil)
+        coinTableController.coins = allCoins.sorted(by: { $0.data.symbol < $1.data.symbol }) //: It would be much better if it were done by marketCap
+//        self.present(coinTableController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(coinTableController, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
