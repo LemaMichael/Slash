@@ -28,6 +28,8 @@
 		4C62060921384A45009FF959 /* CoinContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62060821384A45009FF959 /* CoinContainerView.swift */; };
 		4C62060B213852FE009FF959 /* DetailContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62060A213852FE009FF959 /* DetailContainerView.swift */; };
 		4C62060D2138639D009FF959 /* DetailOrAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62060C2138639D009FF959 /* DetailOrAddView.swift */; };
+		4C62060F2138C85C009FF959 /* CoinSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62060E2138C85C009FF959 /* CoinSnapshot.swift */; };
+		4C6206112138D3DE009FF959 /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6206102138D3DE009FF959 /* DescriptionView.swift */; };
 		4C6618F621361A3F00DD8CBA /* PieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6618F521361A3F00DD8CBA /* PieView.swift */; };
 		4C8DFFE521326BAD00374EC3 /* PriceContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */; };
 		4C8DFFE721327BA300374EC3 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DFFE621327BA300374EC3 /* ChartView.swift */; };
@@ -72,6 +74,8 @@
 		4C62060821384A45009FF959 /* CoinContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinContainerView.swift; sourceTree = "<group>"; };
 		4C62060A213852FE009FF959 /* DetailContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContainerView.swift; sourceTree = "<group>"; };
 		4C62060C2138639D009FF959 /* DetailOrAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrAddView.swift; sourceTree = "<group>"; };
+		4C62060E2138C85C009FF959 /* CoinSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinSnapshot.swift; sourceTree = "<group>"; };
+		4C6206102138D3DE009FF959 /* DescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
 		4C6618F521361A3F00DD8CBA /* PieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieView.swift; sourceTree = "<group>"; };
 		4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceContentView.swift; sourceTree = "<group>"; };
 		4C8DFFE621327BA300374EC3 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				4C0A006521278B3A00919278 /* ReferenceType.swift */,
 				4C982D572127EA220003C2F9 /* CoinDetail.swift */,
 				4C29FA95212DCA50007FAF90 /* User.swift */,
+				4C62060E2138C85C009FF959 /* CoinSnapshot.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 				4C62060821384A45009FF959 /* CoinContainerView.swift */,
 				4C62060A213852FE009FF959 /* DetailContainerView.swift */,
 				4C62060C2138639D009FF959 /* DetailOrAddView.swift */,
+				4C6206102138D3DE009FF959 /* DescriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 				4C96F740212F969B001D16D8 /* Page.swift in Sources */,
 				4C62060B213852FE009FF959 /* DetailContainerView.swift in Sources */,
 				4CE298A221261700008A533A /* PortfolioController.swift in Sources */,
+				4C6206112138D3DE009FF959 /* DescriptionView.swift in Sources */,
 				4C94D97221262272008F80EE /* Extensions.swift in Sources */,
 				4C2C314921337E9A0001AEB9 /* CustomGrayButton.swift in Sources */,
 				4C96F742212FDDB6001D16D8 /* RegisterView.swift in Sources */,
@@ -409,6 +416,7 @@
 				4C94D97521266E63008F80EE /* Pair.swift in Sources */,
 				4C6618F621361A3F00DD8CBA /* PieView.swift in Sources */,
 				4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */,
+				4C62060F2138C85C009FF959 /* CoinSnapshot.swift in Sources */,
 				4CE298A421261710008A533A /* PieViewController.swift in Sources */,
 				4C2C9C162128AAD20041175E /* WelcomeViewController.swift in Sources */,
 				4CE298A621261748008A533A /* PagePortfolioController.swift in Sources */,

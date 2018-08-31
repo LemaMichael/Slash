@@ -49,13 +49,11 @@ class CoinContainerView: UIView {
     }()
     let symbolLabel: DefaultLabel = {
         let label = DefaultLabel()
-        label.text = "BTC"
         label.textAlignment = .right
         return label
     }()
     let nameLabel: DefaultLabel = {
         let label = DefaultLabel()
-        label.text = "Bitcoin"
         label.textAlignment = .right
         return label
     }()

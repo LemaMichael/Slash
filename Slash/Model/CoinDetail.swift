@@ -171,6 +171,7 @@ struct Currency: Decodable {
  "volume_30day":"4358880.80496818"
  }
  */
+/*
 struct Stats: Codable {
     let statsOpen, high, low, volume: String
     let last, volume30Day: String
@@ -181,6 +182,7 @@ struct Stats: Codable {
         case volume30Day = "volume_30day"
     }
 }
+ */
 
 
 /* Products example

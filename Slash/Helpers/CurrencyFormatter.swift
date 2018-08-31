@@ -97,6 +97,35 @@ class CurrencyFormatter: NSObject {
         return formatSymbolAndPrefix(amount, currency: currency, numFormatter: formatter, options: formatOptions)
     }
     
+    func formatCoin(_ amount: Double, currency: String, options: CurrencyFormatterOptions?) -> String {
+        
+        var formatOptions = CurrencyFormatterOptions()
+        
+        if let options = options {
+            formatOptions = options
+        }
+        
+        let amount = amount
+        let currency = currency
+        
+        if let locale = formatOptions.locale {
+            formatter.locale = locale
+            formatter.usesGroupingSeparator = true
+        } else {
+            formatter.locale = Locale(identifier: "en_US")
+        }
+        
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumFractionDigits = 0
+        formatter.minimumFractionDigits = 0
+        
+        if formatOptions.allowTruncation == true {
+            return formatTruncating(amount, currency: currency, options: formatOptions)
+        }
+        
+        return formatSymbolAndPrefix(amount, currency: currency, numFormatter: formatter, options: formatOptions)
+    }
+    
     fileprivate func formatTruncating(_ amount: Double, currency: String, options: CurrencyFormatterOptions) -> String {
         
         formatter.currencySymbol = ""

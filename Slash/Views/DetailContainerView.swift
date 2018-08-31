@@ -33,16 +33,20 @@ class DetailContainerView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.image = #imageLiteral(resourceName: "BTC")
+        //: No image place holder
+        imageView.layer.masksToBounds = false
+        imageView.layer.cornerRadius = 28/2
+        imageView.clipsToBounds = true
         return imageView
     }()
+    
     let priceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font =  UIFont(name: "Avenir-Heavy", size: 15)
         label.textAlignment = .right
         label.adjustsFontSizeToFitWidth = true
-        label.text = "$6500.50"
+        label.text = "$0.00"
         return label
     }()
     
@@ -72,13 +76,13 @@ class DetailContainerView: UIView {
     }()
     let high24hLabel: DefaultLabel = {
         let label = DefaultLabel()
-        label.text = "High (24h):"
+        label.text = "High (24h): "
         label.textAlignment = .left
         return label
     }()
     let low24hLabel: DefaultLabel = {
         let label = DefaultLabel()
-        label.text = "Low (24h):"
+        label.text = "Low (24h): "
         label.textAlignment = .left
         return label
     }()
@@ -106,7 +110,7 @@ class DetailContainerView: UIView {
         addSubview(bottomDivider)
         
         
-        imageView.anchor(top: topAnchor, bottom: nil, left: leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 25, height: 25)
+        imageView.anchor(top: topAnchor, bottom: nil, left: leftAnchor, right: nil, paddingTop: -3, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 28, height: 28)
         priceLabel.anchor(top: topAnchor, bottom: nil, left: imageView.rightAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 30)
         
         topDivider.anchor(top: priceLabel.bottomAnchor, bottom: nil, left: leftAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0.5)
