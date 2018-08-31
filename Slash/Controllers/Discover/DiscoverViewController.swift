@@ -10,8 +10,17 @@ import Foundation
 import UIKit
 import CryptoCompKit
 
+class CryptoCoin: NSObject {
+    var data: CoinData
+    init(data: CoinData) {
+        self.data = data
+    }
+}
+
 class DiscoverViewController: UIViewController {
     let cryptoCompKit = CryptoCompKit()
+    var allCoins = [CryptoCoin]()
+    var baseURL = ""
     
     func setBackgroundImage() {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
@@ -30,7 +39,6 @@ class DiscoverViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupConnection()
         //view.backgroundColor = UIColor.rgb(red: 199, green: 190, blue: 177)
         view.backgroundColor = UIColor.rgb(red: 24, green: 50, blue: 50)
         setBackgroundImage()
@@ -40,6 +48,16 @@ class DiscoverViewController: UIViewController {
         self.view.addSubview(detailContainerView)
         self.view.addSubview(detailOrAddView)
         setupConstraints()
+        
+        let defaultCoins = ["BTC","ETH","LTC", "BCH", "ETC", "XMR", "NANO"]
+        let randomIndex = Int(arc4random_uniform(UInt32(defaultCoins.count)))
+        let randomStr = defaultCoins[randomIndex]
+        getCoinList()
+        getPriceList(coinID: randomStr)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.2, execute: {
+            self.setData(coinID: randomStr)
+        })
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,33 +95,45 @@ extension DiscoverViewController {
     }
 }
 
+//: MARK - Data from CryptoCompare
 extension DiscoverViewController {
-    func setupConnection() {
-        let baseImageURL = "https://www.cryptocompare.com"
+    
+    func getCoinList() {
         cryptoCompKit.coinList { list, result in
             switch result {
             case .success(_):
-                print("!! \(list.coins["BTC"]!.coinName, list.coins["BTC"]!.imageURL,list.coins["BTC"]!.url, list.coins["XMR"]!.id )")
-                self.getSnapshot(id: list.coins["XMR"]!.id)
-                self.detailContainerView.imageView.downloaded(from: baseImageURL + list.coins["XMR"]!.imageURL!)
-                DispatchQueue.main.async {
-                    self.coinContainerView.symbolLabel.text = list.coins["XMR"]!.symbol
-                    self.coinContainerView.nameLabel.text = list.coins["XMR"]!.coinName
+                self.baseURL = list.baseLinkURL
+                for coin in list.coins {
+                    let cryptoCoin = CryptoCoin(data: coin.value)
+                    self.allCoins.append(cryptoCoin)
                 }
             case let .failure(error):
                 print(error.localizedDescription)
             }
         }
-        
-        let from = ["BTC","ETH","LTC", "XMR", "NANO"]
-        let to = ["USD"]
-        cryptoCompKit.priceList(fSyms:from, tSyms:to) { list, result in
+    }
+    
+    func setData(coinID: String ){
+        print("!! \(allCoins.count)")
+        guard let coin = self.allCoins.first(where:{$0.data.symbol == coinID}) else {return}
+        self.setDescription(id: coin.data.id)
+        if let validURL = coin.data.imageURL {
+            self.detailContainerView.imageView.downloaded(from: self.baseURL + validURL)
+        }
+        DispatchQueue.main.async {
+            self.coinContainerView.symbolLabel.text = coin.data.symbol
+            self.coinContainerView.nameLabel.text = coin.data.coinName
+        }
+    }
+    
+    func getPriceList(coinID: String) {
+        let to = ["USD"] //: We can change this to many differency currencies.
+        cryptoCompKit.priceList(fSyms:[coinID], tSyms:to) { list, result in
             switch result {
             case .success(_):
-                for item in list.prices["XMR"]! {
-                    print("!! \(item.key), \(item.value)")
+                for item in list.prices[coinID]! {
                     let coin = item.value
-                    print("!! \(coin.change24Hour, coin.changeDay, coin.marketCap, coin.fromSymbol, coin.flags, coin.totalVolume24Hour)")
+                    //print("!! \(coin.change24Hour, coin.changeDay, coin.marketCap, coin.fromSymbol, coin.flags, coin.totalVolume24Hour)")
                     DispatchQueue.main.async {
                         let detailView = self.detailContainerView
                         let formatter = CurrencyFormatter.sharedInstance
@@ -135,7 +165,8 @@ extension DiscoverViewController {
         }
     }
     
-    func getSnapshot(id: String) {
+    
+    func setDescription(id: String) {
         guard let url = URL(string: "https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=\(id)") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else { return }
@@ -143,7 +174,7 @@ extension DiscoverViewController {
                 let decoder = JSONDecoder()
                 let snapshot = try decoder.decode(Stats.self, from: data)
                 let description = snapshot.data.general.description
-                //print(description.htmlToString)
+                print("!! \(description)")
                 DispatchQueue.main.async {
                     let style = NSMutableParagraphStyle()
                     style.lineSpacing = 1.5
@@ -153,6 +184,6 @@ extension DiscoverViewController {
             } catch let error as NSError {
                 print(error)
             }
-        }.resume()
+            }.resume()
     }
 }
