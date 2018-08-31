@@ -17,7 +17,14 @@ class CryptoCoin: NSObject {
     }
 }
 
-class DiscoverViewController: UIViewController {
+class DiscoverViewController: UIViewController, TableVCDelegate {
+    
+    //: This gets called When TableViewController pops from the stack
+    func didFinishTableVC(controller: CoinTableViewController, coin: CryptoCoin) {
+        self.setData(coinID: coin.data.symbol)
+        self.getPriceList(coinID: coin.data.symbol)
+    }
+    
     let cryptoCompKit = CryptoCompKit()
     var allCoins = [CryptoCoin]()
     var baseURL = String()
@@ -62,6 +69,7 @@ class DiscoverViewController: UIViewController {
     
     @objc func displayTable() {
         let coinTableController = CoinTableViewController()
+        coinTableController.delegate = self
         coinTableController.coins = allCoins.sorted(by: { $0.data.symbol < $1.data.symbol }) //: It would be much better if it were done by marketCap
 //        self.present(coinTableController, animated: true, completion: nil)
         self.navigationController?.pushViewController(coinTableController, animated: false)
@@ -160,19 +168,13 @@ extension DiscoverViewController {
                         let coinOption = CurrencyFormatterOptions()
                         coinOption.allowTruncation = true
                         
-                        let marketCapText = detailView.marketCapLabel.text ?? ""
-                        let volume24Text = detailView.volume24hLabel.text ?? ""
-                        let supplyText = detailView.circulatingSupplyLabel.text ?? ""
-                        let changeText = detailView.change24hLabel.text ?? ""
-                        let highText = detailView.high24hLabel.text ?? ""
-                        let lowText = detailView.low24hLabel.text  ?? ""
                         detailView.priceLabel.text = formatter.formatAmount(coin.price, currency: "USD", options: nil)
-                        detailView.marketCapLabel.text = marketCapText + formatter.formatAmount(coin.marketCap, currency: "USD", options:nil)
-                        detailView.volume24hLabel.text = volume24Text + formatter.formatAmount(coin.totalVolume24Hour, currency: "USD", options: nil)
-                        detailView.circulatingSupplyLabel.text = supplyText + formatter.formatCoin(coin.supply, currency: "", options: nil) +  " \(coin.fromSymbol)"
-                        detailView.change24hLabel.text = changeText + formatter.formatAmount(coin.change24Hour, currency: "USD", options: options)
-                        detailView.high24hLabel.text = highText + formatter.formatAmount(coin.high24Hour, currency: "USD", options: nil)
-                        detailView.low24hLabel.text = lowText + formatter.formatAmount(coin.low24Hour, currency: "USD", options: nil)
+                        detailView.marketCapLabel.text = "Market Cap: " + formatter.formatAmount(coin.marketCap, currency: "USD", options:nil)
+                        detailView.volume24hLabel.text = "Volume (24h): " + formatter.formatAmount(coin.totalVolume24Hour, currency: "USD", options: nil)
+                        detailView.circulatingSupplyLabel.text = "Circulating Supply: " + formatter.formatCoin(coin.supply, currency: "", options: nil) +  " \(coin.fromSymbol)"
+                        detailView.change24hLabel.text = "Change (24h): " + formatter.formatAmount(coin.change24Hour, currency: "USD", options: options)
+                        detailView.high24hLabel.text = "High (24h): " + formatter.formatAmount(coin.high24Hour, currency: "USD", options: nil)
+                        detailView.low24hLabel.text = "Low (24h): " + formatter.formatAmount(coin.low24Hour, currency: "USD", options: nil)
                     }
                 }
             case .failure(_):
@@ -183,7 +185,10 @@ extension DiscoverViewController {
     
     
     func setDescription(id: String) {
-        guard let url = URL(string: "https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=\(id)") else { return }
+        guard let url = URL(string: "https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=\(id)") else {
+            self.descriptionView.textView.attributedText = NSAttributedString(string: "")
+            return
+        }
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else { return }
             do {
@@ -199,6 +204,9 @@ extension DiscoverViewController {
                 }
             } catch let error as NSError {
                 print(error)
+                DispatchQueue.main.async {
+                    self.descriptionView.textView.attributedText = NSAttributedString(string: "")
+                }
             }
             }.resume()
     }

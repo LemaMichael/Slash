@@ -9,10 +9,16 @@
 import Foundation
 import UIKit
 
+// https://bit.ly/2wCz2EO
+protocol TableVCDelegate {
+    func didFinishTableVC(controller: CoinTableViewController, coin: CryptoCoin)
+}
+
 class CoinTableViewController: UITableViewController {
     
     var coins = [CryptoCoin]() //: TODO: - Arrange the coins by marketCap
     var filteredCoins = [CryptoCoin]()
+    var delegate: TableVCDelegate! = nil
     
     lazy var searchController: UISearchController = {
         let sC = UISearchController(searchResultsController: nil)
@@ -119,6 +125,8 @@ class CoinTableViewController: UITableViewController {
         self.tableView.deselectRow(at: indexPath, animated: false)
         let coin = isFiltering() ? filteredCoins[indexPath.row] : coins[indexPath.row]
         print("!coin: \(coin.data.name) was selected")
+        self.navigationController?.popViewController(animated: true)
+        delegate.didFinishTableVC(controller: self, coin: coin)
     }
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
