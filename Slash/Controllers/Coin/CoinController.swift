@@ -131,7 +131,6 @@ class CoinController: DataController {
             let title = "Your " + coin.officialName() + " value: \(user.getCoinBalance(coinName: coin.officialName()))"
             accountHolding.setTitle(title, for: .normal)
         }
-        
     }
     
     func formatPrice(value: Double, isScrolling: Bool) {

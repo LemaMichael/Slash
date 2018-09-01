@@ -44,6 +44,11 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
     let descriptionView = DescriptionView()
     let detailContainerView = DetailContainerView()
     let detailOrAddView = DetailOrAddView()
+    let detailsView: DetailsView = {
+        let dv = DetailsView()
+        dv.alpha = 0
+        return dv
+    }()
     
     
     override func viewDidLoad() {
@@ -52,12 +57,14 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
         view.backgroundColor = UIColor.rgb(red: 24, green: 50, blue: 50)
         setBackgroundImage()
         searchBarView.searchButton.isEnabled = false
+        detailOrAddView.detailButton.addTarget(self, action: #selector(displayDetailsView), for: .touchUpInside)
         searchBarView.searchButton.addTarget(self, action: #selector(displayTable), for: .touchUpInside)
         self.view.addSubview(searchBarView)
         self.view.addSubview(coinContainerView)
         self.view.addSubview(descriptionView)
         self.view.addSubview(detailContainerView)
         self.view.addSubview(detailOrAddView)
+        self.view.addSubview(detailsView)
         setupConstraints()
         
         let defaultCoins = ["BTC","ETH","LTC", "BCH", "ETC", "XMR", "NANO"]
@@ -67,10 +74,15 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
         getCoinList()
     }
     
+    @objc func displayDetailsView() {
+        detailOrAddView.detailButton.isSelected = !detailOrAddView.detailButton.isSelected
+        detailsView.alpha = detailOrAddView.detailButton.isSelected ? 1 : 0
+    }
+    
     @objc func displayTable() {
         let coinTableController = CoinTableViewController()
         coinTableController.delegate = self
-        coinTableController.coins = allCoins.sorted(by: { Int($0.data.sortOrder) ?? 0 < Int($1.data.sortOrder) ?? 0 }) 
+        coinTableController.coins = allCoins.sorted(by: { Int($0.data.sortOrder) ?? 0 < Int($1.data.sortOrder) ?? 0 })
         self.navigationController?.pushViewController(coinTableController, animated: false)
     }
     
@@ -101,11 +113,13 @@ extension DiscoverViewController {
         descriptionView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 1).isActive = true 
         
         let containerHeight = customHeight * 0.6
-        coinContainerView.anchor(top: nil, bottom: descriptionView.topAnchor, left: nil, right: searchBarView.rightAnchor, paddingTop: 0, paddingBottom: -10, paddingLeft: 0, paddingRight: 0, width: (view.bounds.width / 2) * 0.7, height: containerHeight)
+        coinContainerView.anchor(top: nil, bottom: descriptionView.topAnchor, left: nil, right: searchBarView.rightAnchor, paddingTop: 0, paddingBottom: -10, paddingLeft: 0, paddingRight: 0, width: (view.bounds.width / 2) * 0.715, height: containerHeight)
         
         detailContainerView.anchor(top: descriptionView.bottomAnchor, bottom: bottomAnchor, left: view.leftAnchor, right: nil, paddingTop: 40, paddingBottom: -18, paddingLeft: 18, paddingRight: 0, width: (view.bounds.width/2) * 0.9, height: 0)
         
         detailOrAddView.anchor(top: nil, bottom: detailContainerView.bottomAnchor, left: nil, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: (view.bounds.width/2) * 0.72, height: 25)
+        
+        detailsView.anchor(top: searchBarView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: nil, paddingTop: 6, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: (view.bounds.width / 2) * 0.8, height: containerHeight * 1.65)
         
     }
 }
@@ -137,7 +151,7 @@ extension DiscoverViewController {
     
     func setData(coinID: String ){
         guard let coin = self.allCoins.first(where:{$0.data.symbol == coinID}) else {return}
-        self.setDescription(id: coin.data.id)
+        self.getSnapshot(id: coin.data.id)
         if let validURL = coin.data.imageURL {
             self.detailContainerView.imageView.downloaded(from: self.baseURL + validURL)
         }
@@ -182,8 +196,7 @@ extension DiscoverViewController {
         }
     }
     
-    
-    func setDescription(id: String) {
+    func getSnapshot(id: String) {
         guard let url = URL(string: "https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=\(id)") else {
             self.descriptionView.textView.attributedText = NSAttributedString(string: "")
             return
@@ -193,20 +206,44 @@ extension DiscoverViewController {
             do {
                 let decoder = JSONDecoder()
                 let snapshot = try decoder.decode(Stats.self, from: data)
-                let description = snapshot.data.general.description
-
+                
+                print("!!! \(snapshot.data.general.startDate, snapshot.data.general.totalCoinSupply, snapshot.data.general.totalCoinsMined, snapshot.data.general.algorithm, snapshot.data.general.proofType)")
                 DispatchQueue.main.async {
-                    let style = NSMutableParagraphStyle()
-                    style.lineSpacing = 1.5
-                    let attributes = [NSAttributedStringKey.paragraphStyle: style, NSAttributedStringKey.font: UIFont(name: "Avenir-Heavy", size: 11.4)!, NSAttributedStringKey.foregroundColor: UIColor.rgb(red: 140, green: 135, blue: 137)]
-                    self.descriptionView.textView.attributedText = NSAttributedString(string: description.htmlToString, attributes: attributes)
+                    self.modifyViews(general: snapshot.data.general)
                 }
             } catch let error as NSError {
                 print(error)
                 DispatchQueue.main.async {
                     self.descriptionView.textView.attributedText = NSAttributedString(string: "")
+                    self.detailsView.startDateLabel.text = "Start Date: "
+                    self.detailsView.totalSupplyLabel.text = "Total Supply: "
+                    self.detailsView.algorithmLabel.text = "Algorithm: "
+                    self.detailsView.proofLabel.text = "Proof Type: "
                 }
             }
             }.resume()
+    }
+    
+    fileprivate func modifyViews(general: General) {
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 1.5
+        let attributes = [NSAttributedStringKey.paragraphStyle: style, NSAttributedStringKey.font: UIFont(name: "Avenir-Heavy", size: 11.4)!, NSAttributedStringKey.foregroundColor: UIColor.rgb(red: 140, green: 135, blue: 137)]
+        self.descriptionView.textView.attributedText = NSAttributedString(string: general.description.htmlToString, attributes: attributes)
+        
+        //: For DetailView
+        let startDate = general.startDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let date = dateFormatter.date(from: startDate) ?? Date()
+        dateFormatter.dateFormat = "MMM. dd, yyyy"
+        let dateString = dateFormatter.string(from: date)
+        
+        self.detailsView.startDateLabel.text = "Start Date: " + dateString
+        let supply = Double(general.totalCoinSupply)  ?? 0
+        self.detailsView.totalSupplyLabel.text = (supply == 0) ? "Total Supply: Uncapped" : "Total Supply: " + CurrencyFormatter.sharedInstance.formatCoin(supply, currency: "", options: nil)
+        
+        self.detailsView.algorithmLabel.text = "Algorithm: " + general.algorithm
+        self.detailsView.proofLabel.text = "Proof Type: " + general.proofType
     }
 }

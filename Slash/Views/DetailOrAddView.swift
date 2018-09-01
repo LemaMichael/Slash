@@ -11,7 +11,7 @@ import UIKit
 class DetailOrAddView: UIView {
     
     let detailButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitleColor(.white, for: .normal)
         button.setTitle("Details", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 12)

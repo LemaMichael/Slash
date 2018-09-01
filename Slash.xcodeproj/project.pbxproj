@@ -19,6 +19,7 @@
 		4C26CA042136594F0096B4E7 /* PortfolioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C26CA032136594F0096B4E7 /* PortfolioCell.swift */; };
 		4C29FA96212DCA50007FAF90 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C29FA95212DCA50007FAF90 /* User.swift */; };
 		4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C29FA97212DCF98007FAF90 /* UserDefaultsExtension.swift */; };
+		4C2BF76F213A522800890547 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2BF76E213A522800890547 /* DetailsView.swift */; };
 		4C2C314921337E9A0001AEB9 /* CustomGrayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C314821337E9A0001AEB9 /* CustomGrayButton.swift */; };
 		4C2C9C162128AAD20041175E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C152128AAD20041175E /* WelcomeViewController.swift */; };
 		4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */; };
@@ -66,6 +67,7 @@
 		4C26CA032136594F0096B4E7 /* PortfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCell.swift; sourceTree = "<group>"; };
 		4C29FA95212DCA50007FAF90 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4C29FA97212DCF98007FAF90 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
+		4C2BF76E213A522800890547 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		4C2C314821337E9A0001AEB9 /* CustomGrayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGrayButton.swift; sourceTree = "<group>"; };
 		4C2C9C152128AAD20041175E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleWebSocketClient.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				4C62060A213852FE009FF959 /* DetailContainerView.swift */,
 				4C62060C2138639D009FF959 /* DetailOrAddView.swift */,
 				4C6206102138D3DE009FF959 /* DescriptionView.swift */,
+				4C2BF76E213A522800890547 /* DetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				4C94D97521266E63008F80EE /* Pair.swift in Sources */,
 				4C6618F621361A3F00DD8CBA /* PieView.swift in Sources */,
 				4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */,
+				4C2BF76F213A522800890547 /* DetailsView.swift in Sources */,
 				4C62060F2138C85C009FF959 /* CoinSnapshot.swift in Sources */,
 				4CE298A421261710008A533A /* PieViewController.swift in Sources */,
 				4C2C9C162128AAD20041175E /* WelcomeViewController.swift in Sources */,
