@@ -9,7 +9,7 @@
 import UIKit
 
 class CustomGrayButton: UIButton {
-    let customBackgroundColor = UIColor(red: 0.353, green: 0.451, blue: 0.522, alpha: 0.7)
+    let customBackgroundColor = UIColor(red:0.25, green:0.60, blue:0.99, alpha:1.0)
     let customTintColor = UIColor(red: 0.353, green: 0.451, blue: 0.522, alpha: 1)
     let customfont = UIFont(name: "AvenirNext-DemiBold", size: 13)
     

@@ -417,8 +417,7 @@ extension HomeViewController {
         let coinControl = CoinController()
         let result = coinDetail.chartDataEntry.reversed() as [ChartDataEntry]
         coinControl.coin = coinDetail
-        coinControl.chartColor = colors[indexPath.item]
-        coinControl.chartView.setData(values: result, lineColor: colors[indexPath.item])
+        coinControl.chartView.setData(values: result)
         
         self.navigationController?.pushViewController(coinControl, animated: true)
     }

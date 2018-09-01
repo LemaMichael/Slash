@@ -51,7 +51,7 @@ class PriceContentView: UIView {
     
     let dividerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0.7, alpha: 1)
+        view.backgroundColor = UIColor(white: 0.65, alpha: 1)
         return view
     }()
     

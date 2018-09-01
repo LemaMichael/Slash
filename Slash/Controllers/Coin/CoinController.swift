@@ -16,7 +16,6 @@ class CoinController: DataController {
     let user = UserDefaults.standard.getUser()
     let priceContentView = PriceContentView()
     var coin = CoinDetail()
-    var chartColor = UIColor()
     lazy var chartView = ChartView()
     fileprivate var buttonArray = [CustomGrayButton]()
     
@@ -114,7 +113,7 @@ class CoinController: DataController {
         //: Is this the best way to do this? Without this, the chartDataEntry was incomplete.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
-            self.chartView.setData(values: newData, lineColor: self.chartColor)
+            self.chartView.setData(values: newData)
         }
     }
     
@@ -149,9 +148,10 @@ class CoinController: DataController {
         priceContentView.percentageLabel.textColor = (difference < 0) ? priceContentView.customRed : priceContentView.customGreen
     }
     
+    //: MARK: -viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red:0.20, green:0.23, blue:0.27, alpha:1.0)
+        view.backgroundColor = UIColor(red:0.01, green:0.14, blue:0.28, alpha:1.0)
         self.navigationItem.title = coin.officialName() + " Price"
         self.priceContentView.coinPriceLabel.text = CurrencyFormatter.sharedInstance.formatAmount(coin.validCurrentPrice(), currency: "USD", options: nil)
         formatPrice(value: 0.0, isScrolling: false)
