@@ -13,11 +13,13 @@ import SwiftEntryKit
 
 class CoinController: DataController {
     
+    let request = RequestCoinHistory()
     let user = UserDefaults.standard.getUser()
     let priceContentView = PriceContentView()
     var coin = CoinDetail()
     lazy var chartView = ChartView()
     fileprivate var buttonArray = [CustomGrayButton]()
+    let IDS = ["1335", "1211", "527", "1327", "896"]
     
     var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -27,35 +29,31 @@ class CoinController: DataController {
         stackView.spacing = CGFloat(12)
         return stackView
     }()
+
     lazy var button1: CustomGrayButton = {
         let button = CustomGrayButton()
-        button.setTitle("1H", for: .normal)
+        button.defaultChosen() //: 1D button should show it is tapped by default
+        button.setTitle("24H", for: .normal)
         return button
     }()
     lazy var button2: CustomGrayButton = {
         let button = CustomGrayButton()
-        button.defaultChosen() //: 1D button should show it is tapped by default
-        button.setTitle("1D", for: .normal)
+        button.setTitle("1W", for: .normal)
         return button
     }()
     lazy var button3: CustomGrayButton = {
         let button = CustomGrayButton()
-        button.setTitle("1W", for: .normal)
+        button.setTitle("1M", for: .normal)
         return button
     }()
     lazy var button4: CustomGrayButton = {
         let button = CustomGrayButton()
-        button.setTitle("1M", for: .normal)
+        button.setTitle("1Y", for: .normal)
         return button
     }()
     lazy var button5: CustomGrayButton = {
         let button = CustomGrayButton()
-        button.setTitle("1Y", for: .normal)
-        return button
-    }()
-    lazy var button6: CustomGrayButton = {
-        let button = CustomGrayButton()
-        button.setTitle("All", for: .normal)
+        button.setTitle("5Y", for: .normal)
         return button
     }()
     let dividerView: UIView = {
@@ -96,7 +94,7 @@ class CoinController: DataController {
     }()
     
     func setupButtons() {
-        buttonArray = [button1, button2, button3, button4, button5, button6]
+        buttonArray = [button1, button2, button3, button4, button5]
         buttonArray.forEach({ $0.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside) })
     }
     
@@ -108,11 +106,42 @@ class CoinController: DataController {
             return
         }
         
-        self.getHistoricData(coinID: coin.id, selectedRange: rangeText)
+        var timeFrame = ""
+        switch rangeText {
+        case "24H":
+            timeFrame = "24h"
+        case "1W":
+            timeFrame = "7d"
+        case "1M":
+            timeFrame = "30d"
+        case "1Y":
+            timeFrame = "1y"
+        case "5Y":
+            timeFrame = "5y"
+        default:
+            return
+        }
+        var coinID = ""
+        switch coin.officialName() {
+        case "Bitcoin":
+            coinID = IDS[0]
+        case "Ethereum":
+            coinID = IDS[1]
+        case "Litecoin":
+            coinID = IDS[2]
+        case "Bitcoin Cash":
+            coinID = IDS[3]
+        case "Ethereum Classic":
+            coinID = IDS[4]
+        default:
+            return
+        }
+        
+        request.requestHistory(coinID: coinID, timeFrame: timeFrame, base: "USD")
         
         //: Is this the best way to do this? Without this, the chartDataEntry was incomplete.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let newData = self.chartDataEntry.reversed() as [ChartDataEntry]
+            let newData = self.request.chartDataEntry
             self.chartView.setData(values: newData)
         }
     }
@@ -172,7 +201,6 @@ class CoinController: DataController {
         stackView.addArrangedSubview(button3)
         stackView.addArrangedSubview(button4)
         stackView.addArrangedSubview(button5)
-        stackView.addArrangedSubview(button6)
         
         setupButtons()
         setupConstraints()
