@@ -36,6 +36,8 @@ class CoinTableViewController: UITableViewController {
         setupTableView()
         setupSearchController()
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        //: Change this to false if i add my own custom back button
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     func setupSearchController() {
@@ -96,14 +98,11 @@ class CoinTableViewController: UITableViewController {
     
     // MARK:- CELL
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return filteredCoins.count
-        }
-        return coins.count
+        return isFiltering() ? filteredCoins.count : coins.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 61.6
+        return 62
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,6 +137,11 @@ class CoinTableViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.contentView.backgroundColor = UIColor.rgb(red: 35, green: 35, blue: 35)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.searchController.searchBar.becomeFirstResponder()
+    }
    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -146,6 +150,10 @@ class CoinTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isTranslucent = true
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 }
 
