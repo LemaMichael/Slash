@@ -17,6 +17,9 @@ class PortfolioController: UIViewController {
     let options = CurrencyFormatterOptions()
     var coins = [CoinDetail]()
     var previousPortfolioValue: String = String()
+    fileprivate var previousGainValue: String = String()
+    fileprivate var totalGainLoss: Double = 0.0
+    
     let customRed = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
     let customGreen = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
     
@@ -67,8 +70,14 @@ class PortfolioController: UIViewController {
         let btcAmount = convertToBTC(priceAmount: user.balance())
         let btcValue = String(format: "₿%.9f", btcAmount)
         
+        //: Lets convert the change label text as well
+        let changeBTCAmount = convertToBTC(priceAmount: totalGainLoss)
+        let changeBTCValue = String(format: "₿%.9f", changeBTCAmount)
+        
         let text = totalPortfolioValue.isSelected ? btcValue : previousPortfolioValue
+        let changeText = totalPortfolioValue.isSelected ? changeBTCValue : previousGainValue
         totalPortfolioValue.setTitle(text, for: .normal)
+        changeLabel.text = changeText
     }
     
     func convertToBTC(priceAmount: Double) -> Double {
@@ -92,7 +101,6 @@ class PortfolioController: UIViewController {
     }
     
     func calculateTotalGainLoss() {
-        var totalGainLoss = 0.0
         for coin in coinHoldings {
             if let coinDetail = coins.first(where: {$0.officialName() == coin}) {
                 let percent = coinDetail.percent() //: This is the day percentage for the coin
@@ -123,8 +131,9 @@ class PortfolioController: UIViewController {
         options.showPositivePrefix = true
         options.showNegativePrefix = true
         
-        previousPortfolioValue = totalPortfolioValue.titleLabel?.text  ?? ""
         calculateTotalGainLoss()
+        previousPortfolioValue = totalPortfolioValue.titleLabel?.text  ?? ""
+        previousGainValue = changeLabel.text ?? ""
     }
     
     func setupViews(){

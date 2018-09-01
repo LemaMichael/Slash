@@ -207,7 +207,7 @@ extension DiscoverViewController {
                 let decoder = JSONDecoder()
                 let snapshot = try decoder.decode(Stats.self, from: data)
                 
-                print("!!! \(snapshot.data.general.startDate, snapshot.data.general.totalCoinSupply, snapshot.data.general.totalCoinsMined, snapshot.data.general.algorithm, snapshot.data.general.proofType)")
+               // print("!!! \(snapshot.data.general.startDate, snapshot.data.general.totalCoinSupply, snapshot.data.general.totalCoinsMined, snapshot.data.general.algorithm, snapshot.data.general.proofType)")
                 DispatchQueue.main.async {
                     self.modifyViews(general: snapshot.data.general)
                 }
