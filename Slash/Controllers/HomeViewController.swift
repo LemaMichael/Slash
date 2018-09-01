@@ -417,6 +417,7 @@ extension HomeViewController {
         let coinControl = CoinController()
         let result = coinDetail.chartDataEntry.reversed() as [ChartDataEntry]
         coinControl.coin = coinDetail
+        coinControl.dayResult = result
         coinControl.chartView.setData(values: result)
         
         self.navigationController?.pushViewController(coinControl, animated: true)

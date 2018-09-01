@@ -13,6 +13,7 @@ import SwiftEntryKit
 
 class CoinController: UIViewController {
     
+    var dayResult = [ChartDataEntry]()
     let request = RequestCoinHistory()
     let user = UserDefaults.standard.getUser()
     let priceContentView = PriceContentView()
@@ -109,7 +110,7 @@ class CoinController: UIViewController {
         var timeFrame = ""
         switch rangeText {
         case "24H":
-            timeFrame = "24h"
+            self.chartView.setData(values: dayResult)
         case "1W":
             timeFrame = "7d"
         case "1M":
@@ -121,6 +122,7 @@ class CoinController: UIViewController {
         default:
             return
         }
+        if rangeText == "24H" {return}
         var coinID = ""
         switch coin.officialName() {
         case "Bitcoin":
