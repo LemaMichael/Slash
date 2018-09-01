@@ -48,7 +48,6 @@
 		4CC0478E21375897009D9177 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0478D21375897009D9177 /* BarView.swift */; };
 		4CC0479221375B3F009D9177 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0479121375B3F009D9177 /* BarViewController.swift */; };
 		4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989C2126156D008A533A /* HomeViewController.swift */; };
-		4CE298A0212616F4008A533A /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989F212616F4008A533A /* DataController.swift */; };
 		4CE298A221261700008A533A /* PortfolioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A121261700008A533A /* PortfolioController.swift */; };
 		4CE298A421261710008A533A /* PieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A321261710008A533A /* PieViewController.swift */; };
 		4CE298A621261748008A533A /* PagePortfolioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A521261748008A533A /* PagePortfolioController.swift */; };
@@ -97,7 +96,6 @@
 		4CC0478D21375897009D9177 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
 		4CC0479121375B3F009D9177 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
 		4CE2989C2126156D008A533A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		4CE2989F212616F4008A533A /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4CE298A121261700008A533A /* PortfolioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioController.swift; sourceTree = "<group>"; };
 		4CE298A321261710008A533A /* PieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewController.swift; sourceTree = "<group>"; };
 		4CE298A521261748008A533A /* PagePortfolioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagePortfolioController.swift; sourceTree = "<group>"; };
@@ -133,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				4C20F0432126019100CEB049 /* CoinController.swift */,
-				4CE2989F212616F4008A533A /* DataController.swift */,
 			);
 			path = Coin;
 			sourceTree = "<group>";
@@ -435,7 +432,6 @@
 				4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */,
 				4C2C9C1A2128C5050041175E /* ExampleWebSocketClient.swift in Sources */,
 				4C2D79C42130DCCD001FAF7B /* MainNavigationController.swift in Sources */,
-				4CE298A0212616F4008A533A /* DataController.swift in Sources */,
 				4C96F73E212F9520001D16D8 /* PageViewController.swift in Sources */,
 				4CC0478E21375897009D9177 /* BarView.swift in Sources */,
 				4C8DFFE521326BAD00374EC3 /* PriceContentView.swift in Sources */,

@@ -11,7 +11,7 @@ import Charts
 import SwiftEntryKit
 
 
-class CoinController: DataController {
+class CoinController: UIViewController {
     
     let request = RequestCoinHistory()
     let user = UserDefaults.standard.getUser()
