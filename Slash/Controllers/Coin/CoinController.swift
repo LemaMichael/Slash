@@ -63,6 +63,16 @@ class CoinController: UIViewController {
         return view
     }()
     
+    let coverChartView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red:0.01, green:0.14, blue:0.28, alpha:1.0)
+        return view
+    }()
+    let coverChartView2: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red:0.01, green:0.14, blue:0.28, alpha:1.0)
+        return view
+    }()
     
     //:TODO- Change font and color
     lazy var accountHolding: UIButton = {
@@ -213,6 +223,9 @@ class CoinController: UIViewController {
         stackView.addArrangedSubview(button4)
         stackView.addArrangedSubview(button5)
         
+        self.chartView.addSubview(coverChartView)
+        self.chartView.addSubview(coverChartView2)
+        
         setupButtons()
         setupConstraints()
         
@@ -282,6 +295,10 @@ class CoinController: UIViewController {
         accountHolding.anchor(top: dividerView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 35)
         
         containerView.anchor(top: accountHolding.bottomAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 0)
+        
+        coverChartView.anchor(top: nil, bottom: self.chartView.bottomAnchor, left: self.chartView.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 30, height: 13)
+        coverChartView2.anchor(top: nil, bottom: self.chartView.bottomAnchor, left: nil, right: self.chartView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 30, height: 13)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
