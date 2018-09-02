@@ -75,7 +75,7 @@ class RegisterView: UIView {
         transition.duration = 0.6
         transition.type = kCATransitionPush
         transition.subtype = forward ? kCATransitionFromRight : kCATransitionFromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         self.coinLabel.layer.add(transition, forKey: kCATransition)
     }
     

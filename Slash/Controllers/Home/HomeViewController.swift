@@ -47,7 +47,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
     var fontPosistive: NSMutableAttributedString!
     var fontNegative: NSMutableAttributedString!
-    var font:  [String : NSObject]!
+    var font: [String : NSObject]!
     var useColouredSymbols = true
     
     let defaults = Foundation.UserDefaults.standard
@@ -110,7 +110,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         var postiveVal = 0, negativeVal = 0
         let count = coins.count
         let label = accountDescription
-        if (count == 0) { //: Perhaps no connection?
+        if count == 0 { //: Perhaps no connection?
             return
         }
         for coin in coins {
@@ -121,9 +121,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
         label.text! += "The crypto market is "
-        if (negativeVal > postiveVal) {
+        if negativeVal > postiveVal {
             label.text! += "down today."
-        } else if (negativeVal < postiveVal) {
+        } else if negativeVal < postiveVal {
             label.text! += "up today."
         } else { //: negativeVal == postiveVal
             label.text! += "up to something today."
@@ -212,7 +212,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             case .success:
                 // Do stuff with the provided products
                 for item in products {
-                    print(item.id,item.baseCurrency,item.quoteCurrency,  item.baseMinSize, item.baseMaxSize, item.quoteIncrement, item.displayName, item.status, item.marginEnabled, item.statusMessage ?? "\n")
+                    print(item.id, item.baseCurrency, item.quoteCurrency, item.baseMinSize, item.baseMaxSize, item.quoteIncrement, item.displayName, item.status, item.marginEnabled, item.statusMessage ?? "\n")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -225,7 +225,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         for coin in coins {
             let range = DateRange.oneDay
             let granularity = Granularity.oneHour
-            client.historic(pid:coin.id, range:range, granularity:granularity) { candles, result in
+            client.historic(pid: coin.id, range:range, granularity:granularity) { candles, result in
                 switch result {
                 case .success:
                     //: Each candle has a time, low, high. open, close, volume
@@ -263,7 +263,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let correctIndex = self.coins.index(of: coin) //: Finds the index of coin in the array coins
             guard let index = correctIndex else {return }
             let coin = self.coins[index]
-            self.client.historic(pid: coin.id, range:range, granularity:granularity) { candles, result in
+            self.client.historic(pid: coin.id, range: range, granularity: granularity) { candles, result in
                 switch result {
                 case .success:
                     //: Each candle has a time, low, high. open, close, volume
@@ -447,7 +447,7 @@ extension HomeViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (!decelerate) {
+        if !decelerate {
             snapToCenter()
         }
     }
@@ -456,7 +456,7 @@ extension HomeViewController: UIScrollViewDelegate {
 //: MARK: GDAXSocketClientDelegate
 extension HomeViewController: GDAXSocketClientDelegate {
     func gdaxSocketDidConnect(socket: GDAXSocketClient) {
-        socket.subscribe(channels:[.ticker], productIds:[.BTCUSD, .ETHUSD, .LTCUSD, .BCHUSD, .ETCUSD])
+        socket.subscribe(channels: [.ticker], productIds:[.BTCUSD, .ETHUSD, .LTCUSD, .BCHUSD, .ETCUSD])
     }
     
     func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?) {
@@ -485,11 +485,10 @@ extension HomeViewController: GDAXSocketClientDelegate {
         coin.volume = String(ticker.volume24h)
         coin.thirtyDayVolume = String(ticker.volume30d)
         
-        if (coins.isEmpty  || coins.count < 5) {
+        if coins.isEmpty  || coins.count < 5 {
             coins.append(coin)
         }
-        for item in coins {
-            if item.id == coin.id {
+        for item in coins where item.id == coin.id {
                 print("Item: \(item.id) is being modified")
                 item.currentPrice = formattedPrice
                 item.open = String(ticker.open24h)
@@ -522,7 +521,6 @@ extension HomeViewController: GDAXSocketClientDelegate {
                 let formattedPrice = priceFormatter.string(from: currentUser.balance() as NSNumber) ?? "0.00"
                 self.accountBalanceLabel.text = "$" + formattedPrice //: FIXME: This shouldn't only be for US Dollar
             }
-        }
         
         //        print("Currently i have: \(coins.count) items. The items are:")
         //        for item in coins {

@@ -199,7 +199,7 @@ class CoinCell: UICollectionViewCell {
     
     func setupProgressBarAnimation(value: Double) {
         self.progressView.layoutIfNeeded() //: Leave this here.
-        if (!didFinishAnimatingBar) {
+        if !didFinishAnimatingBar {
             self.progressView.setProgress(Float(value), animated: true)
             didFinishAnimatingBar = true
         } else {
@@ -347,7 +347,7 @@ class CoinCell: UICollectionViewCell {
         intervalButton.anchor(top: self.chartView.bottomAnchor, bottom: nil, left: nil, right: self.rightAnchor, paddingTop: 15, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 25, height: 21)
         coinLabel.rightAnchor.constraint(equalTo: intervalButton.leftAnchor, constant: -14).isActive = true
         
-        coinImageView.anchor(top: stackView.topAnchor, bottom: nil, left:  self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 30, height: 30)
+        coinImageView.anchor(top: stackView.topAnchor, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 30, height: 30)
         
         miningImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         miningImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -355,4 +355,3 @@ class CoinCell: UICollectionViewCell {
         miningImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
     }
 }
-

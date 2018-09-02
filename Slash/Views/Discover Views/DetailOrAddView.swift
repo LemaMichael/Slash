@@ -64,4 +64,3 @@ class DetailOrAddView: UIView {
     }
     
 }
-

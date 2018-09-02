@@ -23,7 +23,7 @@ open class BalloonMarker: MarkerImage {
     fileprivate var label: String?
     fileprivate var _labelSize: CGSize = CGSize()
     fileprivate var _paragraphStyle: NSMutableParagraphStyle?
-    fileprivate var _drawAttributes = [NSAttributedStringKey : AnyObject]()
+    fileprivate var _drawAttributes = [NSAttributedStringKey: AnyObject]()
     
     public init(color: UIColor, font: UIFont, textColor: UIColor, insets: UIEdgeInsets) {
         self.color = color
@@ -57,18 +57,15 @@ open class BalloonMarker: MarkerImage {
         
         if origin.x + offset.x < 0.0 {
             offset.x = -origin.x + padding
-        }
-        else if let chart = chartView,
+        } else if let chart = chartView,
             origin.x + width + offset.x > chart.bounds.size.width {
             offset.x = chart.bounds.size.width - origin.x - width - padding
         }
         
         if origin.y + offset.y < 0 {
-            offset.y = height + padding;
-        }
-        else if let chart = chartView,
-            origin.y + height + offset.y > chart.bounds.size.height
-        {
+            offset.y = height + padding
+        } else if let chart = chartView,
+            origin.y + height + offset.y > chart.bounds.size.height {
             offset.y = chart.bounds.size.height - origin.y - height - padding
         }
         
@@ -121,8 +118,7 @@ open class BalloonMarker: MarkerImage {
                 x: rect.origin.x,
                 y: rect.origin.y + arrowSize.height))
             context.fillPath()
-        }
-        else {
+        } else {
             context.beginPath()
             context.move(to: CGPoint(
                 x: rect.origin.x,

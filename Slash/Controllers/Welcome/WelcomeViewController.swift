@@ -72,7 +72,7 @@ class WelcomeViewController: UIViewController {
         transition.duration = 0.6
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         self.registerView.layer.add(transition, forKey: kCATransition)
         self.registerView.isHidden = false
         self.registerView.alpha = 1
@@ -257,4 +257,3 @@ extension WelcomeViewController: UITextFieldDelegate {
         return true
     }
 }
-

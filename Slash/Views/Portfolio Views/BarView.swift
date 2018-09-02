@@ -124,4 +124,3 @@ class BarView: HorizontalBarChartView {
         self.highlightValues(nil)
     }
 }
-

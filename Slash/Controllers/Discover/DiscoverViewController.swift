@@ -66,7 +66,7 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
         self.view.addSubview(detailsView)
         setupConstraints()
         
-        let defaultCoins = ["BTC","ETH","LTC", "BCH", "ETC", "XMR", "NANO"]
+        let defaultCoins = ["BTC", "ETH", "LTC", "BCH", "ETC", "XMR", "NANO"]
         let randomIndex = Int(arc4random_uniform(UInt32(defaultCoins.count)))
         randomStr = defaultCoins[randomIndex]
         getPriceList(coinID: randomStr)
@@ -161,7 +161,7 @@ extension DiscoverViewController {
     
     func getPriceList(coinID: String) {
         let to = ["USD"] //: We can change this to many differency currencies.
-        cryptoCompKit.priceList(fSyms:[coinID], tSyms:to) { list, result in
+        cryptoCompKit.priceList(fSyms: [coinID], tSyms: to) { list, result in
             switch result {
             case .success:
                 guard let coinDict = list.prices[coinID] else { return }
@@ -180,7 +180,7 @@ extension DiscoverViewController {
                         coinOption.allowTruncation = true
                         
                         detailView.priceLabel.text = formatter.formatAmount(coin.price, currency: "USD", options: nil)
-                        detailView.marketCapLabel.text = "Market Cap: " + formatter.formatAmount(coin.marketCap, currency: "USD", options:nil)
+                        detailView.marketCapLabel.text = "Market Cap: " + formatter.formatAmount(coin.marketCap, currency: "USD", options: nil)
                         detailView.volume24hLabel.text = "Volume (24h): " + formatter.formatAmount(coin.totalVolume24Hour, currency: "USD", options: nil)
                         detailView.circulatingSupplyLabel.text = "Circulating Supply: " + formatter.formatCoin(coin.supply, currency: "", options: nil) +  " \(coin.fromSymbol)"
                         detailView.change24hLabel.text = "Change (24h): " + formatter.formatAmount(coin.change24Hour, currency: "USD", options: options)

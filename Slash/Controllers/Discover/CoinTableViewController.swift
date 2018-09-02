@@ -69,7 +69,7 @@ class CoinTableViewController: UITableViewController {
     }
     
     func filterContentForSearchText(_ searchText: String) {
-        filteredCoins = coins.filter({( coin : CryptoCoin) -> Bool in
+        filteredCoins = coins.filter({( coin: CryptoCoin) -> Bool in
             return coin.data.fullName.lowercased().contains(searchText.lowercased())
         })
         tableView.reloadData()
@@ -182,7 +182,7 @@ class CustomTableViewHeader: UITableViewHeaderFooterView {
         setupFooter()
     }
     func setupFooter() {
-        contentView.backgroundColor = UIColor(red:0.12, green:0.12, blue:0.12, alpha:1.0)
+        contentView.backgroundColor = UIColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1.0)
         addSubview(recentLabel)
         recentLabel.anchor(top: topAnchor, bottom: bottomAnchor, left: leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 10, paddingRight: 0, width: 150, height: 0)
     }
@@ -223,4 +223,3 @@ class CoinTableCell: UITableViewCell {
         nameSubLabel.anchor(top: symbolLabel.bottomAnchor, bottom: self.bottomAnchor, left: leftAnchor, right: nil, paddingTop: 0, paddingBottom: -11, paddingLeft: 12, paddingRight: 0, width: 320, height: 20)
     }
 }
-

@@ -127,7 +127,7 @@ class User: Codable {
         var supportedCoins = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic"]
         
         for (index, coin) in supportedCoins.enumerated() {
-            if (getCoinBalance(coinName: coin) == 0) {
+            if getCoinBalance(coinName: coin) == 0 {
                 supportedCoins.remove(at: index)
             }
         }
@@ -143,7 +143,7 @@ class User: Codable {
         let holdingValue = coinBalance * coinPrice
         
         //: 2-Get percentage
-        if (amountOfCoins() == 0) {
+        if amountOfCoins() == 0 {
             return 0.00
         } else {
             let percentage = (holdingValue / balance())

@@ -64,12 +64,12 @@ class CoinController: UIViewController {
     
     let coverChartView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.01, green:0.14, blue:0.28, alpha:1.0)
+        view.backgroundColor = UIColor(red: 0.01, green: 0.14, blue: 0.28, alpha: 1.0)
         return view
     }()
     let coverChartView2: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.01, green:0.14, blue:0.28, alpha:1.0)
+        view.backgroundColor = UIColor(red: 0.01, green: 0.14, blue: 0.28, alpha: 1.0)
         return view
     }()
     
@@ -173,7 +173,7 @@ class CoinController: UIViewController {
             //let currentPrice = user.getCoinPrice(coinName: coin.officialName())
             //let holdingAmount = user.getCoinBalance(coinName: coin.officialName())
             let totalPrice = UserDefaults.standard.getTotalPrice(coin: coin.officialName())
-            let priceFormat = CurrencyFormatter.sharedInstance.formatAmount(totalPrice, currency: "USD", options:nil)
+            let priceFormat = CurrencyFormatter.sharedInstance.formatAmount(totalPrice, currency: "USD", options: nil)
             let title = "Your " + coin.officialName() + " value: \(priceFormat)"
             accountHolding.setTitle(title, for: .normal)
         } else {
@@ -228,7 +228,7 @@ class CoinController: UIViewController {
         setupButtons()
         setupConstraints()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Add"), style: .plain, target: self, action:  #selector(modifyCoins))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Add"), style: .plain, target: self, action: #selector(modifyCoins))
         
         //: Modify the containerView with the given coin data
         let high = self.chartView.chartYMax
@@ -306,7 +306,7 @@ class CoinController: UIViewController {
 }
 
 //: MARK - ChartViewDelegate
-extension CoinController : ChartViewDelegate {
+extension CoinController: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         print("Chart description: \(entry.description)")
         //: Y-Value is the price
@@ -395,4 +395,3 @@ extension CoinController {
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
 }
-

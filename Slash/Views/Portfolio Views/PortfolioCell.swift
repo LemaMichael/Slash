@@ -61,7 +61,7 @@ class PortfolioCell: UICollectionViewCell {
     lazy var gainLossLabel: UILabel = {
         let label = UILabel()
         label.textColor = self.customGreen
-        label.font = UIFont(name: "Avenir-Heavy", size:13)
+        label.font = UIFont(name: "Avenir-Heavy", size: 13)
         label.text = "+ $20.25"
         label.textAlignment = .right
         label.adjustsFontSizeToFitWidth = true

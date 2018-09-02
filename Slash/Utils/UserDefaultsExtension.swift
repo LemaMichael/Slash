@@ -177,15 +177,15 @@ extension UserDefaults {
     func getGainLoss(coin: String) -> Double {
         switch coin {
         case "Bitcoin":
-           return double(forKey:UserDefaultKeys.BTCPercent.rawValue)
+           return double(forKey: UserDefaultKeys.BTCPercent.rawValue)
         case "Ethereum":
-            return double(forKey:UserDefaultKeys.ETHPercent.rawValue)
+            return double(forKey: UserDefaultKeys.ETHPercent.rawValue)
         case "Litecoin":
-            return double(forKey:UserDefaultKeys.LTCPercent.rawValue)
+            return double(forKey: UserDefaultKeys.LTCPercent.rawValue)
         case "Bitcoin Cash":
-            return double(forKey:UserDefaultKeys.BCHPercent.rawValue)
+            return double(forKey: UserDefaultKeys.BCHPercent.rawValue)
         case "Ethereum Classic":
-            return double(forKey:UserDefaultKeys.ETCPercent.rawValue)
+            return double(forKey: UserDefaultKeys.ETCPercent.rawValue)
         default:
             return 0.0
         }
@@ -209,4 +209,3 @@ extension UserDefaults {
     }
     
 }
-

@@ -194,7 +194,7 @@ extension PortfolioController: UICollectionViewDelegate, UICollectionViewDataSou
         let holdingAmount = user.getCoinBalance(coinName: coinHoldings[indexPath.item])
         let coinPrice = user.getTotalCost(coinName: coinHoldings[indexPath.item])
         
-        switch (cell.currentTap) {
+        switch cell.currentTap {
         case 0:
             cell.holdingLabel.text = String(format: "%.9f%", holdingAmount)
             cell.currentTap += 1
