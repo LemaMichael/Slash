@@ -18,7 +18,7 @@ class RequestCoinHistory {
     
     func requestHistory(coinID: String, timeFrame: String, base: String = "USD") {
         guard let url = URL(string: "https://api.coinranking.com/v1/public/coin/\(coinID)/history/\(timeFrame)?base=\(base)") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else { return }
             do {
                 self.chartDataEntry.removeAll()

@@ -39,35 +39,35 @@ extension UserDefaults {
         return validName
     }
     //: Number of coins user has
-    func setBTCBalance(value: Double)  {
+    func setBTCBalance(value: Double) {
         set(value, forKey: UserDefaultKeys.BTCBalance.rawValue)
         synchronize()
     }
     func getBTCBalance() -> Double {
         return double(forKey: UserDefaultKeys.BTCBalance.rawValue)
     }
-    func setETHBalance(value: Double)  {
+    func setETHBalance(value: Double) {
         set(value, forKey: UserDefaultKeys.ETHBalance.rawValue)
         synchronize()
     }
     func getETHBalance() -> Double {
         return double(forKey: UserDefaultKeys.ETHBalance.rawValue)
     }
-    func setLTCBalance(value: Double)  {
+    func setLTCBalance(value: Double) {
         set(value, forKey: UserDefaultKeys.LTCBalance.rawValue)
         synchronize()
     }
     func getLTCBalance() -> Double {
         return double(forKey: UserDefaultKeys.LTCBalance.rawValue)
     }
-    func setBCHBalance(value: Double)  {
+    func setBCHBalance(value: Double) {
         set(value, forKey: UserDefaultKeys.BCHBalance.rawValue)
         synchronize()
     }
     func getBCHBalance() -> Double {
         return double(forKey: UserDefaultKeys.BCHBalance.rawValue)
     }
-    func setETCBalance(value: Double)  {
+    func setETCBalance(value: Double) {
         set(value, forKey: UserDefaultKeys.ETCBalance.rawValue)
         synchronize()
     }
@@ -76,35 +76,35 @@ extension UserDefaults {
     }
     
     //: We need the value of each coin
-    func setBTCPrice(value: Double)  {
+    func setBTCPrice(value: Double) {
         set(value, forKey: UserDefaultKeys.BTCPrice.rawValue)
         synchronize()
     }
     func getBTCPrice() -> Double {
         return double(forKey: UserDefaultKeys.BTCPrice.rawValue)
     }
-    func setETHPrice(value: Double)  {
+    func setETHPrice(value: Double) {
         set(value, forKey: UserDefaultKeys.ETHPrice.rawValue)
         synchronize()
     }
     func getETHPrice() -> Double {
         return double(forKey: UserDefaultKeys.ETHPrice.rawValue)
     }
-    func setLTCPrice(value: Double)  {
+    func setLTCPrice(value: Double) {
         set(value, forKey: UserDefaultKeys.LTCPrice.rawValue)
         synchronize()
     }
     func getLTCPrice() -> Double {
         return double(forKey: UserDefaultKeys.LTCPrice.rawValue)
     }
-    func setBCHPrice(value: Double)  {
+    func setBCHPrice(value: Double) {
         set(value, forKey: UserDefaultKeys.BCHPrice.rawValue)
         synchronize()
     }
     func getBCHPrice() -> Double {
         return double(forKey: UserDefaultKeys.BCHPrice.rawValue)
     }
-    func setETCPrice(value: Double)  {
+    func setETCPrice(value: Double) {
         set(value, forKey: UserDefaultKeys.ETCPrice.rawValue)
         synchronize()
     }
@@ -130,7 +130,6 @@ extension UserDefaults {
         }
     }
 
-    
     func setCoinPrice(name: String, value: Double) {
         switch name {
         case "Bitcoin":
@@ -175,7 +174,7 @@ extension UserDefaults {
             return
         }
     }
-    func getGainLoss(coin: String)  -> Double {
+    func getGainLoss(coin: String) -> Double {
         switch coin {
         case "Bitcoin":
            return double(forKey:UserDefaultKeys.BTCPercent.rawValue)
@@ -191,7 +190,6 @@ extension UserDefaults {
             return 0.0
         }
     }
-    
     
     //: Determine if the user has logged in before
     func setIsLoggedIn(value: Bool) {

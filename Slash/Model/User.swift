@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 class User: Codable {
     
     var name: String
@@ -36,7 +35,7 @@ class User: Codable {
         UserDefaults.standard.setBCHBalance(value: bitcoinCashBalance)
         UserDefaults.standard.setETCBalance(value: ethereumClassicBalance)
         
-        //: Must save user
+        //: Must save user        
         let userData = try! JSONEncoder().encode(self)
         UserDefaults.standard.setUser(value: userData)
     }
@@ -134,7 +133,6 @@ class User: Codable {
         }
         return supportedCoins
     }
-    
     
     func portfolioPercentage(coinName: String) -> Double {
       

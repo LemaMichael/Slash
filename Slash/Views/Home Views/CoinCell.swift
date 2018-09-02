@@ -12,14 +12,12 @@ import Charts
 
 class CoinCell: UICollectionViewCell {
     
-    
     var coin: CoinDetail?
     var isAnimating = false
     var didFinishAnimatingBar = false
     
     let red = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
     let green = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -231,7 +229,6 @@ class CoinCell: UICollectionViewCell {
        /* self.percentageLabel.text = String(format: "%.0f%%", self.progressView.progress * 100) */
     }
     
-    
     //: Add this back if you want tp display the hours at the bottom
     func setxAxis() {
         let xAxis = chartView.xAxis
@@ -245,7 +242,6 @@ class CoinCell: UICollectionViewCell {
         //        xAxis.valueFormatter = DateValueFormatter()
         xAxis.enabled = false //: CHANGE
     }
-    
     
     //: Add this back if you want to display the coin price on the left side of the chart
     func setLeftAxis() {
@@ -302,7 +298,6 @@ class CoinCell: UICollectionViewCell {
         return set1
     }
     
-    
     func setupCell() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = 10
@@ -328,7 +323,6 @@ class CoinCell: UICollectionViewCell {
         
         setupConstraints()
         
-        
         //        //: Setting up coin
         //        guard let coin = coin else { return }
         //        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -340,7 +334,6 @@ class CoinCell: UICollectionViewCell {
     }
     func setupConstraints() {
         let cellWidth = (self.frame.width - 5 - 30 - 10) / 2
-        
         
         stackView.anchor(top: self.topAnchor, bottom: nil, left: nil, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: cellWidth, height: 40)
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -355,7 +348,6 @@ class CoinCell: UICollectionViewCell {
         coinLabel.rightAnchor.constraint(equalTo: intervalButton.leftAnchor, constant: -14).isActive = true
         
         coinImageView.anchor(top: stackView.topAnchor, bottom: nil, left:  self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 30, height: 30)
-
         
         miningImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         miningImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -363,5 +355,4 @@ class CoinCell: UICollectionViewCell {
         miningImageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
     }
 }
-
 

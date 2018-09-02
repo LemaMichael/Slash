@@ -86,7 +86,7 @@ class CoinTableViewController: UITableViewController {
         tableView.register(CoinTableCell.self, forCellReuseIdentifier: cellId)
     }
     
-    // MARK:- HEADER
+    // MARK: HEADER
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 32
     }
@@ -96,7 +96,7 @@ class CoinTableViewController: UITableViewController {
         return header
     }
     
-    // MARK:- CELL
+    // MARK: CELL
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isFiltering() ? filteredCoins.count : coins.count
     }
@@ -163,8 +163,7 @@ extension CoinTableViewController: UISearchResultsUpdating {
     }
 }
 
-
-// MARK:- Header
+// MARK: Header
 class CustomTableViewHeader: UITableViewHeaderFooterView {
     let recentLabel: UILabel = {
         let label = UILabel()
@@ -189,7 +188,7 @@ class CustomTableViewHeader: UITableViewHeaderFooterView {
     }
 }
 
-// MARK:- Cell
+// MARK: Cell
 class CoinTableCell: UITableViewCell {
     let symbolLabel: UILabel = {
         let label = UILabel()

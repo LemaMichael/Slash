@@ -23,4 +23,6 @@ target 'Slash' do
     
     # CryptoCompKit
     pod 'CryptoCompKit'
+
+	pod 'SwiftLint'
 end

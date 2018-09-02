@@ -101,14 +101,12 @@ class DetailContainerView: UIView {
         return sv
     }()
     
-    
     func setupViews() {
         addSubview(imageView)
         addSubview(priceLabel)
         addSubview(topDivider)
         addSubview(leftStackView)
         addSubview(bottomDivider)
-        
         
         imageView.anchor(top: topAnchor, bottom: nil, left: leftAnchor, right: nil, paddingTop: -3, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 28, height: 28)
         priceLabel.anchor(top: topAnchor, bottom: nil, left: imageView.rightAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 30)

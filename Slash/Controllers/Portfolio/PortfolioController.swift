@@ -136,7 +136,7 @@ class PortfolioController: UIViewController {
         previousGainValue = changeLabel.text ?? ""
     }
     
-    func setupViews(){
+    func setupViews() {
         
         if #available(iOS 11, *) {
             pagePortfolioController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
@@ -222,5 +222,3 @@ extension PortfolioController: UICollectionViewDelegateFlowLayout {
         return 0.0
     }
 }
-
-

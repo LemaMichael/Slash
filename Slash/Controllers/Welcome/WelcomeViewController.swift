@@ -179,12 +179,10 @@ class WelcomeViewController: UIViewController {
         self.registerView.nameTextField.delegate = self
         self.registerView.coinTextField.delegate = self
         
-        
         let height = self.view.bounds.height
         let viewHeight = (height - 100)
         let diff = (height - viewHeight)  / 2
         titleLabel.anchor(top: self.view.topAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: diff, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 60)
-        
         
         registerView.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: self.view.bounds.height / 2)
         registerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
@@ -235,13 +233,12 @@ class WelcomeViewController: UIViewController {
     }
 }
 
-
 //: MARK: - UITextFieldDelegate
 extension WelcomeViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == self.registerView.nameTextField {
-        } else if textField == self.registerView.coinTextField  {
+        } else if textField == self.registerView.coinTextField {
         }
         return true
     }

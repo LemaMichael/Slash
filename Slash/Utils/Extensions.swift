@@ -68,7 +68,6 @@ extension String {
     }
 }
 
-
 // https://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
 extension UIImageView {
     func downloaded(from url: URL) {
@@ -79,7 +78,7 @@ extension UIImageView {
                 let data = data, error == nil,
                 let image = UIImage(data: data)
                 else { return }
-            DispatchQueue.main.async() {
+            DispatchQueue.main.async {
                 self.image = image
             }
             }.resume()

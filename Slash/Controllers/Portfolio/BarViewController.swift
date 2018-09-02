@@ -33,9 +33,7 @@ class BarViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-    
 }
-
 
 //: MARK - ChartViewDelegate
 extension BarViewController: ChartViewDelegate {

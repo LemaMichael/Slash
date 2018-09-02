@@ -37,7 +37,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let priceFormatter: NumberFormatter = NumberFormatter()
     let timeFormatter: DateFormatter = DateFormatter()
     
-    
     // Initialize a client
     let client = MarketClient()
     
@@ -46,7 +45,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var timer: Timer!
 
-    
     var fontPosistive: NSMutableAttributedString!
     var fontNegative: NSMutableAttributedString!
     var font:  [String : NSObject]!
@@ -57,7 +55,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let green = UIColor.init(red: 22/256, green: 206/255, blue: 0/256, alpha: 1)
     let red = UIColor.init(red: 255/256, green: 73/255, blue: 0/256, alpha: 1)
     let white = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
-    
     
     lazy var accountBalanceLabel: UILabel = {
         let label = UILabel()
@@ -133,7 +130,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    
     @objc func searchTapped() {
         self.navigationController?.pushViewController(DiscoverViewController(), animated: false)
     }
@@ -201,7 +197,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //: Changing default back button
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        
         //: Changes the bar button icons to white
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Search"), style: .plain, target: self, action: #selector(searchTapped))
@@ -214,7 +209,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Call one of the public endpoint methods
         client.products { products, result in
             switch result {
-            case .success(_):
+            case .success:
                 // Do stuff with the provided products
                 for item in products {
                     print(item.id,item.baseCurrency,item.quoteCurrency,  item.baseMinSize, item.baseMaxSize, item.quoteIncrement, item.displayName, item.status, item.marginEnabled, item.statusMessage ?? "\n")
@@ -232,7 +227,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let granularity = Granularity.oneHour
             client.historic(pid:coin.id, range:range, granularity:granularity) { candles, result in
                 switch result {
-                case .success(_):
+                case .success:
                     //: Each candle has a time, low, high. open, close, volume
                     for item in candles {
                         print(item.time, item.open, item.close, item.high, item.low)
@@ -270,7 +265,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let coin = self.coins[index]
             self.client.historic(pid: coin.id, range:range, granularity:granularity) { candles, result in
                 switch result {
-                case .success(_):
+                case .success:
                     //: Each candle has a time, low, high. open, close, volume
                     for item in candles {
                         print(item.time, item.open, item.close, item.high, item.low)
@@ -313,7 +308,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.collectionView.reloadData()
     }
     
-    
     func updateInterval(_ interval: TimeInterval) {
         updateTimer()
     }
@@ -346,7 +340,7 @@ extension HomeViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewController.coinCellId, for: indexPath) as! CoinCell
-        if !coins.isEmpty{
+        if !coins.isEmpty {
             cell.update(coins[indexPath.item])
             //: MAKE SURE TO DO THIS, or else charts will not display!
             //let result = self.values.reversed() as [ChartDataEntry]
@@ -416,7 +410,6 @@ extension HomeViewController {
         return returnCells
     }
 }
-
 
 //: MARK: UIScrollView
 extension HomeViewController: UIScrollViewDelegate {

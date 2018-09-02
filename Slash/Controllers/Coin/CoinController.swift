@@ -10,7 +10,6 @@ import UIKit
 import Charts
 import SwiftEntryKit
 
-
 class CoinController: UIViewController {
     
     var dayResult = [ChartDataEntry]()
@@ -199,7 +198,7 @@ class CoinController: UIViewController {
         priceContentView.percentageLabel.textColor = (difference < 0) ? priceContentView.customRed : priceContentView.customGreen
     }
     
-    //: MARK: -viewDidLoad
+    //: MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red:0.01, green:0.14, blue:0.28, alpha:1.0)
@@ -247,7 +246,7 @@ class CoinController: UIViewController {
             textField.placeholder = "\(self.user.getCoinBalance(coinName: self.coin.officialName()))"
             textField.keyboardType = UIKeyboardType.decimalPad
         }
-        let doneAction = UIAlertAction(title: "Done", style: .default) { (action) in
+        let doneAction = UIAlertAction(title: "Done", style: .default) { _ in
             let textField = alertController.textFields![0] as UITextField
             let newAmount = textField.text!
             var newInput = 0.0

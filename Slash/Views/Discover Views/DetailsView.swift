@@ -66,7 +66,6 @@ class DetailsView: UIView {
         return sv
     }()
     
-    
     func setupViews() {
         addSubview(topDivider)
         addSubview(leftStackView)

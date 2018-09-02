@@ -50,7 +50,6 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
         return dv
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = UIColor.rgb(red: 199, green: 190, blue: 177)
@@ -96,7 +95,6 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
     }
 }
 
-
 extension DiscoverViewController {
     func setupConstraints() {
         var bottomAnchor = NSLayoutYAxisAnchor()
@@ -130,7 +128,7 @@ extension DiscoverViewController {
     func getCoinList() {
         cryptoCompKit.coinList { list, result in
             switch result {
-            case .success(_):
+            case .success:
                 self.baseURL = list.baseLinkURL
                 self.dispatchGroup.enter()
                 for coin in list.coins {
@@ -149,8 +147,8 @@ extension DiscoverViewController {
         }
     }
     
-    func setData(coinID: String ){
-        guard let coin = self.allCoins.first(where:{$0.data.symbol == coinID}) else {return}
+    func setData(coinID: String ) {
+        guard let coin = self.allCoins.first(where: { $0.data.symbol == coinID }) else {return}
         self.getSnapshot(id: coin.data.id)
         if let validURL = coin.data.imageURL {
             self.detailContainerView.imageView.downloaded(from: self.baseURL + validURL)
@@ -165,7 +163,7 @@ extension DiscoverViewController {
         let to = ["USD"] //: We can change this to many differency currencies.
         cryptoCompKit.priceList(fSyms:[coinID], tSyms:to) { list, result in
             switch result {
-            case .success(_):
+            case .success:
                 guard let coinDict = list.prices[coinID] else { return }
              
                 for (_, coinData) in coinDict {
@@ -190,7 +188,7 @@ extension DiscoverViewController {
                         detailView.low24hLabel.text = "Low (24h): " + formatter.formatAmount(coin.low24Hour, currency: "USD", options: nil)
                     }
                 }
-            case .failure(_):
+            case .failure:
                 print("Fail")
             }
         }
@@ -201,7 +199,7 @@ extension DiscoverViewController {
             self.descriptionView.textView.attributedText = NSAttributedString(string: "")
             return
         }
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else { return }
             do {
                 let decoder = JSONDecoder()

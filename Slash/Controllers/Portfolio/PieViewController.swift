@@ -12,7 +12,6 @@ import Charts
 class PieViewController: UIViewController {
     lazy var pieView = PieView()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         pieView.delegate = self
@@ -30,9 +29,7 @@ class PieViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-    
 }
-
 
 //: MARK - ChartViewDelegate
 extension PieViewController: ChartViewDelegate {
@@ -49,7 +46,7 @@ extension PieViewController: ChartViewDelegate {
         centerText.setAttributes([.font : UIFont(name: "Avenir-Heavy", size: 13)!,
                                   .paragraphStyle : paragraphStyle], range: NSRange(location: 0, length: centerText.length))
         centerText.addAttributes([.foregroundColor : UIColor.white], range: NSRange(location: 0, length: centerText.length))
-        pieView.centerAttributedText = centerText;
+        pieView.centerAttributedText = centerText
     }
     
     func chartValueNothingSelected(_ chartView: ChartViewBase) {

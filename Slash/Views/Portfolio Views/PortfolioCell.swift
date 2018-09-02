@@ -108,7 +108,6 @@ class PortfolioCell: UICollectionViewCell {
         addSubview(divider)
 //        addSubview(identityView)
     
-      
         imageView.anchor(top: nil, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 35, height: 35)
         imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         

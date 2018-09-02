@@ -1,0 +1,15 @@
+disabled_rules:
+- colon
+- comma
+- control_statement
+- trailing_newline
+- trailing_whitespace
+- line_length
+- identifier_name
+
+- force_cast
+- function_parameter_count
+- force_try
+
+excluded:
+- Pods

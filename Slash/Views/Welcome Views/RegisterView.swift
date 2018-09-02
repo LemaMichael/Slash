@@ -62,7 +62,6 @@ class RegisterView: UIView {
         return textField
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -112,6 +111,3 @@ class RegisterView: UIView {
         return true
     }
 }
-
-
-

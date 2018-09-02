@@ -87,7 +87,6 @@ class StatsView: UIView {
         return sv
     }()
     
-    
     func setupViews() {
         addSubview(containerStack)
         containerStack.anchor(top: nil, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 60)
@@ -96,7 +95,4 @@ class StatsView: UIView {
         containerStack.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -15).isActive = true
     }
 
-    
-    
-    
 }

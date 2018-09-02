@@ -112,7 +112,6 @@ class BarView: HorizontalBarChartView {
         let formatter = DefaultValueFormatter.init(decimals: 2)
         set.valueFormatter = formatter
         
-        
         set.colors = colors
         
         let data = BarChartData(dataSet: set)

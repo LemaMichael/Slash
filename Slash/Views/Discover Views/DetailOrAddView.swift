@@ -49,7 +49,6 @@ class DetailOrAddView: UIView {
         return sv
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()

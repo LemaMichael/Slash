@@ -54,7 +54,7 @@ class PageViewController: UIPageViewController {
     func startTimer() {
         self.timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(moveToNextController), userInfo: nil, repeats: true)
     }
-    func resetTimer(){
+    func resetTimer() {
         self.timer.invalidate()
         startTimer()
     }

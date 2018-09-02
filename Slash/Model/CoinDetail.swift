@@ -9,7 +9,6 @@
 import Foundation
 import Charts
 
-
 class CoinDetail: NSObject {
     //: https://api.pro.coinbase.com/currencies
     var id, name: String! //BTC, Bitcoin
@@ -18,7 +17,6 @@ class CoinDetail: NSObject {
     var currentPrice, open, high, low, volume, thirtyDayVolume: String!
     
     var chartDataEntry = [ChartDataEntry]()
-    
     
     let zero = 0.0
     
@@ -76,7 +74,7 @@ class CoinDetail: NSObject {
         return String(name[range])
     }
     
-    func officialName() -> String{
+    func officialName() -> String {
         let start = name.startIndex
         let end = name.index(start, offsetBy: 3)
         let range = start..<end
@@ -140,8 +138,6 @@ struct Ticker: Decodable {
     }
 }
 
-
-
 /* Currencies example
  {
  "id":"BTC",
@@ -183,7 +179,6 @@ struct Stats: Codable {
     }
 }
  */
-
 
 /* Products example
  {
