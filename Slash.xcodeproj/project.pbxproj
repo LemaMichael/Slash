@@ -11,7 +11,6 @@
 		4C07AC7921381A4B00F9239E /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C07AC7821381A4B00F9239E /* DiscoverViewController.swift */; };
 		4C0A005C212730E700919278 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A005B212730E700919278 /* CoinCell.swift */; };
 		4C0A0060212787D300919278 /* FloatFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A005F212787D300919278 /* FloatFormatters.swift */; };
-		4C0A006621278B3A00919278 /* ReferenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A006521278B3A00919278 /* ReferenceType.swift */; };
 		4C20F0402126019100CEB049 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F03F2126019100CEB049 /* AppDelegate.swift */; };
 		4C20F0442126019100CEB049 /* CoinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20F0432126019100CEB049 /* CoinController.swift */; };
 		4C20F04B2126019200CEB049 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C20F04A2126019200CEB049 /* Assets.xcassets */; };
@@ -39,7 +38,6 @@
 		4C8DFFE721327BA300374EC3 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DFFE621327BA300374EC3 /* ChartView.swift */; };
 		4C8DFFEB2132980B00374EC3 /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DFFEA2132980B00374EC3 /* BalloonMarker.swift */; };
 		4C94D97221262272008F80EE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97121262272008F80EE /* Extensions.swift */; };
-		4C94D97521266E63008F80EE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97421266E63008F80EE /* Pair.swift */; };
 		4C94D97721267049008F80EE /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97621267049008F80EE /* CurrencyFormatter.swift */; };
 		4C94D97D212681CA008F80EE /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C94D97C212681CA008F80EE /* Preferences.swift */; };
 		4C96F73E212F9520001D16D8 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96F73D212F9520001D16D8 /* PageViewController.swift */; };
@@ -58,7 +56,6 @@
 		4C07AC7821381A4B00F9239E /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		4C0A005B212730E700919278 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
 		4C0A005F212787D300919278 /* FloatFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatFormatters.swift; sourceTree = "<group>"; };
-		4C0A006521278B3A00919278 /* ReferenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceType.swift; sourceTree = "<group>"; };
 		4C20F03C2126019100CEB049 /* Slash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C20F03F2126019100CEB049 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C20F0432126019100CEB049 /* CoinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinController.swift; sourceTree = "<group>"; };
@@ -88,7 +85,6 @@
 		4C8DFFE621327BA300374EC3 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		4C8DFFEA2132980B00374EC3 /* BalloonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		4C94D97121262272008F80EE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		4C94D97421266E63008F80EE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		4C94D97621267049008F80EE /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		4C94D97C212681CA008F80EE /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		4C96F73D212F9520001D16D8 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +177,64 @@
 			path = Slash;
 			sourceTree = "<group>";
 		};
+		4C67AE16213C12CC00ECB88E /* Welcome Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C96F741212FDDB6001D16D8 /* RegisterView.swift */,
+			);
+			path = "Welcome Views";
+			sourceTree = "<group>";
+		};
+		4C67AE17213C12D800ECB88E /* Coin Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C2C314821337E9A0001AEB9 /* CustomGrayButton.swift */,
+				4C8DFFE621327BA300374EC3 /* ChartView.swift */,
+				4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */,
+				4C67AE12213B4D0500ECB88E /* StatsView.swift */,
+			);
+			path = "Coin Views";
+			sourceTree = "<group>";
+		};
+		4C67AE18213C12DE00ECB88E /* Portfolio Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C6618F521361A3F00DD8CBA /* PieView.swift */,
+				4C26CA032136594F0096B4E7 /* PortfolioCell.swift */,
+				4CC0478D21375897009D9177 /* BarView.swift */,
+			);
+			path = "Portfolio Views";
+			sourceTree = "<group>";
+		};
+		4C67AE19213C14CB00ECB88E /* Discover Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C62060621384100009FF959 /* SearchBarView.swift */,
+				4C62060821384A45009FF959 /* CoinContainerView.swift */,
+				4C62060A213852FE009FF959 /* DetailContainerView.swift */,
+				4C62060C2138639D009FF959 /* DetailOrAddView.swift */,
+				4C6206102138D3DE009FF959 /* DescriptionView.swift */,
+				4C2BF76E213A522800890547 /* DetailsView.swift */,
+			);
+			path = "Discover Views";
+			sourceTree = "<group>";
+		};
+		4C67AE1A213C156E00ECB88E /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				4CE2989C2126156D008A533A /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		4C67AE1B213C157C00ECB88E /* Home Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C0A005B212730E700919278 /* CoinCell.swift */,
+			);
+			path = "Home Views";
+			sourceTree = "<group>";
+		};
 		4C94D97021262269008F80EE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,9 +247,7 @@
 		4C94D97321266E59008F80EE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4C94D97421266E63008F80EE /* Pair.swift */,
 				4C94D97C212681CA008F80EE /* Preferences.swift */,
-				4C0A006521278B3A00919278 /* ReferenceType.swift */,
 				4C982D572127EA220003C2F9 /* CoinDetail.swift */,
 				4C29FA95212DCA50007FAF90 /* User.swift */,
 				4C62060E2138C85C009FF959 /* CoinSnapshot.swift */,
@@ -218,20 +270,11 @@
 		4C94D979212671A5008F80EE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4C0A005B212730E700919278 /* CoinCell.swift */,
-				4C8DFFE421326BAD00374EC3 /* PriceContentView.swift */,
-				4C8DFFE621327BA300374EC3 /* ChartView.swift */,
-				4C2C314821337E9A0001AEB9 /* CustomGrayButton.swift */,
-				4C6618F521361A3F00DD8CBA /* PieView.swift */,
-				4C26CA032136594F0096B4E7 /* PortfolioCell.swift */,
-				4CC0478D21375897009D9177 /* BarView.swift */,
-				4C62060621384100009FF959 /* SearchBarView.swift */,
-				4C62060821384A45009FF959 /* CoinContainerView.swift */,
-				4C62060A213852FE009FF959 /* DetailContainerView.swift */,
-				4C62060C2138639D009FF959 /* DetailOrAddView.swift */,
-				4C6206102138D3DE009FF959 /* DescriptionView.swift */,
-				4C2BF76E213A522800890547 /* DetailsView.swift */,
-				4C67AE12213B4D0500ECB88E /* StatsView.swift */,
+				4C67AE1B213C157C00ECB88E /* Home Views */,
+				4C67AE19213C14CB00ECB88E /* Discover Views */,
+				4C67AE18213C12DE00ECB88E /* Portfolio Views */,
+				4C67AE17213C12D800ECB88E /* Coin Views */,
+				4C67AE16213C12CC00ECB88E /* Welcome Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -242,7 +285,6 @@
 				4C2C9C152128AAD20041175E /* WelcomeViewController.swift */,
 				4C96F73D212F9520001D16D8 /* PageViewController.swift */,
 				4C96F73F212F969B001D16D8 /* Page.swift */,
-				4C96F741212FDDB6001D16D8 /* RegisterView.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -251,7 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				4C2D79C32130DCCD001FAF7B /* MainNavigationController.swift */,
-				4CE2989C2126156D008A533A /* HomeViewController.swift */,
+				4C67AE1A213C156E00ECB88E /* Home */,
 				4C96F73C212F9508001D16D8 /* Welcome */,
 				4C07AC7621380D0400F9239E /* Coin */,
 				4C07AC7721381A1600F9239E /* Discover */,
@@ -402,7 +444,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C0A006621278B3A00919278 /* ReferenceType.swift in Sources */,
 				4C8DFFE721327BA300374EC3 /* ChartView.swift in Sources */,
 				4C20F0442126019100CEB049 /* CoinController.swift in Sources */,
 				4C8DFFEB2132980B00374EC3 /* BalloonMarker.swift in Sources */,
@@ -424,7 +465,6 @@
 				4C2C314921337E9A0001AEB9 /* CustomGrayButton.swift in Sources */,
 				4C96F742212FDDB6001D16D8 /* RegisterView.swift in Sources */,
 				4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */,
-				4C94D97521266E63008F80EE /* Pair.swift in Sources */,
 				4C6618F621361A3F00DD8CBA /* PieView.swift in Sources */,
 				4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */,
 				4C2BF76F213A522800890547 /* DetailsView.swift in Sources */,

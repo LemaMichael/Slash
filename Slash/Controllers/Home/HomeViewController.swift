@@ -44,12 +44,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     static let coinCellId = "cellId"
     var currentUser = UserDefaults.standard.getUser()
     
-    var interval: TimeInterval!
     var timer: Timer!
+
     
-    var pairs = [Pair]()
-    
-    var chosenPairs: [Pair] = []
     var fontPosistive: NSMutableAttributedString!
     var fontNegative: NSMutableAttributedString!
     var font:  [String : NSObject]!
@@ -150,7 +147,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNav()
-        setup()
         
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)
@@ -299,18 +295,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         })
     }
     
-    
-    
-    func setup() {
-        if let interval = defaults.object(forKey: userDefaults.interval.rawValue) as? TimeInterval {
-            self.interval = interval
-        } else {
-            self.interval = TimeInterval(5)  // Default is 5 seconds
-            defaults.set(self.interval, forKey: userDefaults.interval.rawValue)
-        }
-    }
-    
-    
     func updateTimer() {
         if timer != nil {
             if timer.isValid == true {
@@ -318,7 +302,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
         DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(timeInterval: self.interval, target: self, selector: #selector(self.updateCells), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: TimeInterval(5), target: self, selector: #selector(self.updateCells), userInfo: nil, repeats: true)
         }
         
     }
@@ -330,10 +314,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func updateInterval(_ interval: TimeInterval) {
-        self.interval = interval
-        
-        defaults.set(self.interval, forKey: userDefaults.interval.rawValue)
-        defaults.synchronize()
         updateTimer()
     }
     

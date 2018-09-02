@@ -8,11 +8,3 @@
 
 import Foundation
 
-enum userDefaults: String {
-    case interval = "interval"
-    case firstPair = "firstPair"
-    case secondPair = "secondPair"
-    case thirdPair = "thirdPair"
-    case fourthPair = "fourthPair"
-    case fifthPair = "fifthPair"
-}
