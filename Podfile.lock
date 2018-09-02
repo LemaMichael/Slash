@@ -12,7 +12,6 @@ PODS:
   - Starscream (3.0.5)
   - SwiftEntryKit (0.5.8):
     - QuickLayout (= 2.0.2)
-  - SwiftLint (0.27.0)
 
 DEPENDENCIES:
   - Charts
@@ -21,7 +20,6 @@ DEPENDENCIES:
   - GDAXSocketSwift
   - Starscream
   - SwiftEntryKit
-  - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -33,7 +31,6 @@ SPEC REPOS:
     - QuickLayout
     - Starscream
     - SwiftEntryKit
-    - SwiftLint
 
 SPEC CHECKSUMS:
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
@@ -44,8 +41,7 @@ SPEC CHECKSUMS:
   QuickLayout: a730730b646b231fd4ef7cffaeb1e81fe0e1ca92
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
   SwiftEntryKit: ff42f06ff7468ffa6a8b63edf806159c99205681
-  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
 
-PODFILE CHECKSUM: 06f9a256e2c3548b29c41149e6aa12b291bff6dd
+PODFILE CHECKSUM: 0c1db5c990a75fae9876cd40d0aab47e7ca5f013
 
 COCOAPODS: 1.5.3

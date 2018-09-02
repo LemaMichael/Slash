@@ -46,7 +46,6 @@
 		4C982D582127EA220003C2F9 /* CoinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D572127EA220003C2F9 /* CoinDetail.swift */; };
 		4CC0478E21375897009D9177 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0478D21375897009D9177 /* BarView.swift */; };
 		4CC0479221375B3F009D9177 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0479121375B3F009D9177 /* BarViewController.swift */; };
-		4CD10D59213C5E0000B6F590 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4CD10D58213C5E0000B6F590 /* .swiftlint.yml */; };
 		4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989C2126156D008A533A /* HomeViewController.swift */; };
 		4CE298A221261700008A533A /* PortfolioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A121261700008A533A /* PortfolioController.swift */; };
 		4CE298A421261710008A533A /* PieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A321261710008A533A /* PieViewController.swift */; };
@@ -94,7 +93,6 @@
 		4C982D572127EA220003C2F9 /* CoinDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetail.swift; sourceTree = "<group>"; };
 		4CC0478D21375897009D9177 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
 		4CC0479121375B3F009D9177 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
-		4CD10D58213C5E0000B6F590 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		4CE2989C2126156D008A533A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4CE298A121261700008A533A /* PortfolioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioController.swift; sourceTree = "<group>"; };
 		4CE298A321261710008A533A /* PieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewController.swift; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 		4C20F0332126019100CEB049 = {
 			isa = PBXGroup;
 			children = (
-				4CD10D58213C5E0000B6F590 /* .swiftlint.yml */,
 				4C20F03E2126019100CEB049 /* Slash */,
 				4C20F03D2126019100CEB049 /* Products */,
 				D571B1830E84C315D8481814 /* Pods */,
@@ -334,7 +331,6 @@
 				4C20F0392126019100CEB049 /* Frameworks */,
 				4C20F03A2126019100CEB049 /* Resources */,
 				3488E2F15EC1CFBB36D92601 /* [CP] Embed Pods Frameworks */,
-				4CD10D57213C5C1700B6F590 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -383,7 +379,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CD10D59213C5E0000B6F590 /* .swiftlint.yml in Resources */,
 				4C20F04E2126019200CEB049 /* LaunchScreen.storyboard in Resources */,
 				4C20F04B2126019200CEB049 /* Assets.xcassets in Resources */,
 			);
@@ -423,19 +418,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Slash/Pods-Slash-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		4CD10D57213C5C1700B6F590 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
 		};
 		BAA9304884920496BFBF0509 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
