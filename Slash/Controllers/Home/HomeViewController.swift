@@ -147,6 +147,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNav()
+        self.automaticallyAdjustsScrollViewInsets = false //: Without this there is an extra top padding for the collectionView
         
         socketClient.delegate = self
         socketClient.webSocket = ExampleWebSocketClient(url: URL(string: GDAXSocketClient.baseAPIURLString)!)

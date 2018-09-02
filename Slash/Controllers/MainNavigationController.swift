@@ -26,7 +26,8 @@ class MainNavigationController: UINavigationController {
         //UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
         //UserDefaults.standard.synchronize()
         if isLoggedIn() {
-            perform(#selector(showHomeViewController), with: nil, afterDelay: 0.00) //0.70
+            self.pushViewController(HomeViewController(), animated: false)
+            //perform(#selector(showHomeViewController), with: nil, afterDelay: 0.00) //0.70
         } else {
             let welcomeViewController = WelcomeViewController()
             viewControllers = [welcomeViewController]
