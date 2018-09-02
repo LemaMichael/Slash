@@ -27,16 +27,16 @@ class RequestCoinHistory {
                 self.historyData = history.data
                 
                 //: Change is percentage change over given time frame
-                print("!!! \(history.status) Change: \(history.data.change), History Count: \(history.data.history.count)\n\n\n\n")
+                //print("!!! \(history.status) Change: \(history.data.change), History Count: \(history.data.history.count)\n\n\n\n")
                 for history in history.data.history {
-                    print("!!! \(history.price), \(history.price.value()), \(history.timestamp)")
+                    //print("!!! \(history.price), \(history.price.value()), \(history.timestamp)")
                     let xVal = Double(history.timestamp/1000)
                     let yVal = Double(history.price.value()) ?? 0
                     self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                 }
-                print("!!! The highest price here is \(self.getHighPrice())")
-                print("!!! The lowest price here is \(self.getLowPrice())")
-                print("!!! The Change %  here is \(self.getPercentChange())")
+                //print("!!! The highest price here is \(self.getHighPrice())")
+                //print("!!! The lowest price here is \(self.getLowPrice())")
+                //print("!!! The Change %  here is \(self.getPercentChange())")
             } catch let error as NSError {
                 print("!!! error \(error.localizedDescription)")
             }

@@ -33,7 +33,7 @@ class CoinController: UIViewController {
 
     lazy var button1: CustomGrayButton = {
         let button = CustomGrayButton()
-        button.defaultChosen() //: 1D button should show it is tapped by default
+        button.defaultChosen() //: 24H button should show it is tapped by default
         button.setTitle("24H", for: .normal)
         return button
     }()
@@ -76,21 +76,9 @@ class CoinController: UIViewController {
         button.addTarget(self, action: #selector(displayCoinValue), for: .touchUpInside)
         return button
     }()
-    //:TODO- Change font and color
-    lazy var coinDescription: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.text = coin.description(coinName: coin.officialName())
-        label.textColor = .white
-        label.font = UIFont(name: "AvenirNext-Medium", size: 12.2)
-        label.adjustsFontSizeToFitWidth = true
-        return label
-    }()
     
-    let containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
+    let containerView: StatsView = {
+        let view = StatsView()
         return view
     }()
     
@@ -111,6 +99,12 @@ class CoinController: UIViewController {
         switch rangeText {
         case "24H":
             self.chartView.setData(values: dayResult)
+            let high = self.chartView.chartYMax
+            let low = self.chartView.chartYMin
+            self.containerView.highLabel.text = CurrencyFormatter.sharedInstance.formatAmount(high, currency: "USD", options: nil)
+            self.containerView.lowLabel.text = CurrencyFormatter.sharedInstance.formatAmount(low, currency: "USD", options: nil)
+            let validPercent = CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: coin.percent())) ?? ""
+            self.containerView.changeLabel.text = validPercent + "%"
         case "1W":
             timeFrame = "7d"
         case "1M":
@@ -145,6 +139,12 @@ class CoinController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let newData = self.request.chartDataEntry
             self.chartView.setData(values: newData)
+            
+            self.containerView.highLabel.text = CurrencyFormatter.sharedInstance.formatAmount(self.request.getHighPrice(), currency: "USD", options: nil)
+            self.containerView.lowLabel.text = CurrencyFormatter.sharedInstance.formatAmount(self.request.getLowPrice(), currency: "USD", options: nil)
+            
+            let validPercent = CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: self.request.getPercentChange())) ?? ""
+            self.containerView.changeLabel.text = validPercent + "%"
         }
     }
     
@@ -196,7 +196,6 @@ class CoinController: UIViewController {
         self.view.addSubview(dividerView)
         self.view.addSubview(accountHolding)
         self.view.addSubview(containerView)
-        containerView.addSubview(coinDescription)
         
         stackView.addArrangedSubview(button1)
         stackView.addArrangedSubview(button2)
@@ -208,6 +207,14 @@ class CoinController: UIViewController {
         setupConstraints()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Add"), style: .plain, target: self, action:  #selector(modifyCoins))
+        
+        //: Modify the containerView with the given coin data
+        let high = self.chartView.chartYMax
+        let low = self.chartView.chartYMin
+        self.containerView.highLabel.text = CurrencyFormatter.sharedInstance.formatAmount(high, currency: "USD", options: nil)
+        self.containerView.lowLabel.text = CurrencyFormatter.sharedInstance.formatAmount(low, currency: "USD", options: nil)
+        let validPercent = CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: coin.percent())) ?? ""
+        self.containerView.changeLabel.text = validPercent + "%"
     }
     
     @objc func modifyCoins() {
@@ -264,10 +271,42 @@ class CoinController: UIViewController {
         accountHolding.anchor(top: dividerView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 35)
         
         containerView.anchor(top: accountHolding.bottomAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 18, width: 0, height: 0)
-        coinDescription.anchor(top:  containerView.topAnchor, bottom: containerView.bottomAnchor, left: self.containerView.leftAnchor, right: self.containerView.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+}
+
+//: MARK - ChartViewDelegate
+extension CoinController : ChartViewDelegate {
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        print("Chart description: \(entry.description)")
+        //: Y-Value is the price
+        priceContentView.coinPriceLabel.text = CurrencyFormatter.sharedInstance.formatAmount(entry.y, currency: "USD", options: nil)
+        
+        //: X-Value is time
+        let date = Date(timeIntervalSince1970: entry.x)
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "h:mm a EEEE, MMM dd, yyyy" // 4:00 PM Saturday, Aug 25, 2018
+        let strDate = dateFormatter.string(from: date)
+        priceContentView.dateLabel.text = strDate
+        
+        // Get the difference and percentage
+        formatPrice(value: entry.y, isScrolling: true)
+    }
+    func chartValueNothingSelected(_ chartView: ChartViewBase) {
+        //: If user deselects the chart, place the original price back
+        priceContentView.coinPriceLabel.text =  "$" + coin.currentPrice
+        priceContentView.dateLabel.text = ""
+        formatPrice(value: 0.0, isScrolling: false)
+    }
+    
+}
+
+//: MARK - Custom Alert
+extension CoinController {
     //: MARK - Attributes for popup message
     fileprivate func defaultAttributes() -> EKAttributes {
         var attributes = EKAttributes()
@@ -328,36 +367,5 @@ class CoinController: UIViewController {
         let contentView = EKPopUpMessageView(with: message)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-}
-
-//: MARK - ChartViewDelegate
-extension CoinController : ChartViewDelegate {
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        print("Chart description: \(entry.description)")
-        //: Y-Value is the price
-        priceContentView.coinPriceLabel.text = CurrencyFormatter.sharedInstance.formatAmount(entry.y, currency: "USD", options: nil)
-        
-        //: X-Value is time
-        let date = Date(timeIntervalSince1970: entry.x)
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "h:mm a EEEE, MMM dd, yyyy" // 4:00 PM Saturday, Aug 25, 2018
-        let strDate = dateFormatter.string(from: date)
-        priceContentView.dateLabel.text = strDate
-        
-        // Get the difference and percentage
-        formatPrice(value: entry.y, isScrolling: true)
-    }
-    func chartValueNothingSelected(_ chartView: ChartViewBase) {
-        //: If user deselects the chart, place the original price back
-        priceContentView.coinPriceLabel.text =  "$" + coin.currentPrice
-        priceContentView.dateLabel.text = ""
-        formatPrice(value: 0.0, isScrolling: false)
-    }
-    
 }
 
