@@ -17,8 +17,9 @@ class CoinCell: UICollectionViewCell {
     var isAnimating = false
     var didFinishAnimatingBar = false
     
-    let green = UIColor(red:0.38, green:0.79, blue:0.00, alpha:1.0)
-    let red = UIColor(red:1.00, green:0.29, blue:0.29, alpha:1.0)
+    let red = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
+    let green = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
+    
     
     var pairID: String?
     
@@ -85,10 +86,10 @@ class CoinCell: UICollectionViewCell {
     
     let coinPrice: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = UIColor(red:0.45, green:0.45, blue:0.45, alpha:1.0)
         //label.text = "$6,567.08"
         label.font =  UIFont(name: "Avenir-Heavy", size: 18) //: TODO: Find a better font and color
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
@@ -99,7 +100,7 @@ class CoinCell: UICollectionViewCell {
         //label.text = "+240.66 (4.12%)"
         label.font =  UIFont(name: "Avenir-Heavy", size: 12)
         label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
     
@@ -158,43 +159,12 @@ class CoinCell: UICollectionViewCell {
         return cv
     }()
     
-    lazy var leftStackView: UIStackView = {
+    lazy var stackView: UIStackView = {
         let sv = UIStackView()
         sv.addArrangedSubview(coinPrice)
         sv.addArrangedSubview(coinPercentage)
         sv.distribution = .fillProportionally
         sv.spacing = 1
-        sv.axis = .vertical
-        return sv
-    }()
-    
-    let highPrice: UILabel = {
-        let label = UILabel()
-//        label.backgroundColor = UIColor(red:0.85, green:0.88, blue:0.91, alpha:1.0)
-        label.textColor = .black
-        label.text = "H: ∞"
-        label.font =  UIFont(name: "Avenir-Heavy", size: 12)
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .right
-        return label
-    }()
-    let lowPrice: UILabel = {
-        let label = UILabel()
-//        label.backgroundColor = UIColor(red:0.85, green:0.88, blue:0.91, alpha:1.0)
-        label.textColor = .black
-        label.text = "L: ∞"
-        label.font =  UIFont(name: "Avenir-Heavy", size: 12)
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .right
-        return label
-    }()
-    
-    lazy var rightStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.addArrangedSubview(highPrice)
-        sv.addArrangedSubview(lowPrice)
-        sv.distribution = .fillProportionally
-        
         sv.axis = .vertical
         return sv
     }()
@@ -342,15 +312,14 @@ class CoinCell: UICollectionViewCell {
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         self.backgroundColor = .white
-        addSubview(leftStackView)
-        addSubview(rightStackView)
+        addSubview(stackView)
         addSubview(coinLabel)
         addSubview(intervalButton)
         addSubview(progressView)
         addSubview(percentageLabel)
         addSubview(chartView)
         addSubview(miningImageView)
-        chartView.addSubview(coinImageView)
+        addSubview(coinImageView)
         
         setxAxis()
         setLeftAxis()
@@ -377,10 +346,11 @@ class CoinCell: UICollectionViewCell {
         let cellWidth = (self.frame.width - 5 - 30 - 10) / 2
         
         
-        leftStackView.anchor(top: self.topAnchor, bottom: nil, left: self.leftAnchor, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: cellWidth, height: 40)
-        rightStackView.anchor(top: self.topAnchor, bottom: nil, left: self.leftStackView.rightAnchor, right: self.rightAnchor, paddingTop: 18, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 0, height: 40)
+        stackView.anchor(top: self.topAnchor, bottom: nil, left: nil, right: nil, paddingTop: 18, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: cellWidth, height: 40)
+        stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        
         coinLabel.anchor(top: nil, bottom: self.bottomAnchor, left: self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: -25, paddingLeft: 18, paddingRight: 0, width: 0, height: 70)
-        chartView.anchor(top: leftStackView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
+        chartView.anchor(top: stackView.bottomAnchor, bottom: coinLabel.topAnchor, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 2, paddingBottom: 12, paddingLeft: 10, paddingRight: 10, width: 0, height: 0)
         
         progressView.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: self.leftAnchor, right: self.rightAnchor, paddingTop: 5, paddingBottom: 0, paddingLeft: 18, paddingRight: 40, width: 0, height: 6)
         percentageLabel.anchor(top: coinLabel.bottomAnchor, bottom: nil, left: progressView.rightAnchor, right: self.rightAnchor, paddingTop: 1, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 0, height: 0)
@@ -388,7 +358,7 @@ class CoinCell: UICollectionViewCell {
         intervalButton.anchor(top: self.chartView.bottomAnchor, bottom: nil, left: nil, right: self.rightAnchor, paddingTop: 15, paddingBottom: 0, paddingLeft: 0, paddingRight: 18, width: 25, height: 21)
         coinLabel.rightAnchor.constraint(equalTo: intervalButton.leftAnchor, constant: -14).isActive = true
         
-        coinImageView.anchor(top: chartView.topAnchor, bottom: nil, left: nil, right: chartView.rightAnchor, paddingTop: 4, paddingBottom: 0, paddingLeft: 0, paddingRight: 4, width: 25, height: 25)
+        coinImageView.anchor(top: stackView.topAnchor, bottom: nil, left:  self.leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 18, paddingRight: 0, width: 30, height: 30)
 
         
         miningImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true

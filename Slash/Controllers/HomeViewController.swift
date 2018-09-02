@@ -379,10 +379,6 @@ extension HomeViewController {
                 cell.startAnimating()
             } else {
                 cell.stopAnimation()
-                 let high =  CurrencyFormatter.sharedInstance.formatAmountString("\(cell.chartView.chartYMax)", currency: "USD", options: nil)
-                 let low = CurrencyFormatter.sharedInstance.formatAmountString("\(cell.chartView.chartYMin)", currency: "USD", options: nil)
-                cell.highPrice.text = "H: " + high
-                cell.lowPrice.text =  "L: " + low
             }
             print("Chart data: For \(coins[indexPath.item].officialName()), HIGH: \(String(describing: cell.chartView.data?.getYMax())) LOW: \(String(describing: cell.chartView.data?.getYMin()))")
             let percentage = currentUser.portfolioPercentage(coinName: coins[indexPath.item].officialName())
