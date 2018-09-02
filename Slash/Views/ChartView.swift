@@ -36,16 +36,18 @@ class ChartView: LineChartView {
         xAxis.enabled = true
         xAxis.labelPosition = .bottom
         
-        //        xAxis.labelFont = UIFont(name: "AvenirNext-Regular", size: 11)! //: Changes the chart's height if placed here
-        //        self.extraBottomOffset = 3 //: Extra spacing for the label font to fit
+        //xAxis.labelFont = UIFont(name: "AvenirNext-Regular", size: 11)! //: Changes the chart's height if placed here
+//        self.extraBottomOffset = 3 //: Extra spacing for the label font to fit
+//        xAxis.labelPosition = .bottomInside
         
         xAxis.labelTextColor = UIColor(red: 0.678, green: 0.725, blue: 0.776, alpha: 1)
         xAxis.drawAxisLineEnabled = true //: The bottom axis isn't needed
         xAxis.axisLineColor = UIColor(white: 0.65, alpha: 1)
         xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
-        xAxis.centerAxisLabelsEnabled = true
-        xAxis.granularity = 3600 // 60*60 one hour
-        xAxis.valueFormatter = DateValueFormatter()
+        xAxis.setLabelCount(8, force: true) //: We'll only display 6 (cutting off other 2 labels)
+        xAxis.centerAxisLabelsEnabled = false
+        xAxis.granularity = 3600 //: We will need to modify this user changes chart option
+        xAxis.valueFormatter = DateValueFormatter(format: "h a") //:  We will need to modify this when chart changes chart option
     }
     private func setupChart() {
         self.chartDescription?.text = ""
@@ -108,5 +110,18 @@ class ChartView: LineChartView {
         dataSet.drawHorizontalHighlightIndicatorEnabled = false //: Display only the vertical indicator
         dataSet.highlightColor = UIColor(red:0.44, green:0.56, blue:0.68, alpha:1.0)
         return dataSet
+    }
+}
+
+public class DateValueFormatter: NSObject, IAxisValueFormatter {
+    private let dateFormatter = DateFormatter()
+    
+     init(format: String) {
+        super.init()
+        dateFormatter.dateFormat = format
+    }
+    
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
     }
 }

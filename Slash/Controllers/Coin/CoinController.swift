@@ -105,14 +105,24 @@ class CoinController: UIViewController {
             self.containerView.lowLabel.text = CurrencyFormatter.sharedInstance.formatAmount(low, currency: "USD", options: nil)
             let validPercent = CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: coin.percent())) ?? ""
             self.containerView.changeLabel.text = validPercent + "%"
+            chartView.xAxis.granularity = 3600
+            chartView.xAxis.valueFormatter = DateValueFormatter(format: "h a")
         case "1W":
             timeFrame = "7d"
+            chartView.xAxis.granularity = 900
+            chartView.xAxis.valueFormatter = DateValueFormatter(format: "dd MMM")
         case "1M":
             timeFrame = "30d"
+            chartView.xAxis.granularity = 86400
+            chartView.xAxis.valueFormatter = DateValueFormatter(format: "dd MMM")
         case "1Y":
             timeFrame = "1y"
+            chartView.xAxis.granularity = 86400
+            chartView.xAxis.valueFormatter = DateValueFormatter(format: "MMM")
         case "5Y":
             timeFrame = "5y"
+            chartView.xAxis.granularity = 86400
+            chartView.xAxis.valueFormatter = DateValueFormatter(format: "MMM yy")
         default:
             return
         }
@@ -262,6 +272,7 @@ class CoinController: UIViewController {
         priceContentView.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: customHeight)
         
         let custom = (self.view.frame.height / 2) - customHeight
+        //chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: -3, paddingBottom: 0, paddingLeft: -22, paddingRight: -22, width: 0, height: custom)
         chartView.anchor(top: priceContentView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: -3, paddingBottom: 0, paddingLeft: -9, paddingRight: -9, width: 0, height: custom)
         
         stackView.anchor(top: chartView.bottomAnchor, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 10, paddingBottom: 0, paddingLeft: 22, paddingRight: 22, width: 0, height: 44)

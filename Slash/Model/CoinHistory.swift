@@ -25,7 +25,7 @@ class RequestCoinHistory {
                 let decoder = JSONDecoder()
                 let history = try decoder.decode(CoinHistory.self, from: data)
                 self.historyData = history.data
-                
+
                 //: Change is percentage change over given time frame
                 //print("!!! \(history.status) Change: \(history.data.change), History Count: \(history.data.history.count)\n\n\n\n")
                 for history in history.data.history {
