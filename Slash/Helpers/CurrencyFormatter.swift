@@ -156,7 +156,7 @@ class CurrencyFormatter: NSObject {
                 numFormatter.currencySymbol = currencyCode
                 output = numFormatter.string(from: NSNumber(value: amount))!
             } else {
-                if currency.characters.count > 0 {
+                if !currency.isEmpty {
                     numFormatter.numberStyle = NumberFormatter.Style.decimal
                     output = "\(numFormatter.string(from: NSNumber(value: amount))!) \(currency)"
                 } else {

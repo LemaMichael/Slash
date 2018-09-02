@@ -21,8 +21,6 @@ class CoinCell: UICollectionViewCell {
     let green = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
     
     
-    var pairID: String?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCell()
@@ -34,20 +32,18 @@ class CoinCell: UICollectionViewCell {
     //: From Barbar macOS app - Dai Hovey
     func update(_ coin: CoinDetail) {
         DispatchQueue.main.async {
-            //guard let pairID = pairID else { return }
             guard let price = coin.currentPrice else {
                 self.coinPrice.text = "$0.00"
                 self.coinPercentage.text = "..."
                 return
             }
             self.coinPrice.text = "$\(price)" //: FIXME: Find a better way to do this
-            guard let pair = coin.id else {
+            guard (coin.id) != nil else {
                 self.coinLabel.text = "Loading..."
                 return
             }
-            if let currencyPair = coin.id {
-                self.coinLabel.text = coin.officialName()
-            }
+            
+            self.coinLabel.text = coin.officialName()
             self.coinImageView.image = UIImage(named: coin.imageName())?.withRenderingMode(.alwaysTemplate)
             
             let percentString = "\(CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: coin.percent()))!)%"
