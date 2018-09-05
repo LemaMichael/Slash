@@ -9,7 +9,7 @@
 
 # Demo
 <p align="center">
- <img src = "/Screenshots/Demo.mov" height = "475">.
+ <img src = "/Screenshots/Demo.mov" height = "550">.
 </p>
 
 # Todo
