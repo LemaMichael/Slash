@@ -44,14 +44,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var currentUser = UserDefaults.standard.getUser()
     
     var timer: Timer!
-
-    var fontPosistive: NSMutableAttributedString!
-    var fontNegative: NSMutableAttributedString!
-    var font: [String : NSObject]!
-    var useColouredSymbols = true
     
-    let defaults = Foundation.UserDefaults.standard
-    let pairsURL = "https://api.pro.coinbase.com/"
     let green = UIColor.init(red: 22/256, green: 206/255, blue: 0/256, alpha: 1)
     let red = UIColor.init(red: 255/256, green: 73/255, blue: 0/256, alpha: 1)
     let white = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
@@ -306,10 +299,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @objc func updateCells() {
         print("updateCells")
         self.collectionView.reloadData()
-    }
-    
-    func updateInterval(_ interval: TimeInterval) {
-        updateTimer()
     }
     
     func animateBackgroundColor(color: UIColor) {

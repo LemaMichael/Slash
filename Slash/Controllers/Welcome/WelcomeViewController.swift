@@ -9,15 +9,6 @@
 import UIKit
 
 class WelcomeViewController: UIViewController {
-    let orangeColor = UIColor(red:1.00, green:0.37, blue:0.23, alpha:1.0)
-    let blueColor = UIColor(red:0.12, green:0.17, blue:0.23, alpha:1.0) //: Dark blue
-    let darkRed = UIColor(red:0.86, green:0.13, blue:0.22, alpha:1.0)
-    
-    fileprivate let colors: [UIColor] = [UIColor(red:0.91, green:0.73, blue:0.08, alpha:1.0),
-                                         UIColor(red:0.21, green:0.27, blue:0.31, alpha:1.0),
-                                         UIColor(red:0.35, green:0.42, blue:0.38, alpha:1.0),
-                                         UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
-                                         UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
     
     var name = String()
     var btcAmount = 0.0, ethAmount = 0.0, ltcAmount = 0.0, bchAmount = 0.0, etcAmount = 0.0

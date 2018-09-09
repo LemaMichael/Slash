@@ -9,9 +9,7 @@
 import UIKit
 
 class PagePortfolioController: UIPageViewController {
-    
-    fileprivate var timer = Timer()
-    
+        
     fileprivate lazy var pages: [UIViewController] = {
         let page1 = PieViewController()
         let page2 = BarViewController()

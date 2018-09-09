@@ -63,14 +63,6 @@ class CoinCell: UICollectionViewCell {
         }
     }
     
-    func updateOffline() {
-        DispatchQueue.main.async {
-            // self.coinPrice.text = "Sorry, can't connect"
-            self.coinPercentage.text = "Sorry, can't connect."
-            self.coinPercentage.textColor = self.red
-        }
-    }
-    
     let coinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit

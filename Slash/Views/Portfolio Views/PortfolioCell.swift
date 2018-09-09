@@ -87,14 +87,6 @@ class PortfolioCell: UICollectionViewCell {
         return sv
     }()
     
-    //: Perhaps add this in the future?
-    lazy var identityView: UIView = {
-        let view = UIView()
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = 3
-        return view
-    }()
-    
     let divider: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.rgb(red: 47, green: 47, blue: 64)

@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class PriceContentView: UIView {
-    let shadeGray = UIColor(red:0.61, green:0.65, blue:0.69, alpha:1.0)
     let customRed = UIColor(red:0.94, green:0.31, blue:0.11, alpha:1.0)
     let customGreen = UIColor(red:0.27, green:0.75, blue:0.14, alpha:1.0)
     override init(frame: CGRect) {
