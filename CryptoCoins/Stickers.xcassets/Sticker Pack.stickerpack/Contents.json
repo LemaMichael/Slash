@@ -1,0 +1,38 @@
+{
+  "stickers" : [
+    {
+      "filename" : "Bitcoin.sticker"
+    },
+    {
+      "filename" : "Ethereum.sticker"
+    },
+    {
+      "filename" : "Litecoin.sticker"
+    },
+    {
+      "filename" : "Bitcoin Cash.sticker"
+    },
+    {
+      "filename" : "Ethereum Classic.sticker"
+    },
+    {
+      "filename" : "Monero.sticker"
+    },
+    {
+      "filename" : "Nano.sticker"
+    },
+    {
+      "filename" : "Iota.sticker"
+    },
+    {
+      "filename" : "Default Coin.sticker"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "properties" : {
+    "grid-size" : "regular"
+  }
+}

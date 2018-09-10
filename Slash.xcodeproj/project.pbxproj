@@ -45,6 +45,8 @@
 		4C96F740212F969B001D16D8 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96F73F212F969B001D16D8 /* Page.swift */; };
 		4C96F742212FDDB6001D16D8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96F741212FDDB6001D16D8 /* RegisterView.swift */; };
 		4C982D582127EA220003C2F9 /* CoinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D572127EA220003C2F9 /* CoinDetail.swift */; };
+		4CB9D8DA21461C7A00A2B953 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB9D8D921461C7A00A2B953 /* Stickers.xcassets */; };
+		4CB9D8DE21461C7A00A2B953 /* CryptoCoins.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4CB9D8D721461C7900A2B953 /* CryptoCoins.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4CC0478E21375897009D9177 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0478D21375897009D9177 /* BarView.swift */; };
 		4CC0479221375B3F009D9177 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0479121375B3F009D9177 /* BarViewController.swift */; };
 		4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989C2126156D008A533A /* HomeViewController.swift */; };
@@ -53,6 +55,30 @@
 		4CE298A621261748008A533A /* PagePortfolioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE298A521261748008A533A /* PagePortfolioController.swift */; };
 		4CFF732421449EE800F7CAE2 /* unused.rb in Resources */ = {isa = PBXBuildFile; fileRef = 4CFF732321449EE800F7CAE2 /* unused.rb */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CB9D8DC21461C7A00A2B953 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C20F0342126019100CEB049 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CB9D8D621461C7900A2B953;
+			remoteInfo = CryptoCoins;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4CB9D8D421461BD000A2B953 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4CB9D8DE21461C7A00A2B953 /* CryptoCoins.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4C07AC7821381A4B00F9239E /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +120,9 @@
 		4C96F73F212F969B001D16D8 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		4C96F741212FDDB6001D16D8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		4C982D572127EA220003C2F9 /* CoinDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetail.swift; sourceTree = "<group>"; };
+		4CB9D8D721461C7900A2B953 /* CryptoCoins.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CryptoCoins.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CB9D8D921461C7A00A2B953 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		4CB9D8DB21461C7A00A2B953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CC0478D21375897009D9177 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
 		4CC0479121375B3F009D9177 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
 		4CE2989C2126156D008A533A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +180,7 @@
 			children = (
 				4CFF732321449EE800F7CAE2 /* unused.rb */,
 				4C20F03E2126019100CEB049 /* Slash */,
+				4CB9D8D821461C7900A2B953 /* CryptoCoins */,
 				4C20F03D2126019100CEB049 /* Products */,
 				D571B1830E84C315D8481814 /* Pods */,
 				AAE65EA7FD4A9CCEBC4C97E2 /* Frameworks */,
@@ -161,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				4C20F03C2126019100CEB049 /* Slash.app */,
+				4CB9D8D721461C7900A2B953 /* CryptoCoins.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -294,6 +325,15 @@
 			path = Welcome;
 			sourceTree = "<group>";
 		};
+		4CB9D8D821461C7900A2B953 /* CryptoCoins */ = {
+			isa = PBXGroup;
+			children = (
+				4CB9D8D921461C7A00A2B953 /* Stickers.xcassets */,
+				4CB9D8DB21461C7A00A2B953 /* Info.plist */,
+			);
+			path = CryptoCoins;
+			sourceTree = "<group>";
+		};
 		4CE2989E212616C4008A533A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -337,15 +377,32 @@
 				4C20F0392126019100CEB049 /* Frameworks */,
 				4C20F03A2126019100CEB049 /* Resources */,
 				3488E2F15EC1CFBB36D92601 /* [CP] Embed Pods Frameworks */,
+				4CB9D8D421461BD000A2B953 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4CB9D8DD21461C7A00A2B953 /* PBXTargetDependency */,
 			);
 			name = Slash;
 			productName = Slash;
 			productReference = 4C20F03C2126019100CEB049 /* Slash.app */;
 			productType = "com.apple.product-type.application";
+		};
+		4CB9D8D621461C7900A2B953 /* CryptoCoins */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CB9D8DF21461C7A00A2B953 /* Build configuration list for PBXNativeTarget "CryptoCoins" */;
+			buildPhases = (
+				4CB9D8D521461C7900A2B953 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CryptoCoins;
+			productName = CryptoCoins;
+			productReference = 4CB9D8D721461C7900A2B953 /* CryptoCoins.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
 		};
 /* End PBXNativeTarget section */
 
@@ -358,6 +415,9 @@
 				ORGANIZATIONNAME = "Michael Lema";
 				TargetAttributes = {
 					4C20F03B2126019100CEB049 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					4CB9D8D621461C7900A2B953 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
 				};
@@ -376,6 +436,7 @@
 			projectRoot = "";
 			targets = (
 				4C20F03B2126019100CEB049 /* Slash */,
+				4CB9D8D621461C7900A2B953 /* CryptoCoins */,
 			);
 		};
 /* End PBXProject section */
@@ -388,6 +449,14 @@
 				4CFF732421449EE800F7CAE2 /* unused.rb in Resources */,
 				4C20F04E2126019200CEB049 /* LaunchScreen.storyboard in Resources */,
 				4C20F04B2126019200CEB049 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CB9D8D521461C7900A2B953 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CB9D8DA21461C7A00A2B953 /* Stickers.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +565,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CB9D8DD21461C7A00A2B953 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CB9D8D621461C7900A2B953 /* CryptoCoins */;
+			targetProxy = 4CB9D8DC21461C7A00A2B953 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4C20F04C2126019200CEB049 /* LaunchScreen.storyboard */ = {
@@ -663,6 +740,36 @@
 			};
 			name = Release;
 		};
+		4CB9D8E021461C7A00A2B953 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MFNQ54N2S6;
+				INFOPLIST_FILE = CryptoCoins/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lema.Slash.CryptoCoins;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4CB9D8E121461C7A00A2B953 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MFNQ54N2S6;
+				INFOPLIST_FILE = CryptoCoins/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lema.Slash.CryptoCoins;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -680,6 +787,15 @@
 			buildConfigurations = (
 				4C20F0532126019200CEB049 /* Debug */,
 				4C20F0542126019200CEB049 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CB9D8DF21461C7A00A2B953 /* Build configuration list for PBXNativeTarget "CryptoCoins" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CB9D8E021461C7A00A2B953 /* Debug */,
+				4CB9D8E121461C7A00A2B953 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
