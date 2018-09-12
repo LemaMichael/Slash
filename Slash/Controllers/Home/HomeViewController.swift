@@ -298,7 +298,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @objc func updateCells() {
         print("updateCells")
-        self.collectionView.reloadData()
     }
     
     func animateBackgroundColor(color: UIColor) {
