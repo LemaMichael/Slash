@@ -11,7 +11,7 @@ import Charts
 import SwiftEntryKit
 
 class CoinController: UIViewController {
-    
+
     var dayResult = [ChartDataEntry]()
     let request = RequestCoinHistory()
     let user = UserDefaults.standard.getUser()
@@ -151,11 +151,17 @@ class CoinController: UIViewController {
         default:
             return
         }
+        makeNetworkRequest(coinID: coinID, timeFrame: timeFrame, base: "USD")
+    }
+    
+    func makeNetworkRequest(coinID: String, timeFrame: String, base: String = "USD") {
+        let group = DispatchGroup()
+        group.enter()
         
-        request.requestHistory(coinID: coinID, timeFrame: timeFrame, base: "USD")
-        
-        //: Is this the best way to do this? Without this, the chartDataEntry was incomplete.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        request.requestHistory(coinID: coinID, timeFrame: timeFrame, base: "USD") {
+            group.leave()
+        }
+        group.notify(queue: DispatchQueue.main, execute: {
             let newData = self.request.chartDataEntry
             self.chartView.setData(values: newData)
             
@@ -164,7 +170,7 @@ class CoinController: UIViewController {
             
             let validPercent = CurrencyFormatter.sharedInstance.percentFormatter.string(from: NSNumber(value: self.request.getPercentChange())) ?? ""
             self.containerView.changeLabel.text = validPercent + "%"
-        }
+        })
     }
     
     @objc func displayCoinValue() {

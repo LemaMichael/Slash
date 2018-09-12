@@ -16,7 +16,7 @@ class RequestCoinHistory {
     var chartDataEntry = [ChartDataEntry]()
     var historyData: DataClass2? = nil
     
-    func requestHistory(coinID: String, timeFrame: String, base: String = "USD") {
+    func requestHistory(coinID: String, timeFrame: String, base: String = "USD", finished: @escaping () -> Void) {
         guard let url = URL(string: "https://api.coinranking.com/v1/public/coin/\(coinID)/history/\(timeFrame)?base=\(base)") else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else { return }
@@ -34,6 +34,7 @@ class RequestCoinHistory {
                     let yVal = Double(history.price.value()) ?? 0
                     self.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                 }
+                finished()
                 //print("!!! The highest price here is \(self.getHighPrice())")
                 //print("!!! The lowest price here is \(self.getLowPrice())")
                 //print("!!! The Change %  here is \(self.getPercentChange())")
