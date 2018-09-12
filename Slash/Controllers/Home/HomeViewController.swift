@@ -166,10 +166,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         if #available(iOS 11, *) {
             accountBalanceLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
-
         } else {
             accountBalanceLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 5).isActive = true
         }
+        
         accountBalanceLabel.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 55)
         accountDescription.anchor(top: accountBalanceLabel.bottomAnchor, bottom: todaysDateLabel.topAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 5, paddingBottom: -10, paddingLeft: diff, paddingRight: diff, width: 0, height: 0)
         
@@ -322,7 +322,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //: MARK: CollectionView
 extension HomeViewController {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("numberOfItemsInSection called")
         return self.coins.count
     }
     
@@ -333,6 +332,7 @@ extension HomeViewController {
             //: MAKE SURE TO DO THIS, or else charts will not display!
             //let result = self.values.reversed() as [ChartDataEntry]
             let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
+            print("!! \(result.count)")
             //cell.chartView.backgroundColor = colors[indexPath.item]
             cell.setChartData(values: result, lineColor: colors[indexPath.item])
             cell.coinImageView.tintColor = colors[indexPath.item]
