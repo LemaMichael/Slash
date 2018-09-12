@@ -224,70 +224,44 @@ class CoinCell: UICollectionViewCell {
     //: Add this back if you want tp display the hours at the bottom
     func setxAxis() {
         let xAxis = chartView.xAxis
-        //        xAxis.labelPosition = .bottom
-        //        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
-        //        xAxis.labelTextColor = UIColor.red
-        //        xAxis.drawAxisLineEnabled = false //: The bottom axis isn't needed
-        //        xAxis.drawGridLinesEnabled = false //: Grid isn't needed either
-        //        xAxis.centerAxisLabelsEnabled = true
-        //        xAxis.granularity = 3600 // 60*60 one hour
-        //        xAxis.valueFormatter = DateValueFormatter()
-        xAxis.enabled = false //: CHANGE
+        xAxis.enabled = false
     }
     
     //: Add this back if you want to display the coin price on the left side of the chart
     func setLeftAxis() {
-        //This displays the price at the left of the chart
-        /*
-         self.chartView.leftAxis.enabled = true
-         self.chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter.with(block: { value, _ -> String in
-         return Float(value).toCurrencyString(fractionDigits: 2)
-         }) */
         self.chartView.leftAxis.enabled = false
-        
     }
+    
     func setRightAxis() {
         self.chartView.rightAxis.enabled = false
     }
     
     func setChartData(values: [ChartDataEntry], lineColor: UIColor) {
-        
         let line = self.line(values: values, lineColor: lineColor)
         
         let data = LineChartData()
         data.addDataSet(line)
         self.chartView.data = data
-        
     }
     
     private func line(values: [ChartDataEntry], lineColor: UIColor) -> LineChartDataSet {
-        //: 1. color
-        let set1 = LineChartDataSet(values: values, label: nil)
-        set1.mode = .cubicBezier //: Change this back to linear for default chart
-        // set1.axisDependency = .left
-        set1.setColor(lineColor, alpha: 1.00)
-        set1.setCircleColor(lineColor)
-        set1.lineWidth = 3.3
-        set1.drawCirclesEnabled = false
-        set1.drawValuesEnabled = false
-        //: FIXME: Find some colors to mix with.
+        let set = LineChartDataSet(values: values, label: nil)
+        set.mode = .cubicBezier //: Change this back to linear for default chart
+        set.setColor(lineColor, alpha: 1.00)
+        set.setCircleColor(lineColor)
+        set.lineWidth = 3.3
+        set.drawCirclesEnabled = false
+        set.drawValuesEnabled = false
+        //: Change this if you want to add the surface with gradient colors
         let gradientColors = [lineColor.cgColor,
                               lineColor.cgColor]
         let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
         
-        set1.fillAlpha = 0.35
-        set1.fill = Fill(linearGradient: gradient, angle: 0)
-        set1.drawFilledEnabled = false //: If true this will draw more than the surface
-        set1.drawCircleHoleEnabled = false
-        
-        //        let data = LineChartData(dataSet: set1)
-        //        data.setValueTextColor(.white)
-        //        data.setValueFont(.systemFont(ofSize: 9, weight: .light))
-        //        chartView.data = data
-        //        data.setValueTextColor(.white)
-        //        data.setValueFont(.systemFont(ofSize: 9, weight: .light))
-        
-        return set1
+        set.fillAlpha = 0.35
+        set.fill = Fill(linearGradient: gradient, angle: 0)
+        set.drawFilledEnabled = false //: If true this will draw more than the surface
+        set.drawCircleHoleEnabled = false
+        return set
     }
     
     func setupCell() {
@@ -314,16 +288,8 @@ class CoinCell: UICollectionViewCell {
         percentageLabel.text = String(format: "%.0f%%", progressView.progress * 100)
         
         setupConstraints()
-        
-        //        //: Setting up coin
-        //        guard let coin = coin else { return }
-        //        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        //        coinImageView.image = UIImage(named: coin.id)
-        //        coinPrice.text = coin.currentPrice
-        //        coinPercentage.text = coin.currentPrice
-        //        coinLabel.text = coin.name
-        
     }
+    
     func setupConstraints() {
         let cellWidth = (self.frame.width - 5 - 30 - 10) / 2
         
