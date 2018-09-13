@@ -233,12 +233,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                             coin.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                         }
                     }
-                    print("We are now appending: pid \(coin.id)")
+                    print("We are now appending: pid", coin.id ?? "")
                     
                 case .failure(let error):
                     print(error.localizedDescription)
                     //: One of the reasons we are here is because we are making too much requests at a time
-                    print("The current pid was not added \(coin.id)")
+                    print("The current pid was not added", coin.id ?? "")
                     self.requestAgain(coin)
                     
                 }
@@ -270,13 +270,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                             coin.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                         }
                     }
-                    print("Was able to add: pid \(coin.id)")
+                    print("Was able to add: pid", coin.id ?? "")
                     //: Hmmm
                 // self.collectionView.reloadData()
                 case .failure(let error):
                     print(error.localizedDescription)
                     //: One of the reasons we are here because we are making too much requests at a time
-                    print("The current pid was not added2 \(coin.id)")
+                    print("The current pid was not added", coin.id ?? "")
                     self.requestAgain(coin)
                     
                 }
@@ -477,7 +477,7 @@ extension HomeViewController: GDAXSocketClientDelegate {
             coins.append(coin)
         }
         for item in coins where item.id == coin.id {
-                print("Item: \(item.id) is being modified")
+                print("Item:", item.id ?? "", "is being modified")
                 item.currentPrice = formattedPrice
                 item.open = String(ticker.open24h)
                 item.high = String(ticker.high24h)

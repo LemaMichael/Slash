@@ -20,8 +20,7 @@ class User: Codable {
     var ethereumClassicBalance: Double
     
     init(name: String, btcBalance: Double, ethBalance: Double, ltcBalance: Double, bchBalance: Double, etcBlance: Double) {
-        
-        self.name = (name.isEmpty) ? "User" : name
+        self.name = (name.isEmpty) ? "User" : name.trimmingCharacters(in: .whitespaces)
         self.bitcoinBalance = btcBalance
         self.ethereumBalance = ethBalance
         self.litecoinBalance = ltcBalance
