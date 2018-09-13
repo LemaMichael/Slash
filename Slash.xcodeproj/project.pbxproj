@@ -200,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				4C20F03F2126019100CEB049 /* AppDelegate.swift */,
-				4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */,
 				4C94D97321266E59008F80EE /* Model */,
 				4C94D979212671A5008F80EE /* Views */,
 				4CE2989E212616C4008A533A /* Controllers */,
@@ -283,6 +282,7 @@
 		4C94D97321266E59008F80EE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4C2C9C192128C5050041175E /* ExampleWebSocketClient.swift */,
 				4C94D97C212681CA008F80EE /* Preferences.swift */,
 				4C982D572127EA220003C2F9 /* CoinDetail.swift */,
 				4C29FA95212DCA50007FAF90 /* User.swift */,

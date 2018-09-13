@@ -21,7 +21,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                          UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
     var coins: [CoinDetail] = [CoinDetail]() {
         didSet {
-            self.collectionView.reloadData()
+           self.collectionView.reloadData()
             if coins.count >= 5 {
                 getHistoricData()
                 // FIXME: Find a better place to put this. NOTE this should scroll to the cell with the highest percentage holding
@@ -33,7 +33,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     var socketClient: GDAXSocketClient = GDAXSocketClient()
-    
+    let group = DispatchGroup()
     let priceFormatter: NumberFormatter = NumberFormatter()
     let timeFormatter: DateFormatter = DateFormatter()
     
@@ -213,7 +213,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         //: Get historic data
-        //let pid = "BTC-USD"
         print("WE HAVE \(coins.count) itemss")
         for coin in coins {
             let range = DateRange.oneDay
@@ -221,6 +220,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             client.historic(pid: coin.id, range:range, granularity:granularity) { candles, result in
                 switch result {
                 case .success:
+                    self.group.enter()
                     //: Each candle has a time, low, high. open, close, volume
                     for item in candles {
                         print(item.time, item.open, item.close, item.high, item.low)
@@ -233,7 +233,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                             coin.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                         }
                     }
+                    self.group.leave()
                     print("We are now appending: pid", coin.id ?? "")
+                    self.group.notify(queue: DispatchQueue.main, execute: {
+                       self.collectionView.reloadData()
+                    })
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -259,6 +263,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.client.historic(pid: coin.id, range: range, granularity: granularity) { candles, result in
                 switch result {
                 case .success:
+                    self.group.enter()
                     //: Each candle has a time, low, high. open, close, volume
                     for item in candles {
                         print(item.time, item.open, item.close, item.high, item.low)
@@ -270,9 +275,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                             coin.chartDataEntry.append(ChartDataEntry(x: xVal, y: yVal))
                         }
                     }
+                    self.group.leave()
                     print("Was able to add: pid", coin.id ?? "")
-                    //: Hmmm
-                // self.collectionView.reloadData()
+                    self.group.notify(queue: DispatchQueue.main, execute: {
+                        self.collectionView.reloadData()
+                    })
+                
                 case .failure(let error):
                     print(error.localizedDescription)
                     //: One of the reasons we are here because we are making too much requests at a time
@@ -330,10 +338,8 @@ extension HomeViewController {
         if !coins.isEmpty {
             cell.update(coins[indexPath.item])
             //: MAKE SURE TO DO THIS, or else charts will not display!
-            //let result = self.values.reversed() as [ChartDataEntry]
             let result = coins[indexPath.item].chartDataEntry.reversed() as [ChartDataEntry]
             print("!! \(result.count)")
-            //cell.chartView.backgroundColor = colors[indexPath.item]
             cell.setChartData(values: result, lineColor: colors[indexPath.item])
             cell.coinImageView.tintColor = colors[indexPath.item]
             cell.progressView.progressTintColor = colors[indexPath.item] // FIXME: Do I really want this?
