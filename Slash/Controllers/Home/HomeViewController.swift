@@ -185,7 +185,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         //: Adding Title with color
         self.navigationItem.title = "Slash"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir-Heavy", size: 20)!, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Avenir-Heavy", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.white]
         
         //: Changing default back button
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

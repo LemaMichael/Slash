@@ -10,17 +10,17 @@ import Foundation
 
 open class GDAXTicker: GDAXProductSequenceTimeMessage {
     
-    open let tradeId: Int?
-    open let price: Double
-    open let side: GDAXSide?
-    open let lastSize: Double?
-    open let bestBid: Double
-    open let bestAsk: Double
-    open let open24h: Double
-    open let high24h: Double
-    open let low24h: Double
-    open let volume24h: Double
-    open let volume30d: Double
+    public let tradeId: Int?
+    public let price: Double
+    public let side: GDAXSide?
+    public let lastSize: Double?
+    public let bestBid: Double
+    public let bestAsk: Double
+    public let open24h: Double
+    public let high24h: Double
+    public let low24h: Double
+    public let volume24h: Double
+    public let volume30d: Double
     
     public required init(json: [String: Any]) throws {
         

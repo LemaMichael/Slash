@@ -10,12 +10,12 @@ import Foundation
 
 open class GDAXReceived: GDAXProductSequenceTimeMessage {
     
-    open let orderId: String
-    open let size: Double?
-    open let price: Double?
-    open let side: GDAXSide
-    open let orderType: GDAXOrderType
-    open let funds: Double?
+    public let orderId: String
+    public let size: Double?
+    public let price: Double?
+    public let side: GDAXSide
+    public let orderType: GDAXOrderType
+    public let funds: Double?
     
     public required init(json: [String: Any]) throws {
         

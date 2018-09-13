@@ -8,8 +8,8 @@
 
 open class GDAXSnapshot: GDAXProductMessage {
     
-    open let bids: [GDAXBidAsk]
-    open let asks: [GDAXBidAsk]
+    public let bids: [GDAXBidAsk]
+    public let asks: [GDAXBidAsk]
     
     public required init(json: [String: Any]) throws {
 

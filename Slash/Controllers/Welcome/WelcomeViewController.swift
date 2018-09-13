@@ -61,9 +61,9 @@ class WelcomeViewController: UIViewController {
         // https://stackoverflow.com/questions/37722323/how-to-present-view-controller-from-right-to-left-in-ios-using-swift
         let transition = CATransition()
         transition.duration = 0.6
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.registerView.layer.add(transition, forKey: kCATransition)
         self.registerView.isHidden = false
         self.registerView.alpha = 1
@@ -162,7 +162,7 @@ class WelcomeViewController: UIViewController {
         self.view.addSubview(titleLabel)
         self.view.addSubview(startButton)
         self.view.addSubview(registerView)
-        self.addChildViewController(pageViewController)
+        self.addChild(pageViewController)
         self.view.addSubview(pageViewController.view)
         
         //: Textfield

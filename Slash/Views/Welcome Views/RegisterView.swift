@@ -73,9 +73,9 @@ class RegisterView: UIView {
     func animateTextChange(forward: Bool) {
         let transition = CATransition()
         transition.duration = 0.6
-        transition.type = kCATransitionPush
-        transition.subtype = forward ? kCATransitionFromRight : kCATransitionFromLeft
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = convertToOptionalCATransitionSubtype(forward ? CATransitionSubtype.fromRight.rawValue : CATransitionSubtype.fromLeft.rawValue)
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         self.coinLabel.layer.add(transition, forKey: kCATransition)
     }
     
@@ -110,4 +110,10 @@ class RegisterView: UIView {
         }, completion: nil)
         return true
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalCATransitionSubtype(_ input: String?) -> CATransitionSubtype? {
+	guard let input = input else { return nil }
+	return CATransitionSubtype(rawValue: input)
 }

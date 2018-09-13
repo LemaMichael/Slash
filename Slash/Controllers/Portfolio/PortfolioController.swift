@@ -120,7 +120,7 @@ class PortfolioController: UIViewController {
         self.title = "Portfolio"
         
         view.backgroundColor = UIColor.rgb(red: 43, green: 44, blue: 62)
-        self.addChildViewController(pagePortfolioController)
+        self.addChild(pagePortfolioController)
         self.view.addSubview(pagePortfolioController.view)
         self.view.addSubview(totalPortfolioValue)
         self.view.addSubview(dividerView)

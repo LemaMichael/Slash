@@ -8,7 +8,7 @@
 
 open class GDAXUpdate: GDAXProductMessage {
     
-    open let changes: [GDAXUpdateChange]
+    public let changes: [GDAXUpdateChange]
     
     public required init(json: [String: Any]) throws {
         

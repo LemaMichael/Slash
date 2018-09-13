@@ -53,7 +53,7 @@ class CoinTableViewController: UITableViewController {
         }
         
         //: Changes the textColor of the UISearchBar
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = convertToNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white])
         
         //: Change search bar background color
         searchController.searchBar.backgroundImage = UIImage()
@@ -209,7 +209,7 @@ class CoinTableCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
@@ -222,4 +222,9 @@ class CoinTableCell: UITableViewCell {
         symbolLabel.anchor(top: topAnchor, bottom: nil, left: leftAnchor, right: nil, paddingTop: 11, paddingBottom: 0, paddingLeft: 12, paddingRight: 0, width: 320, height: 20)
         nameSubLabel.anchor(top: symbolLabel.bottomAnchor, bottom: self.bottomAnchor, left: leftAnchor, right: nil, paddingTop: 0, paddingBottom: -11, paddingLeft: 12, paddingRight: 0, width: 320, height: 20)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringKeyDictionary(_ input: [String: Any]) -> [NSAttributedString.Key: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

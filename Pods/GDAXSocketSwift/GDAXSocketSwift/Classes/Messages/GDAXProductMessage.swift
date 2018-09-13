@@ -10,7 +10,7 @@ import Foundation
 
 open class GDAXProductMessage: GDAXMessage {
     
-    open let productId: GDAXProductId
+    public let productId: GDAXProductId
 
     public required init(json: [String: Any]) throws {
         

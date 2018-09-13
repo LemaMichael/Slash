@@ -10,7 +10,7 @@ import Foundation
 
 open class GDAXSubscriptions: GDAXMessage {
     
-    open let channels: [GDAXSubscription]
+    public let channels: [GDAXSubscription]
     
     public required init(json: [String: Any]) throws {
         

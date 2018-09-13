@@ -10,24 +10,24 @@ import Foundation
 
 open class GDAXMarginProfileUpdate: GDAXProductMessage {
     
-    open let timestamp: Date
-    open let userId: String
-    open let profileId: String
-    open let nonce: Int
-    open let position: String
-    open let positionSize: Double
-    open let positionCompliment: Double
-    open let positionMaxSize: Double
-    open let callSide: GDAXSide
-    open let callPrice: Double
-    open let callSize: Double
-    open let callFunds: Double
-    open let covered: Bool
-    open let nextExpireTime: Date
-    open let baseFunding: Double
-    open let quoteBalance: Double
-    open let quoteFunding: Double
-    open let privateUpdate: Bool
+    public let timestamp: Date
+    public let userId: String
+    public let profileId: String
+    public let nonce: Int
+    public let position: String
+    public let positionSize: Double
+    public let positionCompliment: Double
+    public let positionMaxSize: Double
+    public let callSide: GDAXSide
+    public let callPrice: Double
+    public let callSize: Double
+    public let callFunds: Double
+    public let covered: Bool
+    public let nextExpireTime: Date
+    public let baseFunding: Double
+    public let quoteBalance: Double
+    public let quoteFunding: Double
+    public let privateUpdate: Bool
     
     public required init(json: [String: Any]) throws {
         

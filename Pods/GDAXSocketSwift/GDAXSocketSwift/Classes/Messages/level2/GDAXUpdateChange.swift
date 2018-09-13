@@ -10,9 +10,9 @@ import Foundation
 
 open class GDAXUpdateChange {
     
-    open let side: GDAXSide
-    open let price: Double
-    open let size: Double
+    public let side: GDAXSide
+    public let price: Double
+    public let size: Double
     
     public init(side: GDAXSide, price: Double, size: Double) {
         self.side = side

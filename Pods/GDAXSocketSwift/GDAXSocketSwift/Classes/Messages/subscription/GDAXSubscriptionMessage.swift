@@ -10,8 +10,8 @@ import Foundation
 
 open class GDAXSubscriptionMessage {
     
-    open let channels: [GDAXChannel]
-    open let productIds: [GDAXProductId]
+    public let channels: [GDAXChannel]
+    public let productIds: [GDAXProductId]
     
     public init(channels:[GDAXChannel], productIds:[GDAXProductId]) {
         self.channels = channels

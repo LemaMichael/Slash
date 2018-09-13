@@ -10,7 +10,7 @@ import Foundation
 
 open class GDAXErrorMessage: GDAXMessage {
     
-    open let message: String
+    public let message: String
     
     public required init(json: [String: Any]) throws {
         

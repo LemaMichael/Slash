@@ -10,17 +10,17 @@ import Foundation
 
 public class GDAXMatch: GDAXProductSequenceTimeMessage {
     
-    open let tradeId: Int
-    open let makerOrderId: String
-    open let takerOrderId: String
-    open let size: Double
-    open let price: Double
-    open let side: GDAXSide
+    public let tradeId: Int
+    public let makerOrderId: String
+    public let takerOrderId: String
+    public let size: Double
+    public let price: Double
+    public let side: GDAXSide
     
-    open let takerUserId: String?
-    open let userId: String?
-    open let takerProfileId: String?
-    open let profileId: String?
+    public let takerUserId: String?
+    public let userId: String?
+    public let takerProfileId: String?
+    public let profileId: String?
     
     public required init(json: [String: Any]) throws {
         

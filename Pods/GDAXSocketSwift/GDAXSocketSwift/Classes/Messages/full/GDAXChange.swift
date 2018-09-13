@@ -10,13 +10,13 @@ import Foundation
 
 open class GDAXChange: GDAXProductSequenceTimeMessage {
     
-    open let orderId: String
-    open let newSize: Double?
-    open let oldSize: Double?
-    open let newFunds: Double?
-    open let oldFunds: Double?
-    open let price: Double
-    open let side: GDAXSide
+    public let orderId: String
+    public let newSize: Double?
+    public let oldSize: Double?
+    public let newFunds: Double?
+    public let oldFunds: Double?
+    public let price: Double
+    public let side: GDAXSide
     
     public required init(json: [String: Any]) throws {
         

@@ -34,7 +34,7 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
     func setBackgroundImage() {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = #imageLiteral(resourceName: "Fire")
-        backgroundImage.contentMode = UIViewContentMode.scaleAspectFill
+        backgroundImage.contentMode = UIView.ContentMode.scaleAspectFill
         backgroundImage.alpha = 0.7
         self.view.insertSubview(backgroundImage, at: 0)
     }
@@ -225,7 +225,7 @@ extension DiscoverViewController {
     fileprivate func modifyViews(general: General) {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 1.5
-        let attributes = [NSAttributedStringKey.paragraphStyle: style, NSAttributedStringKey.font: UIFont(name: "Avenir-Heavy", size: 11.4)!, NSAttributedStringKey.foregroundColor: UIColor.rgb(red: 140, green: 135, blue: 137)]
+        let attributes = [NSAttributedString.Key.paragraphStyle: style, NSAttributedString.Key.font: UIFont(name: "Avenir-Heavy", size: 11.4)!, NSAttributedString.Key.foregroundColor: UIColor.rgb(red: 140, green: 135, blue: 137)]
         self.descriptionView.textView.attributedText = NSAttributedString(string: general.description.htmlToString, attributes: attributes)
         
         //: For DetailView
