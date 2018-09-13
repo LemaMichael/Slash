@@ -178,8 +178,8 @@ class CurrencyFormatter: NSObject {
         }
         if options.showNegativePrefix == false && amount < 0 {
             // Setting formatter.negativePrefix messes up currency symbols so just chop off first character
-            formattedOutput = formattedOutput
-                .substring(from: formattedOutput.characters.index(formattedOutput.startIndex, offsetBy: 1))
+            let index = formattedOutput.index(formattedOutput.startIndex, offsetBy: 1)
+            formattedOutput = String(formattedOutput[index...])
         }
         return formattedOutput
     }
