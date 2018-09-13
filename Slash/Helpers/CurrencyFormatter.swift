@@ -132,7 +132,7 @@ class CurrencyFormatter: NSObject {
         
         let tempOutput = formatter.string(from: NSNumber(value: amount))!
         let dotIndex = tempOutput.range(of: ".")?.lowerBound
-        let currentNumberOfFractionDigits = dotIndex == nil ? 0 : (tempOutput.substring(from: dotIndex!).characters.count - 1)
+        let currentNumberOfFractionDigits = dotIndex == nil ? 0 : (tempOutput[dotIndex!...].count - 1)
         
         if options.allowTruncation && (currentNumberOfFractionDigits > 2) {
             return formatSymbolAndPrefix(amount, currency: currency, numFormatter: truncatingFormatter, options: options)
