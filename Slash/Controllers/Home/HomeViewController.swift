@@ -84,16 +84,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return label
     }()
     
+    let centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        //layout.minimumLineSpacing = 0
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(centeredCollectionViewFlowLayout: centeredCollectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.register(CoinCell.self, forCellWithReuseIdentifier: HomeViewController.coinCellId)
         return collectionView
     }()
@@ -178,6 +174,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         accountBalanceLabel.anchor(top: nil, bottom: nil, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 55)
         accountDescription.anchor(top: accountBalanceLabel.bottomAnchor, bottom: todaysDateLabel.topAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 5, paddingBottom: -10, paddingLeft: diff, paddingRight: diff, width: 0, height: 0)
         
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        // configure layout
+        centeredCollectionViewFlowLayout.itemSize = CGSize(
+            width: self.view.frame.width * 0.825,
+            height: self.view.frame.height / 2
+        )
+
         updateTimer()
     }
     
@@ -366,17 +371,6 @@ extension HomeViewController {
     }
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (self.view.frame.width - 65), height: (self.view.frame.height / 2))
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        //: Adjust the cell position
-        let width = self.view.frame.width
-        let cellWidth = (self.view.frame.width - 65)
-        let diff = (width-cellWidth) / 2
-        return UIEdgeInsets(top: 0, left: diff, bottom: 0, right: diff)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("The following was tapped: \(indexPath.item)")
         
@@ -430,24 +424,6 @@ extension HomeViewController: UIScrollViewDelegate {
             default:
                 return
             }
-        }
-    }
-    
-    //: https://gist.github.com/benjaminsnorris/a19cb14082b28027d183/revisions
-    func snapToCenter() {
-        let centerPoint = self.view.convert(self.view.center, to: collectionView)
-        guard let centerIndexPath = collectionView.indexPathForItem(at: centerPoint) else {return}
-        //: FIXME: There is an issue when user scrolls the first or last cell repeatedly
-        collectionView.scrollToItem(at: centerIndexPath, at: .centeredHorizontally, animated: true)
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        snapToCenter()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            snapToCenter()
         }
     }
 }
@@ -520,10 +496,5 @@ extension HomeViewController: GDAXSocketClientDelegate {
                 let formattedPrice = priceFormatter.string(from: currentUser.balance() as NSNumber) ?? "0.00"
                 self.accountBalanceLabel.text = "$" + formattedPrice //: FIXME: This shouldn't only be for US Dollar
             }
-        
-        //        print("Currently i have: \(coins.count) items. The items are:")
-        //        for item in coins {
-        //            print(item.id)
-        //        }
     }
 }

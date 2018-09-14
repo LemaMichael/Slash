@@ -47,6 +47,7 @@
 		4C982D582127EA220003C2F9 /* CoinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C982D572127EA220003C2F9 /* CoinDetail.swift */; };
 		4CB9D8DA21461C7A00A2B953 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB9D8D921461C7A00A2B953 /* Stickers.xcassets */; };
 		4CB9D8DE21461C7A00A2B953 /* CryptoCoins.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4CB9D8D721461C7900A2B953 /* CryptoCoins.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4CB9F6AD214B442D007BFD06 /* CenteredCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9F6AC214B442D007BFD06 /* CenteredCollectionViewFlowLayout.swift */; };
 		4CC0478E21375897009D9177 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0478D21375897009D9177 /* BarView.swift */; };
 		4CC0479221375B3F009D9177 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0479121375B3F009D9177 /* BarViewController.swift */; };
 		4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2989C2126156D008A533A /* HomeViewController.swift */; };
@@ -123,6 +124,7 @@
 		4CB9D8D721461C7900A2B953 /* CryptoCoins.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CryptoCoins.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB9D8D921461C7A00A2B953 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		4CB9D8DB21461C7A00A2B953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CB9F6AC214B442D007BFD06 /* CenteredCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		4CC0478D21375897009D9177 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
 		4CC0479121375B3F009D9177 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
 		4CE2989C2126156D008A533A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				4C0A005B212730E700919278 /* CoinCell.swift */,
+				4CB9F6AC214B442D007BFD06 /* CenteredCollectionViewFlowLayout.swift */,
 			);
 			path = "Home Views";
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				4C2C314921337E9A0001AEB9 /* CustomGrayButton.swift in Sources */,
 				4C96F742212FDDB6001D16D8 /* RegisterView.swift in Sources */,
 				4CE2989D2126156D008A533A /* HomeViewController.swift in Sources */,
+				4CB9F6AD214B442D007BFD06 /* CenteredCollectionViewFlowLayout.swift in Sources */,
 				4C6618F621361A3F00DD8CBA /* PieView.swift in Sources */,
 				4C29FA98212DCF98007FAF90 /* UserDefaultsExtension.swift in Sources */,
 				4C2BF76F213A522800890547 /* DetailsView.swift in Sources */,
