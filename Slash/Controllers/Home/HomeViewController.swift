@@ -18,11 +18,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                          UIColor(red:0.21, green:0.27, blue:0.31, alpha:1.0),
                                          UIColor(red:0.57, green:0.57, blue:0.57, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
-                                         UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
+                                         UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0),
+                                         UIColor.black]
+    
     var coins: [CoinDetail] = [CoinDetail]() {
         didSet {
            self.collectionView.reloadData()
-            if coins.count >= 5 {
+            if coins.count >= 6 {
                 getHistoricData()
                 // FIXME: Find a better place to put this. NOTE this should scroll to the cell with the highest percentage holding
                 self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
@@ -421,6 +423,8 @@ extension HomeViewController: UIScrollViewDelegate {
                 self.animateBackgroundColor(color: colors[3])
             case 4:
                 self.animateBackgroundColor(color: colors[4])
+            case 5:
+                self.animateBackgroundColor(color: colors[5])
             default:
                 return
             }
@@ -431,7 +435,7 @@ extension HomeViewController: UIScrollViewDelegate {
 //: MARK: GDAXSocketClientDelegate
 extension HomeViewController: GDAXSocketClientDelegate {
     func gdaxSocketDidConnect(socket: GDAXSocketClient) {
-        socket.subscribe(channels: [.ticker], productIds:[.BTCUSD, .ETHUSD, .LTCUSD, .BCHUSD, .ETCUSD])
+        socket.subscribe(channels: [.ticker], productIds:[.BTCUSD, .ETHUSD, .LTCUSD, .BCHUSD, .ETCUSD, .ZRXUSD])
     }
     
     func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?) {
@@ -460,7 +464,7 @@ extension HomeViewController: GDAXSocketClientDelegate {
         coin.volume = String(ticker.volume24h)
         coin.thirtyDayVolume = String(ticker.volume30d)
         
-        if coins.isEmpty  || coins.count < 5 {
+        if coins.isEmpty  || coins.count < 6 {
             coins.append(coin)
         }
         for item in coins where item.id == coin.id {
@@ -488,6 +492,8 @@ extension HomeViewController: GDAXSocketClientDelegate {
                     UserDefaults.standard.setBCHPrice(value: validPrice)
                 case "Ethereum Classic":
                     UserDefaults.standard.setETCPrice(value: validPrice)
+                case "0x":
+                    UserDefaults.standard.setZRXPrice(value: validPrice)
                 default:
                     return
                 }

@@ -11,7 +11,7 @@ import UIKit
 class WelcomeViewController: UIViewController {
     
     var name = String()
-    var btcAmount = 0.0, ethAmount = 0.0, ltcAmount = 0.0, bchAmount = 0.0, etcAmount = 0.0
+    var btcAmount = 0.0, ethAmount = 0.0, ltcAmount = 0.0, bchAmount = 0.0, etcAmount = 0.0, zrxAmount = 0.0
     var prevButtonItem = UIBarButtonItem()
     
     let imageView: UIImageView = {
@@ -112,9 +112,14 @@ class WelcomeViewController: UIViewController {
             self.registerView.animateTextChange(forward: true)
             coinLabel.text = self.registerView.coinAmounts[4]
         case "ETC":
-            textField.resignFirstResponder()
             etcAmount = invalidInput ? 0.0 : doubleVal
-            _ = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount)
+            textField.text = ""
+            self.registerView.animateTextChange(forward: true)
+            coinLabel.text = self.registerView.coinAmounts[5]
+        case "ZRX":
+            textField.resignFirstResponder()
+            zrxAmount = invalidInput ? 0.0 : doubleVal
+            _ = User(name: name, btcBalance: btcAmount, ethBalance: ethAmount, ltcBalance: ltcAmount, bchBalance: bchAmount, etcBlance: etcAmount, zrxBalance: zrxAmount)
             UserDefaults.standard.setIsLoggedIn(value: true)
             self.navigationController?.pushViewController(HomeViewController(), animated: false)
         default:
@@ -152,6 +157,10 @@ class WelcomeViewController: UIViewController {
             textField.text = ""
             self.registerView.animateTextChange(forward: false)
             coinLabel.text = self.registerView.coinAmounts[3]
+        case "ZRX":
+            textField.text = ""
+            self.registerView.animateTextChange(forward: false)
+            coinLabel.text = self.registerView.coinAmounts[4]
         default:
             return
         }

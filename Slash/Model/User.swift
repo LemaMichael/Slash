@@ -18,14 +18,16 @@ class User: Codable {
     var litecoinBalance: Double
     var bitcoinCashBalance: Double
     var ethereumClassicBalance: Double
+    var zrxBlanace: Double
     
-    init(name: String, btcBalance: Double, ethBalance: Double, ltcBalance: Double, bchBalance: Double, etcBlance: Double) {
+    init(name: String, btcBalance: Double, ethBalance: Double, ltcBalance: Double, bchBalance: Double, etcBlance: Double, zrxBalance: Double) {
         self.name = (name.isEmpty) ? "User" : name.trimmingCharacters(in: .whitespaces)
         self.bitcoinBalance = btcBalance
         self.ethereumBalance = ethBalance
         self.litecoinBalance = ltcBalance
         self.bitcoinCashBalance = bchBalance
         self.ethereumClassicBalance = etcBlance
+        self.zrxBlanace = zrxBalance
         
         UserDefaults.standard.setUsername(value: self.name)
         UserDefaults.standard.setBTCBalance(value: bitcoinBalance)
@@ -33,6 +35,7 @@ class User: Codable {
         UserDefaults.standard.setLTCBalance(value: litecoinBalance)
         UserDefaults.standard.setBCHBalance(value: bitcoinCashBalance)
         UserDefaults.standard.setETCBalance(value: ethereumClassicBalance)
+        UserDefaults.standard.setZRXBalance(value: self.zrxBlanace)
         
         //: Must save user        
         let userData = try! JSONEncoder().encode(self)
@@ -55,6 +58,8 @@ class User: Codable {
             return UserDefaults.standard.getBCHBalance()
         case "Ethereum Classic":
             return UserDefaults.standard.getETCBalance()
+        case "0x":
+            return UserDefaults.standard.getZRXBalance()
         default:
             return 0.00
         }
@@ -74,6 +79,8 @@ class User: Codable {
             return UserDefaults.standard.getBCHPrice()
         case "Ethereum Classic":
             return UserDefaults.standard.getETCPrice()
+        case "0x":
+            return UserDefaults.standard.getZRXPrice()
         default:
             return 0.00
         }
@@ -97,6 +104,7 @@ class User: Codable {
         let litecoinBalance = UserDefaults.standard.getLTCBalance()
         let bitcoinCashBalance = UserDefaults.standard.getBCHBalance()
         let ethereumClassicBalance = UserDefaults.standard.getETCBalance()
+        let zrxBalance = UserDefaults.standard.getZRXBalance()
         
         //: 2- We need to get the current price for all the coins
         let bitcoinPrice = UserDefaults.standard.getBTCPrice()
@@ -104,9 +112,10 @@ class User: Codable {
         let litecoinPrice  = UserDefaults.standard.getLTCPrice()
         let bitcoinCashPrice  = UserDefaults.standard.getBCHPrice()
         let ethereumClassicPrice  = UserDefaults.standard.getETCPrice()
+        let zrxPrice = UserDefaults.standard.getZRXPrice()
         
         //: 3-Multiply
-        let totalBalance = (bitcoinPrice * bitcoinBalance) + (ethereumPrice * ethereumBalance) + (litecoinPrice * litecoinBalance) + (bitcoinCashPrice * bitcoinCashBalance) + (ethereumClassicPrice * ethereumClassicBalance)
+        let totalBalance = (bitcoinPrice * bitcoinBalance) + (ethereumPrice * ethereumBalance) + (litecoinPrice * litecoinBalance) + (bitcoinCashPrice * bitcoinCashBalance) + (ethereumClassicPrice * ethereumClassicBalance) + (zrxPrice * zrxBalance)
         
         return totalBalance
     }
@@ -117,13 +126,14 @@ class User: Codable {
         let litecoinBalance = UserDefaults.standard.getLTCBalance()
         let bitcoinCashBalance = UserDefaults.standard.getBCHBalance()
         let ethereumClassicBalance = UserDefaults.standard.getETCBalance()
+        let zrxBalance = UserDefaults.standard.getZRXBalance()
         
-        return bitcoinBalance + ethereumBalance + litecoinBalance + bitcoinCashBalance + ethereumClassicBalance
+        return bitcoinBalance + ethereumBalance + litecoinBalance + bitcoinCashBalance + ethereumClassicBalance + zrxBalance
     }
     
     /// This returns an array of coin names that have a balance > 0.
     func getAllHoldings() -> [String] {
-        var supportedCoins = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic"]
+        var supportedCoins = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic", "0x"]
         
         for (index, coin) in supportedCoins.enumerated() {
             if getCoinBalance(coinName: coin) == 0 {

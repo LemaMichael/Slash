@@ -91,6 +91,8 @@ class CoinDetail: NSObject {
             return "Bitcoin Cash"
         case "ETC":
             return "Ethereum Classic"
+        case "ZRX":
+            return "0x"
         default:
             return "..."
         }

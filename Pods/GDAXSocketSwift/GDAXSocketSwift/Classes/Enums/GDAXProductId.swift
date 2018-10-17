@@ -24,5 +24,8 @@ public enum GDAXProductId: String {
     case ETCUSD = "ETC-USD"
     case ETCBTC = "ETC-BTC"
     case ETCEUR = "ETC-EUR"
+    case ZRXUSD = "ZRX-USD"
+    case ZRXBTC = "ZRX-BTC"
+    case ZRXEUR = "ZRX-EUR"
     
 }

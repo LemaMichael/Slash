@@ -11,7 +11,7 @@ import UIKit
 
 class RegisterView: UIView {
     
-    var coinAmounts = ["BTC AMOUNT", "ETH AMOUNT", "LTC AMOUNT", "BCH AMOUNT", "ETC AMOUNT"]
+    var coinAmounts = ["BTC AMOUNT", "ETH AMOUNT", "LTC AMOUNT", "BCH AMOUNT", "ETC AMOUNT", "ZRX AMOUNT"]
     
     var nameLabel: UILabel = {
         let label = UILabel()

@@ -66,7 +66,7 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
         self.view.addSubview(detailsView)
         setupConstraints()
         
-        let defaultCoins = ["BTC", "ETH", "LTC", "BCH", "ETC", "XMR", "NANO"]
+        let defaultCoins = ["BTC", "ETH", "LTC", "BCH", "ETC", "XMR", "NANO", "ZRX"]
         let randomIndex = Int(arc4random_uniform(UInt32(defaultCoins.count)))
         randomStr = defaultCoins[randomIndex]
         getPriceList(coinID: randomStr)

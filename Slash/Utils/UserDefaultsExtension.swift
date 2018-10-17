@@ -10,9 +10,9 @@ import UIKit
 
 extension UserDefaults {
     enum UserDefaultKeys: String {
-        case Username, BTCBalance, ETHBalance, LTCBalance, BCHBalance, ETCBalance
-        case BTCPrice, ETHPrice, LTCPrice, BCHPrice, ETCPrice
-        case BTCPercent, ETHPercent, LTCPercent, BCHPercent, ETCPercent
+        case Username, BTCBalance, ETHBalance, LTCBalance, BCHBalance, ETCBalance, ZRXBalance
+        case BTCPrice, ETHPrice, LTCPrice, BCHPrice, ETCPrice, ZRXPrice
+        case BTCPercent, ETHPercent, LTCPercent, BCHPercent, ETCPercent, ZRXPercent
         case isLoggedIn, isFirstLaunch
         case user
     }
@@ -23,7 +23,7 @@ extension UserDefaults {
     }
     func getUser() -> User {
         guard let userData = UserDefaults.standard.data(forKey: UserDefaultKeys.user.rawValue) else {
-            return User(name: "User", btcBalance: 0, ethBalance: 0, ltcBalance: 0, bchBalance: 0, etcBlance: 0)
+            return User(name: "User", btcBalance: 0, ethBalance: 0, ltcBalance: 0, bchBalance: 0, etcBlance: 0, zrxBalance: 0)
         }
         let user = try! JSONDecoder().decode(User.self, from: userData)
         return user
@@ -74,6 +74,13 @@ extension UserDefaults {
     func getETCBalance() -> Double {
         return double(forKey: UserDefaultKeys.ETCBalance.rawValue)
     }
+    func setZRXBalance(value: Double) {
+        set(value, forKey: UserDefaultKeys.ZRXBalance.rawValue)
+        synchronize()
+    }
+    func getZRXBalance() -> Double {
+        return double(forKey: UserDefaultKeys.ZRXBalance.rawValue)
+    }
     
     //: We need the value of each coin
     func setBTCPrice(value: Double) {
@@ -112,6 +119,14 @@ extension UserDefaults {
         return double(forKey: UserDefaultKeys.ETCPrice.rawValue)
     }
     
+    func setZRXPrice(value: Double) {
+        set(value, forKey: UserDefaultKeys.ZRXPrice.rawValue)
+        synchronize()
+    }
+    func getZRXPrice() -> Double {
+        return double(forKey: UserDefaultKeys.ZRXPrice.rawValue)
+    }
+    
     //: Get the total price, coin amount * current price
     func getTotalPrice(coin: String) -> Double {
         switch coin {
@@ -125,6 +140,8 @@ extension UserDefaults {
             return getBCHBalance() * getBCHPrice()
         case "Ethereum Classic":
             return getETCBalance() * getETCPrice()
+        case "0x":
+            return getZRXBalance() * getZRXPrice()
         default:
             return 0
         }
@@ -146,6 +163,9 @@ extension UserDefaults {
             synchronize()
         case "Ethereum Classic":
             set(value, forKey: UserDefaultKeys.ETCBalance.rawValue)
+            synchronize()
+        case "0x":
+            set(value, forKey: UserDefaultKeys.ZRXBalance.rawValue)
             synchronize()
         default:
             return
@@ -170,6 +190,9 @@ extension UserDefaults {
         case "Ethereum Classic":
             set(percent, forKey: UserDefaultKeys.ETCPercent.rawValue)
             synchronize()
+        case "0x":
+            set(percent, forKey: UserDefaultKeys.ZRXPercent.rawValue)
+            synchronize()
         default:
             return
         }
@@ -186,6 +209,8 @@ extension UserDefaults {
             return double(forKey: UserDefaultKeys.BCHPercent.rawValue)
         case "Ethereum Classic":
             return double(forKey: UserDefaultKeys.ETCPercent.rawValue)
+        case "0x":
+            return double(forKey: UserDefaultKeys.ZRXPercent.rawValue)
         default:
             return 0.0
         }

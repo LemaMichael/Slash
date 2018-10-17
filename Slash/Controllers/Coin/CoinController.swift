@@ -19,7 +19,7 @@ class CoinController: UIViewController {
     var coin = CoinDetail()
     lazy var chartView = ChartView()
     fileprivate var buttonArray = [CustomGrayButton]()
-    let IDS = ["1335", "1211", "527", "1327", "896"]
+    let IDS = ["1335", "1211", "527", "1327", "896", "1397"]
     
     var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -148,6 +148,8 @@ class CoinController: UIViewController {
             coinID = IDS[3]
         case "Ethereum Classic":
             coinID = IDS[4]
+        case "0x":
+            coinID = IDS[5]
         default:
             return
         }

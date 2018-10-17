@@ -14,7 +14,8 @@ class PieView: PieChartView {
                                          UIColor(red:0.21, green:0.27, blue:0.31, alpha:1.0),
                                          UIColor(red:0.57, green:0.57, blue:0.57, alpha:1.0),
                                          UIColor(red:0.95, green:0.47, blue:0.21, alpha:1.0),
-                                         UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0)]
+                                         UIColor(red:0.35, green:0.55, blue:0.45, alpha:1.0),
+                                         UIColor.black]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -69,7 +70,7 @@ class PieView: PieChartView {
     }
     
     func setData() {
-        let coinName = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic"]
+        let coinName = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic", "0x"]
 
         var coinPrices = [Double]()
         for name in coinName {
