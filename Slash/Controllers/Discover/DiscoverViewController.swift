@@ -30,14 +30,6 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
     var baseURL = String()
     var randomStr = String()
     let dispatchGroup = DispatchGroup()
-
-    func setBackgroundImage() {
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = #imageLiteral(resourceName: "Fire")
-        backgroundImage.contentMode = UIView.ContentMode.scaleAspectFill
-        backgroundImage.alpha = 0.7
-        self.view.insertSubview(backgroundImage, at: 0)
-    }
     
     let searchBarView = SearchBarView()
     let coinContainerView = CoinContainerView()
@@ -53,8 +45,8 @@ class DiscoverViewController: UIViewController, TableVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = UIColor.rgb(red: 199, green: 190, blue: 177)
-        view.backgroundColor = UIColor.rgb(red: 24, green: 50, blue: 50)
-        setBackgroundImage()
+        view.backgroundColor = UIColor(red:0.80, green:0.26, blue:0.34, alpha:1.00)
+    
         searchBarView.searchButton.isEnabled = false
         detailOrAddView.detailButton.addTarget(self, action: #selector(displayDetailsView), for: .touchUpInside)
         searchBarView.searchButton.addTarget(self, action: #selector(displayTable), for: .touchUpInside)
@@ -225,7 +217,7 @@ extension DiscoverViewController {
     fileprivate func modifyViews(general: General) {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 1.5
-        let attributes = [NSAttributedString.Key.paragraphStyle: style, NSAttributedString.Key.font: UIFont(name: "Avenir-Heavy", size: 11.4)!, NSAttributedString.Key.foregroundColor: UIColor.rgb(red: 140, green: 135, blue: 137)]
+        let attributes = [NSAttributedString.Key.paragraphStyle: style, NSAttributedString.Key.font: UIFont(name: "Avenir-Heavy", size: 11.4)!, NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.74)]
         self.descriptionView.textView.attributedText = NSAttributedString(string: general.description.htmlToString, attributes: attributes)
         
         //: For DetailView
