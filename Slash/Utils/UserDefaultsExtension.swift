@@ -22,18 +22,12 @@ extension UserDefaults {
         synchronize()
     }
     func getUser() -> User {
-        let newUser = User(name: "User", btcBalance: 0, ethBalance: 0, ltcBalance: 0, bchBalance: 0, etcBlance: 0, zrxBalance: 0)
         guard let userData = UserDefaults.standard.data(forKey: UserDefaultKeys.user.rawValue) else {
-            return newUser
+            return User(name: "User", btcBalance: 0, ethBalance: 0, ltcBalance: 0, bchBalance: 0, etcBlance: 0, zrxBalance: 0)
         }
-        do {
-            let user = try JSONDecoder().decode(User.self, from: userData)
-            return user
-        }
-        catch let error {
-            print("Failed to get user: ", error)
-            return newUser
-        }
+        
+        let user = try! JSONDecoder().decode(User.self, from: userData)
+        return user
     }
     
     //: Anything else to add?

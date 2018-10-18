@@ -135,7 +135,7 @@ class User: Codable {
     func getAllHoldings() -> [String] {
         var supportedCoins = ["Bitcoin", "Ethereum", "Litecoin", "Bitcoin Cash", "Ethereum Classic", "0x"]
         
-        for (index, coin) in supportedCoins.enumerated() {
+        for (index, coin) in supportedCoins.enumerated().reversed() {
             if getCoinBalance(coinName: coin) == 0 {
                 supportedCoins.remove(at: index)
             }
