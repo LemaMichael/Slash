@@ -29,7 +29,7 @@ class SearchBarView: UIView {
     }()
     let divider: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.rgb(red: 104, green: 100, blue: 106)
+        view.backgroundColor = .white
         return view
     }()
     let showAllLabel: UILabel = {

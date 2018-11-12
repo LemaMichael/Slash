@@ -210,7 +210,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func getHistoricData() {
-        
         // Call one of the public endpoint methods
         client.products { products, result in
             switch result {

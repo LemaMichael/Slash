@@ -20,12 +20,12 @@ class CoinContainerView: UIView {
     
     let topDivider: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.rgb(red: 104, green: 100, blue: 106)
+        view.backgroundColor = .white
         return view
     }()
     let bottomDivider: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.rgb(red: 104, green: 100, blue: 106)
+        view.backgroundColor = .white
         return view
     }()
     
