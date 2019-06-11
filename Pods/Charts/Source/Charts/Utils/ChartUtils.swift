@@ -12,6 +12,18 @@
 import Foundation
 import CoreGraphics
 
+extension Comparable {
+    func clamped(to range: ClosedRange<Self>) -> Self {
+        if self > range.upperBound {
+            return range.upperBound
+        } else if self < range.lowerBound {
+            return range.lowerBound
+        } else {
+            return self
+        }
+    }
+}
+
 extension FloatingPoint
 {
     var DEG2RAD: Self
@@ -24,8 +36,8 @@ extension FloatingPoint
         return self * 180 / .pi
     }
 
-    /// - returns: An angle between 0.0 < 360.0 (not less than zero, less than 360)
-    /// NOTE: Value must be in degrees
+    /// - Note: Value must be in degrees
+    /// - Returns: An angle between 0.0 < 360.0 (not less than zero, less than 360)
     var normalizedAngle: Self
     {
         let angle = truncatingRemainder(dividingBy: 360)
@@ -276,7 +288,7 @@ open class ChartUtils
         return formatter
     }
     
-    /// - returns: The default value formatter used for all chart components that needs a default
+    /// - Returns: The default value formatter used for all chart components that needs a default
     open class func defaultValueFormatter() -> IValueFormatter
     {
         return _defaultValueFormatter

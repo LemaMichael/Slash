@@ -8,46 +8,89 @@
 
 import UIKit
 
+protocol EntryPresenterDelegate: class {
+    var isResponsiveToTouches: Bool { set get }
+    func displayPendingEntryIfNeeded()
+}
+
 class EKRootViewController: UIViewController {
     
     // MARK: - Props
     
+    private unowned let delegate: EntryPresenterDelegate
+    
     private var lastAttributes: EKAttributes!
-    private var tapGestureRecognizer: UITapGestureRecognizer!
     
     private let backgroundView = EKBackgroundView()
 
-    // Previous status bar style
-    private let previousStatusBar: EKAttributes.StatusBar
-    
     private lazy var wrapperView: EKWrapperView = {
         return EKWrapperView()
     }()
     
-    private var statusBar: EKAttributes.StatusBar? = nil {
-        didSet {
-            if let statusBar = statusBar {
-                UIApplication.shared.set(statusBarStyle: statusBar)
-            }
-        }
+    /*
+     Count the total amount of currently displaying entries,
+     meaning, total subviews less one - the backgorund of the entry
+     */
+    fileprivate var displayingEntryCount: Int {
+        return view.subviews.count - 1
+    }
+    
+    fileprivate var isDisplaying: Bool {
+        return lastEntry != nil
     }
     
     private var lastEntry: EKContentView? {
         return view.subviews.last as? EKContentView
     }
-    
-    private var isResponsive: Bool = false {
+        
+    private var isResponsive = false {
         didSet {
             wrapperView.isAbleToReceiveTouches = isResponsive
-            EKWindowProvider.shared.entryWindow.isAbleToReceiveTouches = isResponsive
+            delegate.isResponsiveToTouches = isResponsive
+        }
+    }
+
+    override var shouldAutorotate: Bool {
+        if lastAttributes == nil {
+            return true
+        }
+        return lastAttributes.positionConstraints.rotation.isEnabled
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        guard let lastAttributes = lastAttributes else {
+            return super.supportedInterfaceOrientations
+        }
+        switch lastAttributes.positionConstraints.rotation.supportedInterfaceOrientations {
+        case .standard:
+            return super.supportedInterfaceOrientations
+        case .all:
+            return .all
+        }
+    }
+    
+    // Previous status bar style
+    private let previousStatusBar: EKAttributes.StatusBar
+    
+    private var statusBar: EKAttributes.StatusBar? = nil {
+        didSet {
+            if let statusBar = statusBar, ![statusBar, oldValue].contains(.ignored) {
+                UIApplication.shared.set(statusBarStyle: statusBar)
+            }
         }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
+        if [previousStatusBar, statusBar].contains(.ignored) {
+            return super.preferredStatusBarStyle
+        }
         return statusBar?.appearance.style ?? previousStatusBar.appearance.style
     }
 
     override var prefersStatusBarHidden: Bool {
+        if [previousStatusBar, statusBar].contains(.ignored) {
+            return super.prefersStatusBarHidden
+        }
         return !(statusBar?.appearance.visible ?? previousStatusBar.appearance.visible)
     }
     
@@ -57,7 +100,8 @@ class EKRootViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init() {
+    public init(with delegate: EntryPresenterDelegate) {
+        self.delegate = delegate
         previousStatusBar = .currentStatusBar
         super.init(nibName: nil, bundle: nil)
     }
@@ -103,9 +147,19 @@ class EKRootViewController: UIViewController {
         view.addSubview(entryContentView)
         entryContentView.setup(with: entryView)
         
-        isResponsive = attributes.screenInteraction.isResponsive
+        switch attributes.screenInteraction.defaultAction {
+        case .forward:
+            isResponsive = false
+        default:
+            isResponsive = true
+        }
+
         if previousAttributes?.statusBar != attributes.statusBar {
             setNeedsStatusBarAppearanceUpdate()
+        }
+        
+        if shouldAutorotate {
+            UIViewController.attemptRotationToDeviceOrientation()
         }
     }
         
@@ -114,7 +168,7 @@ class EKRootViewController: UIViewController {
         guard let lastAttributes = lastAttributes else {
             return true
         }
-        return attributes.displayPriority >= lastAttributes.displayPriority
+        return attributes.precedence.priority >= lastAttributes.precedence.priority
     }
 
     // Removes last entry - can keep the window 'ON' if necessary
@@ -160,12 +214,20 @@ extension EKRootViewController {
 
 extension EKRootViewController: EntryContentViewDelegate {
     
-    func changeToActive(withAttributes attributes: EKAttributes) {
-        changeBackground(to: attributes.screenBackground, duration: attributes.entranceAnimation.totalDuration)
+    func didFinishDisplaying(entry: EKEntryView, keepWindowActive: Bool) {
+        guard !isDisplaying else {
+            return
+        }
+        
+        guard !keepWindowActive else {
+            return
+        }
+        
+        delegate.displayPendingEntryIfNeeded()
     }
     
     func changeToInactive(withAttributes attributes: EKAttributes, pushOut: Bool) {
-        guard EKAttributes.count <= 1 else {
+        guard displayingEntryCount <= 1 else {
             return
         }
         
@@ -186,6 +248,10 @@ extension EKRootViewController: EntryContentViewDelegate {
         if lastBackroundStyle != attributes.screenBackground {
             clear()
         }
+    }
+    
+    func changeToActive(withAttributes attributes: EKAttributes) {
+        changeBackground(to: attributes.screenBackground, duration: attributes.entranceAnimation.totalDuration)
     }
     
     private func changeBackground(to style: EKAttributes.BackgroundStyle, duration: TimeInterval) {

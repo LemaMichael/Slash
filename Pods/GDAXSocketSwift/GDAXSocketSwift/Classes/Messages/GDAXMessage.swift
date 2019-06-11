@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class GDAXMessage: JSONInitializable {
+open class GDAXMessage: NSObject, JSONInitializable {
     
     public let type: GDAXType
 

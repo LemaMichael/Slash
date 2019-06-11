@@ -43,14 +43,14 @@ class PagePortfolioController: UIPageViewController {
     @objc func moveToNextController() {
         guard let currentViewController = self.viewControllers?.first else { return }
         guard let nextViewController = dataSource?.pageViewController(self, viewControllerAfter: currentViewController) else { return }
-        self.pageControl.currentPage = pages.index(of: nextViewController)!
+        self.pageControl.currentPage = pages.firstIndex(of: nextViewController)!
         setViewControllers([nextViewController], direction: .forward, animated: true, completion: nil)
     }
 }
 
 extension PagePortfolioController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = pages.index(of: viewController) else { return nil }
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
         let previousIndex = viewControllerIndex - 1
         guard previousIndex >= 0 else { return pages.last }
         guard pages.count > previousIndex else { return nil }
@@ -58,7 +58,7 @@ extension PagePortfolioController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = pages.index(of: viewController) else { return nil }
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
         let nextIndex = viewControllerIndex + 1
         guard nextIndex < pages.count else { return pages.first }
         guard pages.count > nextIndex else { return nil }
@@ -70,6 +70,6 @@ extension PagePortfolioController: UIPageViewControllerDataSource {
 extension PagePortfolioController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let viewControllerIndex = pageViewController.viewControllers![0]
-        self.pageControl.currentPage = pages.index(of: viewControllerIndex)!
+        self.pageControl.currentPage = pages.firstIndex(of: viewControllerIndex)!
     }
 }

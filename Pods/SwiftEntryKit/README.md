@@ -21,7 +21,11 @@
     * [Entry Name](#entry-name)
     * [Window Level](#window-level)
     * [Display Position](#display-position)
-    * [Display Priority](#display-priority)
+    * [Precedence](#precedence)
+      * [Override](#override)
+      * [Enqueue](#enqueue)
+        * [Heuristics](#heuristics)
+      * [Display Priority](#display-priority)
     * [Display Duration](#display-duration)
     * [Position Constraints](#position-constraints)
     * [User Interaction](#user-interaction)
@@ -40,36 +44,38 @@
   * [Displaying a View Controller](#displaying-a-view-controller)
   * [Alternative Rollback Window](#alternative-rollback-window)
   * [Dismissing an Entry](#dismissing-an-entry)
-  * [Swiping And Rubber Banding](#swiping-and-rubber-banding)
+  * [Swiping and Rubber Banding](#swiping-and-rubber-banding)
   * [Dealing With Safe Area](#dealing-with-safe-area)
   * [Dealing With Orientation Change](#dealing-with-orientation-change)
+  * [Swift and Objective-C Interoperability](#swift-and-objective-c-interoperability)
 * [Known Issues](#known-issues)
 * [Author](#author)
 * [License](#license)
 
 ## Overview
 
-SwiftEntryKit is a simple and versatile pop-up presenter written in Swift.
+SwiftEntryKit is a simple and versatile content presenter written in Swift.
 
 ### Features
 
-Banners or Pop-Ups are called *Entries*.
+Banners or pop-ups are called *Entries*.
 
-- The entries are displayed in a separated UIWindow (of type EKWindow), so the user is able to navigate the app freely while entries are being displayed in a non intrusive manner.
-- The kit offers some beautiful [presets](#presets) that can be themed with your app colors and fonts.
+- Entries are displayed inside a separate UIWindow (of type EKWindow), so users are able to navigate the app freely while entries are being displayed in a non intrusive manner.
+- The kit offers beautiful [presets](#presets) that can be themed with your app colors and fonts.
 - **Customization**: Entries are highly customizable
-  - [x] Can be displayed either at the top, center, or the bottom of the screen.
-  - [x] Can be displayed within or outside the screen's safe area.
-  - [x] Can be stylized: have a border, drop-shadow and round corners.
-  - [x] Their content's and the screen's background can be blurred, dimmed, colored or have a gradient style.
-  - [x] Transition animations are customizable - Entrance, Exit and Pop (by another entry).
-  - [x] The user interactions with the entry or the screen can be intercepted.
-  - [x] Entries have an optional rubber banding effect in panning.
-  - [x] Entries can be optionally dismissed using a simple swipe gesture.
-  - [x] Entries have display priority attribute. That means that an entry can be dismissed only be other entry with equal or higher priority. 
-  - [x] Entries can be optionally injected with lifecycle events: *will* and *did* appear/disappear.
-  - [x] The status bar style is settable for the display duration of the entry.
-  - [x] SwiftEntryKit supports [custom views](#custom-view-usage-example) as well.
+  - [x] Can be [positioned](#display-position) either at the top, center, or the bottom of the screen.
+  - [x] Can be displayed within or outside the screen safe area.
+  - [x] Can be stylized: have a [border](#border), [drop-shadow](#shadow) and [round corners](#round-corners).
+  - [x] Their content and the surrounding background can be blurred, dimmed, colored or have a gradient [style](#background-style).
+  - [x] Transition [animations](#animations) are customizable - entrance, exit and pop (by another entry).
+  - [x] The [user interaction](#user-interaction) with the entry or the screen can be intercepted.
+  - [x] Entries can be enqueued or override previous entries using the [precedence](#precedence) attribute.
+  - [x] Entries have [display priority](#display-priority) attribute. That means that an entry can be dismissed only be other entry with an equal or higher priority. 
+  - [x] Entries have an optional rubber banding effect while panning.
+  - [x] Entries can be optionally dismissed using a simple [swipe gesture](#swiping-and-rubber-banding).
+  - [x] Entries can be optionally injected with [lifecycle events](#lifecycle-events): *will* and *did* appear/disappear.
+  - [x] The [status bar style](#status-bar) is settable for the display duration of the entry.
+  - [x] Supports [navigation controllers](#presets) & [custom views](#custom-view-usage-example) as well!
 
 ## Example Project
 
@@ -92,9 +98,13 @@ Cloning from https://github.com/huri000/SwiftEntryKit.git also setups QuickLayou
 
 ### Presets
 
-Toasts | Notes | Floats | Popups | Alerts | Forms | Rating
---- | --- | --- | --- | --- | --- | --- 
-![toasts_example](https://github.com/huri000/assets/blob/master/swift-entrykit/toasts.gif) | ![notes_example](https://github.com/huri000/assets/blob/master/swift-entrykit/notes.gif) | ![floats_example](https://github.com/huri000/assets/blob/master/swift-entrykit/floats.gif) | ![popup_example](https://github.com/huri000/assets/blob/master/swift-entrykit/popups.gif) | ![alert_example](https://github.com/huri000/assets/blob/master/swift-entrykit/alerts.gif) | ![form_example](https://github.com/huri000/assets/blob/master/swift-entrykit/forms.gif) | ![rating](https://github.com/huri000/assets/blob/master/swift-entrykit/rating.gif)
+| Toasts | Notes | Floats | Popups |
+| --- | --- | --- | --- |
+| ![toasts_example](https://github.com/huri000/assets/blob/master/swift-entrykit/toasts.gif) | ![notes_example](https://github.com/huri000/assets/blob/master/swift-entrykit/notes.gif) | ![floats_example](https://github.com/huri000/assets/blob/master/swift-entrykit/floats.gif) | ![popup_example](https://github.com/huri000/assets/blob/master/swift-entrykit/popups.gif) |
+
+| Alerts | Forms | Rating | More... |
+| --- | --- | --- | --- |
+| ![alert_example](https://github.com/huri000/assets/blob/master/swift-entrykit/alerts.gif) | ![form_example](https://github.com/huri000/assets/blob/master/swift-entrykit/forms.gif) | ![rating_example](https://github.com/huri000/assets/blob/master/swift-entrykit/rating.gif) | ![custom_example](https://github.com/huri000/assets/blob/master/swift-entrykit/custom.gif) |
 
 ### Playground
 
@@ -117,6 +127,10 @@ The Playground Screen | Top Toast Sample
 
 ## Installation
 
+- SwiftEntryKit is compatible with Swift 5 as of release *1.0.0*. 
+- SwiftEntryKit is compatible with Swift 4.2 as of release *0.8.1*. 
+- Developers who use lower Swift version should install release *0.7.2*.
+
 ### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
@@ -132,7 +146,7 @@ source 'https://github.com/cocoapods/specs.git'
 platform :ios, '9.0'
 use_frameworks!
 
-pod 'SwiftEntryKit', '0.5.8'
+pod 'SwiftEntryKit', '1.0.1'
 ```
 
 Then, run the following command:
@@ -155,7 +169,7 @@ $ brew install carthage
 To integrate SwiftEntryKit into your Xcode project using Carthage, specify the following in your `Cartfile`:
 
 ```ogdl
-github "huri000/SwiftEntryKit" == 0.5.8
+github "huri000/SwiftEntryKit" == 1.0.1
 ```
 
 ## Usage
@@ -186,7 +200,7 @@ The kit will replace the application main window with the EKWindow instance and 
 
 ### Entry Attributes
 
-*EKAttributes* is the entry's descriptor. Each time an entry is displayed, an EKAttributes struct is necessary to describe the entry's presentation, position inside the screen, the display duration, it's frame constraints (if needed), it's styling (corners, border and shadow), the user interaction events, the animations (in / out) and more.
+*EKAttributes* is the entry's descriptor. Each time an entry is displayed, an EKAttributes struct is necessary to describe the entry's presentation, position inside the screen, the display duration, its frame constraints (if needed), its styling (corners, border and shadow), the user interaction events, the animations (in / out) and more.
 
 Create a mutable EKAttributes structure likewise:
 ```Swift
@@ -220,24 +234,77 @@ attributes.windowLevel = .normal
 ```
 This causes the entry to appear above the application key window and below the status bar.
 
+The default value of `windowLevel` is `.statusBar`.
+
 #### Display Position
 The entry can be displayed either at the *top*, *center*, or the *bottom* of the screen.
 
-For example, set the display position to *top*, likewise:
+For example, set the display position to *bottom*, likewise:
 ```Swift 
-attributes.position = .top
+attributes.position = .bottom
 ```
 
-#### Display Priority 
-The display priority of the entry determines whether it dismisses other entries or be dismissed by them. 
+The default value of `position` is `.top`.
+
+#### Precedence
+The precedence attribute of an entry describes the manner in which entries are pushed in. It offers 2 approaches for managing the presentation priority of multiple simultanious entries.
+
+##### Override
+If the [display priority](#display-priority) is equal or higher than the currently displayed entry, override it.
+
+Example for setting `.override` precedence with `.max` display priority while ignoring entries that are already enqueued (leaving them to display after the new entry is dismissed).
+
+```Swift 
+attributes.precedence = .override(priority: .max, dropEnqueuedEntries: false)
+```
+
+You can optionally flush the entries that are inside the queue.
+
+In case  `dropEnqueuedEntries` is `false`, enqueued entries remain in the queue. The first enqueued entry will show right after the new entry pops out. 
+In case  `dropEnqueuedEntries` is `true`, the entry-queue is flushed as the new entry is being displayed.
+
+##### Enqueue
+If the queue is empty, display the entry immediately, otherwise, insert the entry into the queue until its turn to show arrives.
+
+Example for setting `.enqueue` precedence with `.normal` display priority: 
+
+```Swift 
+attributes.precedence = .enqueue(priority: .normal)
+```
+
+###### Heuristics
+
+There are 2 possible heuristics for entries prioritization in the queue:
+
+- Display Priority Queue: The entries are sorted by their [display priority](#display-priority), then by chronological order.
+- Chronological Queue: The entries are sorted only by their chronological order (standard queue).
+
+Select the heuristic that suits you best by doing the following, only once, before using `SwiftEntryKit` to display entries.
+
+```Swift 
+EKAttributes.Precedence.QueueingHeuristic.value = .priority
+```
+
+Or:
+
+```Swift 
+EKAttributes.Precedence.QueueingHeuristic.value = .chronological
+```
+
+The default value of `EKAttributes.Precedence.QueueingHeuristic.value` is `.priority`.
+
+The default value of precedence is `.override(priority: .normal, dropEnqueuedEntries: false)`.
+
+##### Display Priority 
+The display priority of the entry determines whether it dismisses other entries or is dismissed by them. 
 An entry can be dismissed only by an entry with an equal or a higher display priority.
 
 ```Swift
 let highPriorityAttributes = EKAttributes()
-highPriorityAttributes.displayPriority = .high
+highPriorityAttributes.precedence.priority = .high
 
 let normalPriorityAttributes = EKAttributes()
-normalPriorityAttributes.displayPriority = .normal
+normalPriorityAttributes.precedence.priority = .normal
 
 // Display high priority entry
 SwiftEntryKit.display(entry: view1, using: highPriorityAttributes)
@@ -249,20 +316,25 @@ SwiftEntryKit.display(entry: view2, using: normalPriorityAttributes)
 *view2* won't be displayed!
 
 #### Display Duration
-The display duration of the entry (Counted from the moment the entry has finished it's entrance animation and until the exit animation begins).
+The display duration of the entry (Counted from the moment the entry has finished its entrance animation and until the exit animation begins).
 
-Display for 2 seconds:
+Display for 4 seconds:
 ```Swift
-attributes.displayDuration = 2
+attributes.displayDuration = 4
 ```
 
-Display for an infinate duration
+Display for an infinite duration
 ```Swift
 attributes.displayDuration = .infinity
 ```
 
+The default value of `displayDuration` is `2`.
+
 #### Position Constraints 
-Constraints that tie the entry tightly to the screen contexts, for example: Height, Width, Max Width, Max Height, Additional Vertical Offset & Safe Area related info.
+Constraints that tie the entry tightly to the screen context, for example: Height, Width, Max Width, Max Height, Additional Vertical Offset & Safe Area related info.
+
+- Entries that support Auto Layout - Their height is inferred from the constraints that applied to them.
+- Entries that don't support Auto Layout - Their exact size must be explicitly set using `positionConstraints`'s `size` property.
 
 For example:
 
@@ -288,9 +360,14 @@ That snippet implies that the safe area insets should be kept and not be a part 
 attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
 ```
 
-Vertical Offset - An additional offset that can be applied to the entry (Other than the safe area).
+Vertical Offset - an additional offset that can be applied to the entry (Other than the safe area).
 ```Swift
 attributes.positionConstraints.verticalOffset = 10
+```
+
+Autorotation - whether the entry autorotates along with the orientation of the device. Defaults to `true`.
+```Swift
+attributes.positionConstraints.rotation.isEnabled = false
 ```
 
 Keyboard Releation - used to bind an entry to the keyboard once the keyboard is displayed.
@@ -307,7 +384,7 @@ The extreme situation might occur as the device orientation is landscape and the
 #### User Interaction
 The entry and the screen can be interacted by the user. User interaction be can intercepted in various ways:
 
-An interaction (Any touch whatsoever) with the entry delays it's exit by 3s:
+An interaction (Any touch whatsoever) with the entry delays its exit by 3s:
 ```Swift
 attributes.entryInteraction = .delayExit(by: 3)
 ```
@@ -329,13 +406,17 @@ This is very useful when you want to display an unintrusive content like banners
 attributes.screenInteraction = .forward
 ```
 
-Pass additional actions that are invokes when the user taps the entry:
+Pass additional actions that are invoked when the user taps the entry:
 ```Swift
 let action = {
     // Do something useful
 }
 attributes.entryInteraction.customTapActions.append(action)
 ```
+
+The default value of `screenInteraction` is `.forward`.
+
+The default value of `entryInteraction` is `.dismiss`.
 
 #### Scroll Behavior
 Describes the entry behavior when it's being scrolled, that is, dismissal by a swipe gesture and a rubber band effect much similar to a UIScrollView.
@@ -360,8 +441,12 @@ Enable swipe but disable stretch:
 attributes.scroll = .edgeCrossingDisabled(swipeable: true)
 ```
 
+The default value of `scroll` is `.enabled(swipeable: true, pullbackAnimation: .jolt)`.
+
 #### [Haptic Feedback](https://developer.apple.com/ios/human-interface-guidelines/user-interaction/feedback/)
 The device can produce a haptic feedback, thus adding an additional sensory depth to each entry.
+
+The default value of `hapticFeedbackType` is `.none`.
 
 #### Lifecycle Events
 Events can be injected to the entry so that they are to be called during its lifecycle.
@@ -387,7 +472,7 @@ attributes.lifecycleEvents.didDisappear = {
 #### Background Style
 The entry and the screen can have various background styles, such as blur, color, gradient and even an image.
 
-The default value is *.clear*. This example implies clear background for both the entry and the screen:
+The following example implies clear background for both the entry and the screen:
 ```Swift
 attributes.entryBackground = .clear
 attributes.screenBackground = .clear
@@ -410,6 +495,8 @@ Visual Effect entry background:
 attributes.entryBackground = .visualEffect(style: .light)
 ```
 
+The default value of `entryBackground` and `screenBackground` is `.clear`. 
+
 #### Shadow
 The shadow that surrounds the entry.
 
@@ -422,6 +509,8 @@ Disable shadow around the entry:
 ```Swift
 attributes.shadow = .none
 ```
+
+The default value of `shadow` is `.none`. 
 
 #### Round Corners
 Round corners around the entry.
@@ -446,6 +535,8 @@ No round corners:
 attributes.roundCorners = .none
 ```
 
+The default value of `roundCorners` is `.none`. 
+
 #### Border
 The border around the entry.
 
@@ -458,6 +549,8 @@ No border:
 ```Swift
 attributes.border = .none
 ```
+
+The default value of `border` is `.none`. 
 
 #### Animations
 Describes how the entry animates into and out of the screen. 
@@ -473,6 +566,8 @@ attributes.entranceAnimation = .init(
                  fade: .init(from: 0.8, to: 1, duration: 0.3))
 ```
 
+The default value of `entranceAnimation` and `exitAnimation` is `.translation` - The entry translates in or out, respectively, with duration of 0.3 seconds. 
+
 #### Pop Behavior
 Describes the entry behavior when it's being popped (dismissed by an entry with equal / higher display-priority.
 
@@ -485,6 +580,8 @@ The entry is being overriden (Disappears promptly):
 ```Swift
 attributes.popBehavior = .overridden
 ```
+
+The default value of `popBehavior` is `.animated(animation: .translation)` - It translates out with duration of 0.3 seconds. 
 
 #### Status Bar
 The status bar appearance can be modified during the display of the entry. 
@@ -507,10 +604,12 @@ The status bar appearance is inferred from the previous context (won't be change
 attributes.statusBar = .inferred
 ```
 
-In case there is an already presenting entry with lower/equal display priority, the status bar will change it's style
-When the entry is removed the status bar gets it's initial style back.
+In case there is an already presenting entry with lower/equal display priority, the status bar will change its style. 
+When the entry is removed, the status bar gets its initial style back.
 
-EKAttributes' interface is as follows:
+The default value of `statusBar` is `.inferred`. 
+
+#### EKAttributes' interface is as follows:
 
 ```Swift
 public struct EKAttributes
@@ -521,7 +620,7 @@ public struct EKAttributes
     // Display
     public var windowLevel: WindowLevel
     public var position: Position
-    public var displayPriority: DisplayPriority
+    public var precedence: Precedence
     public var displayDuration: DisplayDuration
     public var positionConstraints: PositionConstraints
 
@@ -584,7 +683,7 @@ SwiftEntryKit.display(entry: contentView, using: attributes)
 // Create a basic toast that appears at the top
 var attributes = EKAttributes.topToast
 
-// Set it's background to white
+// Set its background to white
 attributes.entryBackground = .color(color: .white)
 
 // Animate in and out using default translation
@@ -617,11 +716,42 @@ SwiftEntryKit.display(entry: view, using: attributes, rollbackWindow: .custom(wi
 After the entry has been dismissed, the given window `alternativeWindow` would become the key instead of the window that is held by the application delegate.
 
 ### Dismissing an Entry
-You can dismiss an entry by simply invoke *dismiss* in the SwiftEntryKit class, likewise:
+You can dismiss the currently displayed entry by simply invoke *dismiss* in the SwiftEntryKit class, likewise:
+
 ```Swift
 SwiftEntryKit.dismiss()
 ```
-This dismisses the entry animatedly using its *exitAnimation* attribute and on comletion, the window would be removed as well.
+Or:
+
+```Swift
+SwiftEntryKit.dismiss(.displayed)
+```
+
+This dismisses the entry animatedly using its *exitAnimation* attribute and on completion, the window would be removed as well.
+
+You can dismiss the currently displayed entry and flush the queue as well, likewise:
+
+```Swift
+SwiftEntryKit.dismiss(.all)
+```
+
+Only flush the queue, leaving any currently displayed entry to its natural lifecycle:
+
+```Swift
+SwiftEntryKit.dismiss(.queue)
+```
+
+Dismiss a specific entry by name - either currently displayed or enqueued. All the entries with the given name are dismissed.
+
+```Swift
+SwiftEntryKit.dismiss(.specific(entryName: "Entry Name"))
+```
+
+Dismiss any entry with a lower or equal display priority of `.normal`.
+
+```Swift
+SwiftEntryKit.dismiss(.prioritizedLowerOrEqualTo(priority: .normal))
+```
 
 #### Using a completion handler
 
@@ -644,6 +774,21 @@ if SwiftEntryKit.isCurrentlyDisplaying {
 Inquire whether a **specific** entry is currently displayed using the `name` property inside `EKAttributes`.
 ```Swift
 if SwiftEntryKit.isCurrentlyDisplaying(entryNamed: "Top Note") {
+/* Do your things */
+}
+```
+
+### Queue Contains
+Inquire whether the queue of entries is not empty:
+```Swift
+if SwiftEntryKit.isQueueEmpty {
+    /* Do your things */
+}
+```
+
+Inquire whether the queue of entries contains an entry with name:
+```Swift
+if SwiftEntryKit.queueContains(entryNamed: "Custom-Name") {
     /* Do your things */
 }
 ```
@@ -699,6 +844,14 @@ SwiftEntryKit.display(entry: customView, using: attributes)
 Orientation Change Demonstration |
 --- |
 ![orientation_change](https://github.com/huri000/assets/blob/master/swift-entrykit/orientation.gif)
+
+### Swift and Objective-C Interoperability
+SwiftEntryKit's APIs use the Swift language exclusive syntax (enums, associated values, and more). 
+Therefore, `SwiftEntryKit` cannot be referenced directly from an Objective-C file (*.m*, *.h* or *.mm*).
+
+Yet, it is pretty easy to integrate SwiftEntryKit into an Objective-C project using a simple *.swift* class that is a sort of adapter between `SwiftEntryKit` and your Objective-C code.
+
+[This project](https://github.com/huri000/ObjcEntryKitExample) demonstrates that using Carthage and CocoaPods.  
 
 ## Known Issues
 

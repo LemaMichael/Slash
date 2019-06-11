@@ -11,9 +11,8 @@ import UIKit
 extension UIApplication {
     
     func set(statusBarStyle: EKAttributes.StatusBar) {
-        return
-        //let appearance = statusBarStyle.appearance
-        //UIApplication.shared.isStatusBarHidden = !appearance.visible
-        //UIApplication.shared.statusBarStyle = appearance.style
+        let appearance = statusBarStyle.appearance
+        UIApplication.shared.isStatusBarHidden = !appearance.visible
+        UIApplication.shared.statusBarStyle = appearance.style
     }
 }

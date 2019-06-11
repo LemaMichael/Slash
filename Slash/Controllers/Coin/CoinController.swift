@@ -349,7 +349,7 @@ extension CoinController {
         //: Display
         attributes.windowLevel = .statusBar
         attributes.position = .bottom
-        attributes.displayPriority = .normal
+        //attributes.displayPriority = .normal
         attributes.displayDuration = .infinity
         attributes.positionConstraints.keyboardRelation = .unbind
         attributes.positionConstraints.size = .init(width: .offset(value: 0), height: .intrinsic)

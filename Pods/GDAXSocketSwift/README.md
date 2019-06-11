@@ -17,7 +17,7 @@ This library was inspired by [GDAXSwift](https://github.com/anthonypuppo/GDAXSwi
 
 ## Requirements
 
-- iOS 8.1+ / macOS 10.13+ / tvOS 11.0+ / watchOS 4.0+
+- iOS 8.1+ / macOS 10.13+ / tvOS 9.0+ / watchOS 4.0+
 - Xcode 9.0+
 - Swift 4.0+
 

@@ -10,37 +10,37 @@ import UIKit
 
 enum Factory {
     
-    case products()
-    case currencies()
-    case book()
-    case ticker()
-    case trades()
-    case historic()
-    case stats()
-    case time()
+    case products
+    case currencies
+    case book
+    case ticker
+    case trades
+    case historic
+    case stats
+    case time
     
     public func build(_ data:Data)->[Any] {
         var items = [Any]()
         do {
             switch self {
-            case .products():
+            case .products:
                 items = try decoder().decode([Product].self, from: data)
-            case .currencies():
+            case .currencies:
                 items = try decoder().decode([Currency].self, from: data)
-            case .book():
+            case .book:
                 let item = try decoder().decode(Book.self, from: data)
                 items.append(item)
-            case .ticker():
+            case .ticker:
                 let item = try decoder().decode(Ticker.self, from: data)
                 items.append(item)
-            case .trades():
+            case .trades:
                 items = try decoder().decode([Trade].self, from: data)
-            case .historic():
+            case .historic:
                 items = try decoder().decode([Candle].self, from: data)
-            case .stats():
+            case .stats:
                 let item = try decoder().decode(Stat.self, from: data)
                 items.append(item)
-            case .time():
+            case .time:
                 let item = try decoder().decode(ServerTime.self, from: data)
                 items.append(item)
             }
@@ -53,7 +53,7 @@ enum Factory {
     private func decoder()->JSONDecoder {
         let jsonDecoder = JSONDecoder()
         switch self {
-        case .historic():
+        case .historic:
             jsonDecoder.dateDecodingStrategy = .secondsSince1970
         default:
             jsonDecoder.dateDecodingStrategy = .custom({ (decoder)-> Date in

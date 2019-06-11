@@ -12,6 +12,7 @@ import QuickLayout
 protocol EntryContentViewDelegate: class {
     func changeToActive(withAttributes attributes: EKAttributes)
     func changeToInactive(withAttributes attributes: EKAttributes, pushOut: Bool)
+    func didFinishDisplaying(entry: EKEntryView, keepWindowActive: Bool)
 }
 
 class EKContentView: UIView {
@@ -290,12 +291,15 @@ class EKContentView: UIView {
     
     // Setup tap gesture
     private func setupTapGestureRecognizer() {
-        guard attributes.entryInteraction.isResponsive else {
+        switch attributes.entryInteraction.defaultAction {
+        case .forward:
             return
+        default:
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognized))
+            tapGestureRecognizer.numberOfTapsRequired = 1
+            tapGestureRecognizer.cancelsTouchesInView = false
+            addGestureRecognizer(tapGestureRecognizer)
         }
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognized))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        addGestureRecognizer(tapGestureRecognizer)
     }
     
     // Generate a haptic feedback if needed
@@ -373,9 +377,7 @@ class EKContentView: UIView {
     
     // Animate in
     private func animateIn() {
-        
-        EKAttributes.count += 1
-        
+                
         let animation = attributes.entranceAnimation
         
         superview?.layoutIfNeeded()
@@ -460,6 +462,7 @@ class EKContentView: UIView {
     func removePromptly(keepWindow: Bool = true) {
         outDispatchWorkItem?.cancel()
         entryDelegate?.changeToInactive(withAttributes: attributes, pushOut: false)
+        contentView.content.attributes.lifecycleEvents.willDisappear?()
         removeFromSuperview(keepWindow: keepWindow)
     }
     
@@ -479,12 +482,7 @@ class EKContentView: UIView {
         super.removeFromSuperview()
         contentView.content.viewController?.removeFromParent()
         
-        if EKAttributes.count > 0 {
-            EKAttributes.count -= 1
-        }
-        if !keepWindow && !EKAttributes.isDisplaying {
-            EKWindowProvider.shared.displayRollbackWindow()
-        }
+        entryDelegate.didFinishDisplaying(entry: contentView, keepWindowActive: keepWindow)
     }
     
     deinit {
@@ -520,7 +518,7 @@ extension EKContentView {
                 return nil
             }
             duration = rawValue[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-            curve = UIView.AnimationOptions(rawValue: rawValue[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt)
+            curve = .init(rawValue: rawValue[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt)
             begin = (rawValue[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
             end = (rawValue[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         }
@@ -662,7 +660,7 @@ extension EKContentView {
     private func stretchOut(usingSwipe type: OutTranslation, duration: TimeInterval) {
         outDispatchWorkItem?.cancel()
         entryDelegate?.changeToInactive(withAttributes: attributes, pushOut: false)
-        
+        contentView.content.attributes.lifecycleEvents.willDisappear?()
         UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 4, options: [.allowUserInteraction, .beginFromCurrentState], animations: {
             self.translateOut(withType: type)
         }, completion: { finished in

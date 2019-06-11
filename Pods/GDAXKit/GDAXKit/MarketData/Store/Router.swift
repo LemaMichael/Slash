@@ -15,14 +15,14 @@ protocol URLRequestProtocol {
 enum Router:URLRequestProtocol {
     static let baseURL = "https://api.pro.coinbase.com"
 
-    case products()
-    case currencies()
+    case products
+    case currencies
     case book(productID:String,level:BookLevel)
     case ticker(productID:String)
     case trades(productID:String)
     case historic(productID:String,params:[String:String])
     case stats(productID:String)
-    case time()
+    case time
     
     public func request()->URLRequest {
         var request = URLRequest(url:url())
@@ -46,9 +46,9 @@ enum Router:URLRequestProtocol {
     
     private func path()->String {
         switch self {
-        case .products():
+        case .products:
             return "/products"
-        case .currencies():
+        case .currencies:
             return "/currencies"
         case let .book(productID,_):
             return "/products/\(productID)/book"
@@ -60,14 +60,14 @@ enum Router:URLRequestProtocol {
             return "/products/\(productID)/candles"
         case let .stats(productID):
             return "/products/\(productID)/stats"
-        case .time():
+        case .time:
             return "/time"
         }
     }
     
     private func paramItems()->[URLQueryItem] {
         switch self {
-        case .products(),.currencies(),.time():
+        case .products,.currencies,.time:
             return []
         case .ticker(_), .trades(_), .stats(_):
             return []

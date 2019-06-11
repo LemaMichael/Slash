@@ -8,59 +8,26 @@
 
 import Foundation
 
-public protocol GDAXSocketClientDelegate: class {
-    func gdaxSocketDidConnect(socket: GDAXSocketClient)
-    func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?)
+@objc public protocol GDAXSocketClientDelegate: class {
+    @objc optional func gdaxSocketDidConnect(socket: GDAXSocketClient)
+    @objc optional func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?)
     
-    func gdaxSocketClientOnErrorMessage(socket: GDAXSocketClient, error: GDAXErrorMessage)
+    @objc optional func gdaxSocketClientOnErrorMessage(socket: GDAXSocketClient, error: GDAXErrorMessage)
     
-    func gdaxSocketClientOnSubscriptions(socket: GDAXSocketClient, subscriptions: GDAXSubscriptions)
+    @objc optional func gdaxSocketClientOnSubscriptions(socket: GDAXSocketClient, subscriptions: GDAXSubscriptions)
     
-    func gdaxSocketClientOnHeartbeat(socket: GDAXSocketClient, heartbeat: GDAXHeartbeat)
+    @objc optional func gdaxSocketClientOnHeartbeat(socket: GDAXSocketClient, heartbeat: GDAXHeartbeat)
     
-    func gdaxSocketClientOnTicker(socket: GDAXSocketClient, ticker: GDAXTicker)
+    @objc optional func gdaxSocketClientOnTicker(socket: GDAXSocketClient, ticker: GDAXTicker)
     
-    func gdaxSocketClientOnSnapshot(socket: GDAXSocketClient, snapshot: GDAXSnapshot)
-    func gdaxSocketClientOnUpdate(socket: GDAXSocketClient, update: GDAXUpdate)
+    @objc optional func gdaxSocketClientOnSnapshot(socket: GDAXSocketClient, snapshot: GDAXSnapshot)
+    @objc optional func gdaxSocketClientOnUpdate(socket: GDAXSocketClient, update: GDAXUpdate)
     
-    func gdaxSocketClientOnReceived(socket: GDAXSocketClient, received: GDAXReceived)
-    func gdaxSocketClientOnOpen(socket: GDAXSocketClient, open: GDAXOpen)
-    func gdaxSocketClientOnDone(socket: GDAXSocketClient, done: GDAXDone)
-    func gdaxSocketClientOnMatch(socket: GDAXSocketClient, match: GDAXMatch)
-    func gdaxSocketClientOnChange(socket: GDAXSocketClient, change: GDAXChange)
-    func gdaxSocketClientOnMarginProfileUpdate(socket: GDAXSocketClient, marginProfileUpdate: GDAXMarginProfileUpdate)
-    func gdaxSocketClientOnActivate(socket: GDAXSocketClient, activate: GDAXActivate)
-}
-
-extension GDAXSocketClientDelegate {
-    
-    public func gdaxSocketDidConnect(socket: GDAXSocketClient) {}
-    
-    public func gdaxSocketDidDisconnect(socket: GDAXSocketClient, error: Error?) {}
-    
-    public func gdaxSocketClientOnErrorMessage(socket: GDAXSocketClient, error: GDAXErrorMessage) {}
-    
-    public func gdaxSocketClientOnSubscriptions(socket: GDAXSocketClient, subscriptions: GDAXSubscriptions) {}
-    
-    public func gdaxSocketClientOnHeartbeat(socket: GDAXSocketClient, heartbeat: GDAXHeartbeat) {}
-    
-    public func gdaxSocketClientOnTicker(socket: GDAXSocketClient, ticker: GDAXTicker) {}
-    
-    public func gdaxSocketClientOnSnapshot(socket: GDAXSocketClient, snapshot: GDAXSnapshot) {}
-    
-    public func gdaxSocketClientOnUpdate(socket: GDAXSocketClient, update: GDAXUpdate) {}
-    
-    public func gdaxSocketClientOnReceived(socket: GDAXSocketClient, received: GDAXReceived) {}
-    
-    public func gdaxSocketClientOnOpen(socket: GDAXSocketClient, open: GDAXOpen) {}
-    
-    public func gdaxSocketClientOnDone(socket: GDAXSocketClient, done: GDAXDone) {}
-    
-    public func gdaxSocketClientOnMatch(socket: GDAXSocketClient, match: GDAXMatch) {}
-    
-    public func gdaxSocketClientOnChange(socket: GDAXSocketClient, change: GDAXChange) {}
-    
-    public func gdaxSocketClientOnMarginProfileUpdate(socket: GDAXSocketClient, marginProfileUpdate: GDAXMarginProfileUpdate) {}
-    
-    public func gdaxSocketClientOnActivate(socket: GDAXSocketClient, activate: GDAXActivate) {}
+    @objc optional func gdaxSocketClientOnReceived(socket: GDAXSocketClient, received: GDAXReceived)
+    @objc optional func gdaxSocketClientOnOpen(socket: GDAXSocketClient, open: GDAXOpen)
+    @objc optional func gdaxSocketClientOnDone(socket: GDAXSocketClient, done: GDAXDone)
+    @objc optional func gdaxSocketClientOnMatch(socket: GDAXSocketClient, match: GDAXMatch)
+    @objc optional func gdaxSocketClientOnChange(socket: GDAXSocketClient, change: GDAXChange)
+    @objc optional func gdaxSocketClientOnMarginProfileUpdate(socket: GDAXSocketClient, marginProfileUpdate: GDAXMarginProfileUpdate)
+    @objc optional func gdaxSocketClientOnActivate(socket: GDAXSocketClient, activate: GDAXActivate)
 }

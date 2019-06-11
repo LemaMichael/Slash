@@ -30,7 +30,7 @@ class BarView: HorizontalBarChartView {
     }
     
     private func setupNoData() {
-        noDataFont = UIFont(name: "Avenir", size: 14)
+        noDataFont = UIFont(name: "Avenir", size: 14)!
         noDataTextColor = UIColor.white
         noDataText = "No data to show."
     }
@@ -108,7 +108,7 @@ class BarView: HorizontalBarChartView {
                                      icon: nil)
         }
         
-        let set = BarChartDataSet(values: entries, label: "")
+        let set = BarChartDataSet(entries: entries, label: "")
         set.drawValuesEnabled = true
         let formatter = DefaultValueFormatter.init(decimals: 2)
         set.valueFormatter = formatter
@@ -116,7 +116,7 @@ class BarView: HorizontalBarChartView {
         set.colors = colors
         
         let data = BarChartData(dataSet: set)
-        data.setValueFont(UIFont(name: "Avenir-Heavy", size: 11))
+        data.setValueFont(UIFont(name: "Avenir-Heavy", size: 11)!)
         data.setValueTextColor(.white)
         //: Set the xAxis format
         self.xAxis.valueFormatter = IndexAxisValueFormatter(values: coinName)

@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class GDAXSocketClient {
+@objc public class GDAXSocketClient: NSObject {
     
-    public static let baseAPIURLString = "wss://ws-feed.pro.coinbase.com"
+    public static let baseAPIURLString = "wss://ws-feed.gdax.com"
     public static let baseSandboxAPIURLString = "wss://ws-feed-public.sandbox.gdax.com"
     
     internal let apiKey: String?
@@ -111,56 +111,56 @@ public class GDAXSocketClient {
         switch gdaxType {
         case .error:
             let error = try GDAXErrorMessage(json: json)
-            self.delegate?.gdaxSocketClientOnErrorMessage(socket: self, error: error)
+            self.delegate?.gdaxSocketClientOnErrorMessage?(socket: self, error: error)
             break
         case .subscriptions:
             let subscriptions = try GDAXSubscriptions(json: json)
             self.currentSubscriptions = subscriptions.channels
-            self.delegate?.gdaxSocketClientOnSubscriptions(socket: self, subscriptions: subscriptions)
+            self.delegate?.gdaxSocketClientOnSubscriptions?(socket: self, subscriptions: subscriptions)
             break
         case .heartbeat:
             let heartbeat = try GDAXHeartbeat(json: json)
-            self.delegate?.gdaxSocketClientOnHeartbeat(socket: self, heartbeat: heartbeat)
+            self.delegate?.gdaxSocketClientOnHeartbeat?(socket: self, heartbeat: heartbeat)
             break
         case .ticker:
             let ticker = try GDAXTicker(json: json)
-            self.delegate?.gdaxSocketClientOnTicker(socket: self, ticker: ticker)
+            self.delegate?.gdaxSocketClientOnTicker?(socket: self, ticker: ticker)
             break
         case .snapshot:
             let snapshot = try GDAXSnapshot(json: json)
-            self.delegate?.gdaxSocketClientOnSnapshot(socket: self, snapshot: snapshot)
+            self.delegate?.gdaxSocketClientOnSnapshot?(socket: self, snapshot: snapshot)
             break
         case .update:
             let update = try GDAXUpdate(json: json)
-            self.delegate?.gdaxSocketClientOnUpdate(socket: self, update: update)
+            self.delegate?.gdaxSocketClientOnUpdate?(socket: self, update: update)
             break
         case .received:
             let received = try GDAXReceived(json: json)
-            self.delegate?.gdaxSocketClientOnReceived(socket: self, received: received)
+            self.delegate?.gdaxSocketClientOnReceived?(socket: self, received: received)
             break
         case .open:
             let open = try GDAXOpen(json: json)
-            self.delegate?.gdaxSocketClientOnOpen(socket: self, open: open)
+            self.delegate?.gdaxSocketClientOnOpen?(socket: self, open: open)
             break
         case .done:
             let done = try GDAXDone(json: json)
-            self.delegate?.gdaxSocketClientOnDone(socket: self, done: done)
+            self.delegate?.gdaxSocketClientOnDone?(socket: self, done: done)
             break
         case .match:
             let match = try GDAXMatch(json: json)
-            self.delegate?.gdaxSocketClientOnMatch(socket: self, match: match)
+            self.delegate?.gdaxSocketClientOnMatch?(socket: self, match: match)
             break
         case .change:
             let change = try GDAXChange(json: json)
-            self.delegate?.gdaxSocketClientOnChange(socket: self, change: change)
+            self.delegate?.gdaxSocketClientOnChange?(socket: self, change: change)
             break
         case .marginProfileUpdate:
             let marginProfileUpdate = try GDAXMarginProfileUpdate(json: json)
-            self.delegate?.gdaxSocketClientOnMarginProfileUpdate(socket: self, marginProfileUpdate: marginProfileUpdate)
+            self.delegate?.gdaxSocketClientOnMarginProfileUpdate?(socket: self, marginProfileUpdate: marginProfileUpdate)
             break
         case .activate:
             let activate = try GDAXActivate(json: json)
-            self.delegate?.gdaxSocketClientOnActivate(socket: self, activate: activate)
+            self.delegate?.gdaxSocketClientOnActivate?(socket: self, activate: activate)
             break
         case .unknown:
             fallthrough
@@ -175,13 +175,13 @@ extension GDAXSocketClient: GDAXWebSocketClientDelegate {
     
     public func websocketDidConnect(socket: GDAXWebSocketClient) {
         self.logger?.logGDAXSocketDidConnect(socket: self)
-        self.delegate?.gdaxSocketDidConnect(socket: self)
+        self.delegate?.gdaxSocketDidConnect?(socket: self)
     }
     
     public func websocketDidDisconnect(socket: GDAXWebSocketClient, error: Error?) {
         self.logger?.logGDAXSocketDidDisconnect(socket: self, error: error)
         self.currentSubscriptions = nil
-        self.delegate?.gdaxSocketDidDisconnect(socket: self, error: error)
+        self.delegate?.gdaxSocketDidDisconnect?(socket: self, error: error)
     }
     
     public func websocketDidReceiveMessage(socket: GDAXWebSocketClient, text: String) {

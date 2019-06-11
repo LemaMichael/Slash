@@ -245,7 +245,7 @@ class CoinCell: UICollectionViewCell {
     }
     
     private func line(values: [ChartDataEntry], lineColor: UIColor) -> LineChartDataSet {
-        let set = LineChartDataSet(values: values, label: nil)
+        let set = LineChartDataSet(entries: values, label: nil)
         set.mode = .cubicBezier //: Change this back to linear for default chart
         set.setColor(lineColor, alpha: 1.00)
         set.setCircleColor(lineColor)

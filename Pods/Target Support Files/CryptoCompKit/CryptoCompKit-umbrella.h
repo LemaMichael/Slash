@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "CryptoCompKit.h"
 
 FOUNDATION_EXPORT double CryptoCompKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char CryptoCompKitVersionString[];

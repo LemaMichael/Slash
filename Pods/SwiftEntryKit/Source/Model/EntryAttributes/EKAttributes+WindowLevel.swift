@@ -11,7 +11,7 @@ import UIKit
 public extension EKAttributes {
     
     /** Describes the window level in which the entry would be displayed */
-    public enum WindowLevel {
+    enum WindowLevel {
         
         /** Above the alerts */
         case alerts
@@ -29,11 +29,11 @@ public extension EKAttributes {
         public var value: UIWindow.Level {
             switch self {
             case .alerts:
-                return UIWindow.Level.alert
+                return .alert
             case .statusBar:
-                return UIWindow.Level.statusBar
+                return .statusBar
             case .normal:
-                return UIWindow.Level.normal
+                return .normal
             case .custom(level: let level):
                 return level
             }

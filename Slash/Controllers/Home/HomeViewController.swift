@@ -97,7 +97,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }()
     
     func quickAnalysis() {
-        print("quick analysis: \(currentUser.bitcoinBalance, currentUser.ethereumBalance, currentUser.litecoinBalance, currentUser.bitcoinCashBalance, currentUser.ethereumClassicBalance)")
+       // print("quick analysis: \(currentUser.bitcoinBalance, currentUser.ethereumBalance, currentUser.litecoinBalance, currentUser.bitcoinCashBalance, currentUser.ethereumClassicBalance)")
         var postiveVal = 0, negativeVal = 0
         let count = coins.count
         let label = accountDescription
@@ -268,7 +268,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("I am in request again")
             let range = DateRange.oneDay
             let granularity = Granularity.oneHour
-            let correctIndex = self.coins.index(of: coin) //: Finds the index of coin in the array coins
+            let correctIndex = self.coins.firstIndex(of: coin) //: Finds the index of coin in the array coins
             guard let index = correctIndex else {return }
             let coin = self.coins[index]
             self.client.historic(pid: coin.id, range: range, granularity: granularity) { candles, result in

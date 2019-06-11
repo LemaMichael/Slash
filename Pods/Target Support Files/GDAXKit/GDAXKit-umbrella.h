@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "GDAXKit.h"
 
 FOUNDATION_EXPORT double GDAXKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char GDAXKitVersionString[];

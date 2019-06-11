@@ -24,7 +24,7 @@ class ChartView: LineChartView {
     }
     
     private func setupNoData() {
-        noDataFont = UIFont(name: "Avenir", size: 14)
+        noDataFont = UIFont(name: "Avenir", size: 14)!
         noDataTextColor = UIColor.white
         noDataText = "No data to show."
     }
@@ -90,7 +90,7 @@ class ChartView: LineChartView {
         //: 1. color
         let lineColor = UIColor(red:0.25, green:0.60, blue:0.99, alpha:1.0)
 
-        let dataSet = LineChartDataSet(values: values, label: nil)
+        let dataSet = LineChartDataSet(entries: values, label: nil)
         dataSet.mode = .cubicBezier //: Change this back to linear for default chart
         dataSet.setColor(lineColor, alpha: 1.00)
         dataSet.setCircleColor(lineColor)

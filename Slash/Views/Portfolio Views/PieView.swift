@@ -31,7 +31,7 @@ class PieView: PieChartView {
     }
     
     private func setupNoData() {
-        noDataFont = UIFont(name: "Avenir", size: 14)
+        noDataFont = UIFont(name: "Avenir", size: 14)!
         noDataTextColor = UIColor.white
         noDataText = "No data to show."
     }
@@ -86,7 +86,7 @@ class PieView: PieChartView {
                                      icon: nil)
         }
         
-        let set = PieChartDataSet(values: entries, label: nil)
+        let set = PieChartDataSet(entries: entries, label: nil)
         set.drawIconsEnabled = false
         set.sliceSpace = 3
         
@@ -107,7 +107,7 @@ class PieView: PieChartView {
         pFormatter.percentSymbol = " %"
         data.setValueFormatter(DefaultValueFormatter(formatter: pFormatter))
         
-        data.setValueFont(UIFont(name: "Avenir-Heavy", size: 11))
+        data.setValueFont(UIFont(name: "Avenir-Heavy", size: 11)!)
         data.setValueTextColor(.white)
         
         self.data = data

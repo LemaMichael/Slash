@@ -1,17 +1,17 @@
 PODS:
-  - Charts (3.1.1):
-    - Charts/Core (= 3.1.1)
-  - Charts/Core (3.1.1)
+  - Charts (3.3.0):
+    - Charts/Core (= 3.3.0)
+  - Charts/Core (3.3.0)
   - CryptoCompKit (0.0.2)
-  - CryptoSwift (0.11.0)
+  - CryptoSwift (1.0.0)
   - GDAXKit (0.0.8):
     - Starscream (~> 3.0)
-  - GDAXSocketSwift (0.1.2):
+  - GDAXSocketSwift (0.1.3):
     - CryptoSwift
-  - QuickLayout (2.0.2)
-  - Starscream (3.0.5)
-  - SwiftEntryKit (0.5.8):
-    - QuickLayout (= 2.0.2)
+  - QuickLayout (3.0.0)
+  - Starscream (3.1.0)
+  - SwiftEntryKit (1.0.1):
+    - QuickLayout (= 3.0.0)
 
 DEPENDENCIES:
   - Charts
@@ -33,14 +33,14 @@ SPEC REPOS:
     - SwiftEntryKit
 
 SPEC CHECKSUMS:
-  Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
+  Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
   CryptoCompKit: df9a12ec3032ee567b6fd836f5faea615539d249
-  CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
+  CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   GDAXKit: 2951b3134861f2369b3079ba26aa50224a04d0f8
-  GDAXSocketSwift: c0d01a025fa90b053f2fed19cca9a13b856e3e28
-  QuickLayout: a730730b646b231fd4ef7cffaeb1e81fe0e1ca92
-  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
-  SwiftEntryKit: ff42f06ff7468ffa6a8b63edf806159c99205681
+  GDAXSocketSwift: 7c482e7b368f4d38e87b3157b5b0189801ee4c4a
+  QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
+  Starscream: 08172b481e145289c4930cb567230fb55897cfa4
+  SwiftEntryKit: 3f55c0b8e676afe24a3703237bcac68372891c56
 
 PODFILE CHECKSUM: 0c1db5c990a75fae9876cd40d0aab47e7ca5f013
 

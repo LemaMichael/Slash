@@ -21,7 +21,7 @@ enum RouterPath:String {
 enum Router:URLRequestProtocol {
     static let baseURL = "https://min-api.cryptocompare.com/data/"
     
-    case coinList()
+    case coinList
     case priceList(fSyms:[String],tSyms:[String])
     case histoMinute(fSym:String,tSym:String)
     

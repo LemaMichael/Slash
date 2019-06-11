@@ -11,8 +11,8 @@ import UIKit
 public extension EKAttributes {
     
     /** Describes the frame of the entry. It's limitations, width and offset from the anchor (top / bottom of the screen) */
-    public struct PositionConstraints {
-        
+    struct PositionConstraints {
+
         /** Describes safe area relation */
         public enum SafeArea {
             
@@ -127,6 +127,31 @@ public extension EKAttributes {
             }
         }
         
+        /** Rotation related position constraints */
+        public struct Rotation {
+            
+            /** Attributes of supported interface orientations */
+            public enum SupportedInterfaceOrientation {
+                
+                /** Uses standard supported interface orientation (target specification in general settings) */
+                case standard
+                
+                /** Supports all orinetations */
+                case all
+            }
+            
+            /** Autorotate the entry along with the device orientation */
+            public var isEnabled = true
+            
+            /** The screen autorotates with accordance to this option */
+            public var supportedInterfaceOrientations = SupportedInterfaceOrientation.standard
+            
+            public init() {}
+        }
+        
+        /** The rotation attributes of the entry */
+        public var rotation = Rotation()
+        
         /** The entry can be bound to keyboard in case of appearance */
         public var keyboardRelation = KeyboardRelation.unbind
         
@@ -165,7 +190,7 @@ public extension EKAttributes {
         public init(verticalOffset: CGFloat = 0, size: Size = .sizeToWidth, maxSize: Size = .intrinsic) {
             self.verticalOffset = verticalOffset
             self.size = size
-            self.maxSize = .intrinsic
+            self.maxSize = maxSize
         }
     }
 }
